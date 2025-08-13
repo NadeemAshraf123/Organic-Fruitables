@@ -102,12 +102,17 @@ const ProductSection: React.FC = () => {
 
                 return (
                     <section className='max-w-7xl mx-auto px-4 py-10 mt-20'>
-                        <div className='flex flex-col md:flex-row justify-around items-center mb-18'>
+
+                      <div  className='max-w-6xl mx-auto'>
+
+
+
+                        <div className='flex flex-col md:flex-row justify-evenly items-center mb-18'>
                             <h2 className='text-3xl font-bold text-[#45595B] mb-4 md:mb-0'>
                                 Our Organic Products
                             </h2>
 
-                            <div className='flex gap-3 flex-wrap'>
+                            <div className='flex gap-10 flex-wrap'>
                                 {categories.map((cat) => (
                                     <button 
                                       key={cat}
@@ -124,7 +129,9 @@ const ProductSection: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"> */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+
 
                             {filteredProducts.map((product) => (
                                 <ProductCard 
@@ -137,6 +144,8 @@ const ProductSection: React.FC = () => {
                                 />
                             ))}
                         </div>
+                      </div>
+
                     </section>
                 )
             }

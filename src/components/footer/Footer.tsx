@@ -7,7 +7,7 @@ import { FaCcVisa, FaCcMastercard, FaCcPaypal } from "react-icons/fa";
 const Footer: React.FC = () => {
     return (
         <footer className="bg-[#45595B] text-white pt-16 pb-10 px-6 md:px-12 lg:px-20">
-            
+
             <div className="flex flex-col lg:flex-row justify-between items-center gap-6 mb-12">
                 <div className="text-center lg:text-left">
                     <h2 className="text-3xl font-bold text-[#81C408]">Fruitables</h2>
@@ -49,20 +49,20 @@ const Footer: React.FC = () => {
             <hr className="border-t border-[#FFB524] my-6" />
 
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12 leading-[35px]">
                 <div>
-                    <h3 className="text-xl font-bold mb-4">Why People Like Us!</h3>
-                    <p className="text-sm text-gray-300 mb-4 leading-loose">
+                    <h3 className="text-xl font-bold mb-4 text-[#F4F6F8]">Why People Like Us!</h3>
+                    <p className="text-md text-[#9FAAAD] mb-4 leading-[35px]">
                         Typesetting industry lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since.
                     </p>
-                    <button className="bg-[#FDC700] text-[#45595B] px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#e0b000] transition">
+                    <button className=" border border-[#FFB524] text-[#81C408] px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#e0b000] hover:text-[#FFFFFF] transition">
                         Read More
                     </button>
                 </div>
 
                 <div>
-                    <h3 className="text-xl font-bold mb-4">Shop Info</h3>
-                    <ul className="space-y-2 text-sm text-gray-300">
+                    <h3 className="text-xl font-bold mb-4 text-[#F4F6F8]">Shop Info</h3>
+                    <ul className="space-y-2 text-md text-[#9FAAAD] leading-loose">
                         <li><a href="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>About Us</a></li>
                         <li><a href="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Contact Us</a></li>
                         <li><a href="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Privacy Policy</a></li>
@@ -73,8 +73,8 @@ const Footer: React.FC = () => {
                 </div>
 
                 <div>
-                    <h3 className="text-xl font-bold mb-4">Account</h3>
-                    <ul className="space-y-2 text-sm text-gray-300">
+                    <h3 className="text-xl font-bold mb-4 text-[#F4F6F8]">Account</h3>
+                    <ul className="space-y-2 text-md text-[#9FAAAD] leading-loose">
                         <li><a href="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>My Account</a></li>
                         <li><a href="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Shop</a></li>
                         <li><a href="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Shopping Cart</a></li>
@@ -85,15 +85,15 @@ const Footer: React.FC = () => {
                 </div>
 
                 <div>
-                    <h3 className="text-xl font-bold mb-4">Contact</h3>
-                    <ul className="space-y-2 text-sm text-gray-300">
+                    <h3 className="text-xl font-bold mb-4 text-[#F4F6F8]">Contact</h3>
+                    <ul className="space-y-2 text-[16px]  text-[#9FAAAD] leading-[35px]">
                         <li>1429 Netus Rd, NY 48247</li>
                         <li>Example@gmail.com</li>
                         <li>+92 300 1234567</li>
                     </ul>
 
                     <div className="flex gap-4 mt-4 text-4xl">
-                        <FaCcVisa  className=' text-white'/>
+                        <FaCcVisa className=' text-white' />
                         <FaCcMastercard />
                         <FaCcPaypal />
                     </div>
@@ -110,10 +110,27 @@ const Footer: React.FC = () => {
                     />
 
                 </div>
-
-
-
             </div>
+
+            <div className="w-full flex flex-col md:flex-row justify-between items-start text-sm mt-6 text-white">
+                <div className="flex items-center gap-2 text-left">
+                    <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center text-[#45595B] text-xs font-bold">
+                        C
+                    </div>
+                    <span className="text-[#81C408]">Your Site Name</span>, <span className="text-white">All right reserved.</span>
+                </div>
+
+                <div className="text-right text-[#9FAAAD] flex items-center gap-1">
+                    <span>Designed By</span>
+                    <a href="https://htmlcodex.com" className="relative inline-block text-[#81C408] hover:underline">
+                        HTML Codex
+                        <span className="absolute left-0 right-0 bottom-[-2px] h-[1px] bg-[#FFB524]"></span>
+                    </a>
+                </div>
+            </div>
+
+
+
         </footer>
     );
 };

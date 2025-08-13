@@ -5,7 +5,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 const Header: React.FC = () => {
   return (
 
-    <header className="fixed top-0 left-0 right-0 bg-white  px-6 py-4 flex justify-around items-center h-[100px] z-50">
+    <header className=" bg-white  px-6 py-4 flex justify-around items-center h-[100px] z-50">
       <div className="text-4xl font-bold text-[#81C408]">
         Fruitables
       </div>

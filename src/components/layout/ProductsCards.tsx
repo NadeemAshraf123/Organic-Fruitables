@@ -18,7 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
   <div
   className="bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_70px_rgba(128,128,128,0.6),0_0_30px_rgba(128,128,128,0.4)] transition-all
-  w-full sm-w-[300px] lg:w-[260px] border border-[#FDC700] "
+  w-full border border-[#FDC700] "
 >
 
       <div className="overflow-hidden">
