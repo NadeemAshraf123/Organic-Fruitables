@@ -13,6 +13,7 @@ import StatsSection from './components/statssection/StatsSection'
 import OurTestimonial from './components/ourtestimonials/OurTesttimonial'
 import BestsellerProductsSection from './components/bestsellerproducts/BestSellerProductsSection'
 import PromoBanner from './components/promobanner/PromoBanner'
+import BestsellerProductTwo from './components/bestsellerproducts/BestSellerProductTwo'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
       <Navbar />
       <HeroBanner /> 
       <FeatureHighlights /> 
+
       <ProductSection />
       <CardsGrid />
       <CaruselProductsDisplay />
@@ -31,6 +33,7 @@ function App() {
       <PromoBanner />
 
       <BestsellerProductsSection />
+      <BestsellerProductTwo />
       <StatsSection />
       <OurTestimonial />
 

@@ -3,7 +3,7 @@ import storeImage from '../../assets/storeimages/storeImage.png'; // Replace wit
 
 const PromoBanner: React.FC = () => {
     return (
-        <section className="bg-[#FFB524] rounded-xl shadow-lg px-8 py-20 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto mt-20">
+        <section className="bg-[#FFB524]  shadow-lg px-8 py-20 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto mt-20">
 
             {/* Left Section */}
             <div className="flex-1 text-white max-w-xl">
@@ -12,7 +12,7 @@ const PromoBanner: React.FC = () => {
                     <h2 className="text-[54px] md:text-[64px] font-bold leading-tight">
                         Fresh Exotic Fruits
                     </h2>
-                    <h2 className="text-[54px] md:text-[64px] font-bold leading-tight text-[#45595B]">
+                    <h2 className="text-[54px] md:text-[64px] font-lightbold leading-tight text-[#45595B]">
                         in Our Store
                     </h2>
                 </div>

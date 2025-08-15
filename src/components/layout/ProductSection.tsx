@@ -105,22 +105,23 @@ const ProductSection: React.FC = () => {
 
                       <div  className='max-w-6xl mx-auto'>
 
-
-
-                        <div className='flex flex-col md:flex-row justify-evenly items-center mb-18'>
-                            <h2 className='text-3xl font-bold text-[#45595B] mb-4 md:mb-0'>
-                                Our Organic Products
+                        <div className='flex flex-col md:flex-row justify-between mb-18'>
+                            <h2 className='text-3xl font-bold text-[#45595B] mb-4'>
+                                <div>
+                                  Our Organic 
+                                  </div>
+                                  Products
                             </h2>
 
-                            <div className='flex gap-10 flex-wrap'>
+                            <div className='flex gap-16 flex-wrap'>
                                 {categories.map((cat) => (
                                     <button 
                                       key={cat}
                                       onClick={() => setSelectedCategory(cat)}
-                                      className={`px-4 py-2 rounded-full border ${
+                                      className={`px-4 py-2 h-fit text-left rounded-full border ${
                                         selectedCategory === cat
                                         ? 'bg-[#FDC700] text-white'
-                                        : 'bg-[#F4F6F8] text-[#456D84] border-0'
+                                        : 'bg-transparent text-[#456D84] border-0'
                                       } transition-colors duration-500`}
                                     >
                                         {cat}
@@ -129,9 +130,8 @@ const ProductSection: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"> */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-
+                        <div className="grid grid-cols-1 text-center sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6
+                        justify-items-center ">
 
                             {filteredProducts.map((product) => (
                                 <ProductCard 

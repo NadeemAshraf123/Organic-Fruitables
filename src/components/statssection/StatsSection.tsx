@@ -31,10 +31,10 @@ const StatsSection: React.FC = () => {
 
     return (
         <section className='max-w-7xl mx-auto px-4 py-10 bg-[#F4F6F8] mt-20 mb-10 ' >
-            <div className='max-w-6xl mx-auto '>
+            <div className='max-w-6xl mx-auto flex justify-center '>
 
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
+            <div className='grid grid-cols-1 mt-4 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
                 {stats.map((stat, i) => (
                     <StatCard key={i} {...stat} />
                 ))}

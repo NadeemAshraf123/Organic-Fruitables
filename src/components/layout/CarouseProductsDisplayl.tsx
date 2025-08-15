@@ -126,20 +126,20 @@ const CaruselProductsDisplay: React.FC = () => {
 
 
       <div className='flex gap-3 justify-between items-center mb-6'>
-        <h2 className='text-4xl font-lightbold text-[#45595B]'>
-          Our Organic Vegetables
+        <h2 className='text-4xl font-semibold text-[#45595B]'>
+          Fresh Organic Vegetables
         </h2>
 
-        <div className='flex gap-3 mt-28'>
+        <div className='flex gap-3 mt-5'>
           <button
             onClick={scrollLeft}
-            className='bg-transparent border border-[#FFB524] hover:bg-[#FFB524] text-[#81C408] px-6 py-1 rounded-full transition'
+            className='bg-transparent text-[15px] font-[bold] border border-[#FFB524] hover:bg-[#FFB524] hover:text-[#FFFFFF] text-[#81C408] px-4  rounded-full transition'
           >
             →
           </button>
           <button
             onClick={scrollRight}
-            className='bg-transparent border border-[#FFB524] text-[#81C408] px-6 py-1 rounded-full hover:bg-[#FFB524] transition'
+            className='bg-transparent text-[15px] border border-[#FFB524] text-[#81C408] px-4 rounded-full hover:bg-[#FFB524] hover:text-[#FFFFFF] transition'
           >
             ←
           </button>
