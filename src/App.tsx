@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import './App.css'
-// import TopBar from './components/layout/TopBar'
-// import LandingPageHeader from './components/layout/LandingPageHeader'
+import ShyrianCodingSchool from './sheriyan/ShyrianCodingSchool'
+import SheriyanCodingLandingPage from './sheriyan/SheriyanCodingLandingPage'
+import TopBar from './components/layout/TopBar'
+import LandingPageHeader from './components/layout/LandingPageHeader'
 import HeroBanner from './components/layout/hero/HeroBanner'
 import FeatureHighlights from './components/layout/FeatureHighlights'
 import ProductSection from './components/layout/ProductSection'
@@ -19,25 +21,24 @@ function App() {
 
   return (
     <>
-      
+      {/* <ShyrianCodingSchool />  */}
+      {/* <SheriyanCodingLandingPage /> */}
       {/* <TopBar /> */}
       {/* <LandingPageHeader /> */}
-      <Navbar />
+       <Navbar />
       <HeroBanner /> 
       <FeatureHighlights /> 
 
       <ProductSection />
       <CardsGrid />
       <CaruselProductsDisplay />
-
       <PromoBanner />
 
       <BestsellerProductsSection />
       <BestsellerProductTwo />
       <StatsSection />
       <OurTestimonial />
-
-      <Footer />
+      <Footer /> 
     </>
   )
 }

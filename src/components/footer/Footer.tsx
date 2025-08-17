@@ -8,17 +8,17 @@ const Footer: React.FC = () => {
     return (
         <footer className="bg-[#45595B] text-white pt-16 pb-10 px-6 md:px-12 lg:px-20">
 
-            <div className="flex flex-col lg:flex-row justify-between items-center gap-6 mb-12">
-                <div className="text-center lg:text-left">
-                    <h2 className="text-3xl font-bold text-[#81C408]">Fruitables</h2>
-                    <p className="text-md text-[#FFB524] mt-1">Fresh products</p>
+            <div className="flex flex-col lg:flex-row justify-between items-left gap-6 mb-12">
+                <div className="text-left lg:text-left">
+                    <h2 className="text-3xl font-bold text-left text-[#81C408]">Fruitables</h2>
+                    <p className="text-md text-left text-[#FFB524] mt-1">Fresh products</p>
                 </div>
 
                 <form className="relative w-full max-w-md" onSubmit={(e) => e.preventDefault()}>
                     <input
                         type="text"
                         placeholder="Search"
-                        className="w-full px-6 py-4 bg-[#FFFFFF] text-[#6C757D]  rounded-full focus:outline-none"
+                        className="w-full px-6 py-4 bg-[#FFFFFF] text-[#6C757D] text-left  rounded-full focus:outline-none"
                     />
                     <button
                         type="submit"
@@ -28,13 +28,15 @@ const Footer: React.FC = () => {
                     </button>
                 </form>
 
-                <div className="flex gap-4 text-[#FFB524]">
+                <div className="flex justify-end gap-4 text-[#FFB524]">
                     <div className="w-12 h-12 rounded-full border-2 border-[#FFB524] flex items-center justify-center hover:bg-[#FFB524] hover:text-black cursor-pointer transition">
-                        <FaFacebookF className="text-xl" />
+                        <FaTwitter className="text-xl" />
+
                     </div>
 
                     <div className="w-12 h-12 rounded-full border-2 border-[#FFB524] flex items-center justify-center hover:bg-[#FFB524] hover:text-black cursor-pointer transition">
-                        <FaTwitter className="text-xl" />
+                        <FaFacebookF className="text-xl" />
+
                     </div>
 
                     <div className="w-12 h-12 rounded-full border-2 border-[#FFB524] flex items-center justify-center hover:bg-[#FFB524] hover:text-black cursor-pointer transition">

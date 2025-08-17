@@ -27,18 +27,18 @@ const BestsellerProductTwo: React.FC<BestsellerProductsSectionProps> = ({
 }) => {
   return (
     <section className="mx-auto max-w-7xl px-4 py-16">
-      <h2 className="text-center text-5xl md:text-6xl font-extrabold text-gray-800">
+      {/* <h2 className="text-center text-5xl md:text-6xl font-extrabold text-gray-800">
         Bestseller Products
       </h2>
       <p className="mx-auto mt-4 max-w-3xl text-center text-gray-500">
         Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.
-      </p>
+      </p> */}
 
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {products.map((product) => (
           <div
             key={product.id}
-            className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col items-center p-4"
+            className="bg-transparent rounded-lg flex flex-col items-center p-4"
           >
             {/* Image */}
             <img

@@ -35,15 +35,19 @@ const PromoBanner: React.FC = () => {
           1 50$ kg
         </div> */}
 
-                <div className="absolute top-0 left-14 bg-white w-[120px] h-[120px] rounded-full shadow flex flex-col justify-center items-center text-[##45595B]">
+                <div className="absolute top-0 left-2 bg-white w-[120px] h-[120px] rounded-full shadow flex flex-row justify-center items-center text-[#45595B] md:left-10 lg:left-14 md:w-[120px] md:h-[120px] lg:w-[140px] lg:h-[140px]">
                     {/* Top row: 1 and 50$ */}
-                    <div className="flex items-baseline">
-                        <span className="text-[52px] font-bold">1</span>
-                        <span className="text-[25px] font-semibold">50$</span>
+                    <div className="flex items-left gap-1">
+                        <span className="text-[52px] font-bold leading-none">1</span>
+                    
+                    </div>
+
+                        <div className='flex flex-col'>
+                        <span className="text-[22px] font-semibold mt-10 leading-none">50$</span>
+                        <span className="text-[18px] font-medium ">kg</span>
                     </div>
 
                     {/* Bottom row: kg */}
-                    <span className="text-[18px] font-medium">kg</span>
                 </div>
                 {/* Image */}
                 <img
