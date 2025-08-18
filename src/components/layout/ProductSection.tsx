@@ -101,16 +101,14 @@ const ProductSection: React.FC = () => {
                 : products.filter((p) => p.category === selectedCategory);
 
                 return (
-                    <section className='max-w-7xl mx-auto px-4 py-10 mt-20'>
+                    <section className='max-w-7xl mx-auto px-4 mt-20'>
 
                       <div  className='max-w-6xl mx-auto'>
 
-                        <div className='flex flex-col md:flex-row justify-between mb-18'>
-                            <h2 className='text-3xl font-bold text-[#45595B] mb-4'>
-                                <div>
-                                  Our Organic 
-                                  </div>
-                                  Products
+                        <div className='flex md:flex-row justify-between mb-5'>
+                            <h2 className='text-[30px] font-semibold text-[#45595B] mb-4'>
+                    
+                                  Our Organic Products
                             </h2>
 
                             <div className='flex gap-16 flex-wrap'>

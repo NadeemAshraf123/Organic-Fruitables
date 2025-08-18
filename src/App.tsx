@@ -21,6 +21,8 @@ function App() {
 
   return (
     <>
+    <div className='max-w-6xl mx-auto'>
+
       {/* <ShyrianCodingSchool />  */}
       {/* <SheriyanCodingLandingPage /> */}
       {/* <TopBar /> */}
@@ -38,7 +40,10 @@ function App() {
       <BestsellerProductTwo />
       <StatsSection />
       <OurTestimonial />
+          </div>
       <Footer /> 
+
+
     </>
   )
 }

@@ -67,17 +67,19 @@ const BestsellerProductsSection: React.FC<BestsellerProductsSectionProps> = ({
   return (
 
 
-    <section className="mx-auto max-w-7xl px-4 py-16">
-      <h2 className="text-center text-5xl md:text-6xl font-extrabold text-gray-800">
+    <section className="max-auto max-w-7xl py-16">
+      <div className="max-w-6xl mx-auto">
+      <h2 className="text-center text-[48px] font-Sans md:text-[43px] font-bold  text-[#45595B]">
         Bestseller Products
       </h2>
       <p className="mx-auto mt-4 max-w-3xl text-center text-gray-500">
         Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.
       </p>
-      <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 flex flex-wrap gap-4 justify-center">
         {products.map((product) => (
           <BestSellerProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
         ))}
+      </div>
       </div>
     </section>
   );

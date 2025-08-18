@@ -33,8 +33,8 @@ const features: Feature[] = [
 const FeatureHighlights: React.FC = () => {
     return (
 
-        <section className='bg-white py-16 px-6 mt-20'>
-            <div className='max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
+        <section className='bg-[yellow] py-16 px-6 mt-20'>
+            <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
                 {features.map((feature, index) => (
                     <div 
                         key={index}

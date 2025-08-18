@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
                     />
                     <button
                         type="submit"
-                        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-[#81C408] text-white font-semibold px-6 py-4.5 rounded-full hover:bg-[#FFB524] transition text-sm"
+                        className="absolute top-7.5 right-0 transform -translate-y-1/2 bg-[#81C408] text-white font-semibold px-6 py-5 rounded-full hover:bg-[#FFB524] transition text-sm"
                     >
                         Submit Now
                     </button>

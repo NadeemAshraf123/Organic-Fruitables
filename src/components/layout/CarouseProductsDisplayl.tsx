@@ -120,12 +120,12 @@ const CaruselProductsDisplay: React.FC = () => {
   };
 
   return (
-    <section className='max-w-7xl mx-auto px-4 py-10'>
+    <section className='w-full  px-4  mt-15'>
 
-      <div className='max-w-6xl mx-auto'>
+      <div className=' w-full mx-auto'>
 
 
-      <div className='flex gap-3 justify-between items-center mb-6'>
+      <div className='flex gap-3 justify-between items-center '>
         <h2 className='text-4xl font-semibold text-[#45595B]'>
           Fresh Organic Vegetables
         </h2>

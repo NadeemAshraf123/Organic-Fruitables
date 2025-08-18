@@ -99,7 +99,7 @@ const TestimonialCarousel = () => {
   };
 
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-20">
+    <section className=" w-full py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-20">
       {/* Header */}
       <div className="mb-10">
         <div className="text-center">
