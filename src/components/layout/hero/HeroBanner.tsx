@@ -28,72 +28,74 @@ const HeroBanner: React.FC = () => {
     };
 
     return (
-
         <section
             style={{ backgroundImage: `url(${herobackroundImg})` }}
-            className="flex flex-col md:flex-row items-center justify-around bg-cover bg-center px-4 md:px-8 py-8 md:py-16 gap-8 md:gap-16 mt-50 md:mt-40"
+            className="bg-cover bg-center min-h-[533px]"
         >
-            {/* Text Content */}
-            <div className="flex-1 max-w-xl w-full text-left ml-[20px] md:ml-[100px]">
+            <div className="max-w-[1320px] w-full mx-auto mt-20  md:py-16">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16 min-h-[70vh]">
+                    
+                    {/* Left Side - Text Content */}
+                    <div className="flex-1 text-left  max-w-7xl">
+                        <h1 className="text-[24px] md:text-3xl lg:text-2xl text-[#FFB524] mb-4 font-medium">
+                            100% Organic Foods
+                        </h1>
+                        <h2 className="text-[64px] font-sansserif md:text-5xl lg:text-[64px] font-bold text-[#81C408] mb-8 leading-tight">
+                            Organic Veggies &  <span className="block font-bold" style={{fontFamily: "sans-serif"}}>Fruits Foods </span>
+                        </h2>
 
-                <h1 className="text-2xl md:text-3xl lg:text-4xl text-[#FFB524] mb-2">
-                    100% Organic Foods
-                </h1>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#81C408] mb-10 leading-tight">
-                    Organic Veggies & Fruits Foods
-                </h2>
+                        <form className="relative  w-[552px] max-w-full" onSubmit={(e) => e.preventDefault()}>
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                className="w-full px-6 py-4 border-2 border-[#FFB524] bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-[#FFB524] text-base pr-32"
+                            />
+                            <button
+                                type="submit"
+                                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#81C408] text-white font-semibold px-8 py-4 rounded-full hover:bg-[#FFB524] transition text-sm border-2 border-[#ffb524]"
+                            >
+                                Submit Now
+                            </button>
+                        </form>
+                    </div>
 
-                <form className="relative w-full max-w-md text-left" onSubmit={(e) => e.preventDefault()}>
-                    <input
-                        type="text"
-                        placeholder="Search"
-                        className="w-full text-left px-4 md:px-6 py-4 border-2 border-[#FFB524] bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-[#FFB524] text-sm md:text-base"
-                    />
-                    <button
-                        type="submit"
-                        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-[#81C408] text-white font-semibold border-2 border-[#FFB524] px-6 py-1 md:py-4 rounded-full hover:bg-[#FFB524] transition text-sm"
-                        style={{
-                            height: 'calc(100% - 4px)',
-                        }}
-                    >
-                        Submit Now
-                    </button>
-                </form>
-            </div>
-
-
-            <div className="flex-1 relative max-w-md w-full mx-auto mt-8  md:mt-0">
-                <button
-                    onClick={goLeft}
-                    className="absolute left-0 md:left-2 top-1/2 transform -translate-y-1/2 bg-[#d0f984] text-xl md:text-2xl text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full shadow hover:bg-[#a0f207] z-10 w-[50px] h-[50px] flex items-center justify-center"
-                    aria-label="Previous image"
-                >
-                    <FaChevronLeft />
-                </button>
-
-                <div  className="relative">
-                    <img
-                        src={images[currentIndex]?.image}
-                        alt="Organic food selection"
-                        className="w-full h-auto max-h-64 md:max-h-none rounded-lg bg-[#FFB524] transition-opacity duration-500 object-cover"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    {/* Right Side - Image Carousel */}
+                    <div className="flex-1 relative max-w-lg mr-3 mt-10 w-full">
+                        <div className="relative overflow-hidden rounded-2xl">
+                            <img
+                                src={images[currentIndex]?.image}
+                                style={{background:'#ffb524'}}
+                                alt="Organic food selection"
+                                className="w-full h-[400px] md:h-[341px] object-cover transition-opacity duration-500"
+                            />
+                            
                         
-                        <span className="bg-[#E8B33A] text-white text-2xl md:text-2xl font-bold px-4 py-2 rounded-xl">
-                            {images[currentIndex]?.title}
-                            </span>
-                        
-                        
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="bg-[#FFB524] text-white text-2xl md:text-3xl font-bold px-6 py-3 rounded-xl shadow-lg">
+                                    {images[currentIndex]?.title}
+                                </span>
+                            </div>
                         </div>
-                </div>
-                <button
-                    onClick={goRight}
-                    className="absolute right-0 md:right-2 top-1/2 transform -translate-y-1/2 bg-[#c8f475] text-xl md:text-2xl text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full shadow hover:bg-[#a0f207] z-10 w-[50px] h-[50px] flex items-center justify-center"
-                    aria-label="Next image"
-                >
-                    <FaChevronRight />
 
-                </button>
+                        {/* Navigation Buttons */}
+                        <button
+                            onClick={goLeft}
+                            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#81C408] hover:bg-[#6fa007] text-white text-xl px-3 py-3 rounded-full shadow-lg z-10 w-12 h-12 flex items-center justify-center transition-colors"
+                            aria-label="Previous image"
+                        >
+                            <FaChevronLeft />
+                        </button>
+
+                        <button
+                            onClick={goRight}
+                            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#81C408] hover:bg-[#6fa007] text-white text-xl px-3 py-3 rounded-full shadow-lg z-10 w-12 h-12 flex items-center justify-center transition-colors"
+                            aria-label="Next image"
+                        >
+                            <FaChevronRight />
+                        </button>
+                    </div>
+
+                </div>
             </div>
         </section>
     );

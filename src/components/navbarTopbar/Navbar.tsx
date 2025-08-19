@@ -15,28 +15,66 @@ const SmartHeader: React.FC = () => {
 
   const TOPBAR_HEIGHT = 56;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      setAtTop(currentScrollPos === 0);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const currentScrollPos = window.pageYOffset;
+  //     setAtTop(currentScrollPos === 0);
 
-      if (currentScrollPos === 0) {
+  //     if (currentScrollPos === 0) {
+  //       setTopBarVisible(true);
+  //       return;
+  //     }
+
+  //     const isScrollingUp = currentScrollPos < prevScrollPos;
+
+  //     if (currentScrollPos > 100) {
+  //       setTopBarVisible(isScrollingUp);
+  //     }
+
+  //     setPrevScrollPos(currentScrollPos);
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll, { passive: true });
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [prevScrollPos]);
+
+useEffect(() => {
+  let hideTimeout: NodeJS.Timeout;
+
+  const handleScroll = () => {
+    const currentScrollPos = window.pageYOffset;
+    setAtTop(currentScrollPos === 0);
+
+    if (currentScrollPos === 0) {
+      setTopBarVisible(true);
+      return;
+    }
+
+    const isScrollingUp = currentScrollPos < prevScrollPos;
+
+    if (currentScrollPos > 100) {
+      if (isScrollingUp) {
         setTopBarVisible(true);
-        return;
+        clearTimeout(hideTimeout);
+      } else {
+      
+        hideTimeout = setTimeout(() => {
+          setTopBarVisible(false);
+        }, 300);
       }
+    }
 
-      const isScrollingUp = currentScrollPos < prevScrollPos;
+    setPrevScrollPos(currentScrollPos);
+  };
 
-      if (currentScrollPos > 100) {
-        setTopBarVisible(isScrollingUp);
-      }
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  return () => {
+    clearTimeout(hideTimeout);
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, [prevScrollPos]);
 
-      setPrevScrollPos(currentScrollPos);
-    };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [prevScrollPos]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,31 +87,31 @@ const SmartHeader: React.FC = () => {
 
 
       {searchOpen && (
-        <div className="fixed inset-0 bg-[#ffffffcc] z-50 p-4">
+        <div className="fixed inset-0 bg-[rgba(237,231,231,0.89)] z-50 p-4">
 
-          <p className="text-gray-500">Search by Keywords</p>
+          <p className="text-xl text-gray-900">Search by Keywords</p>
 
           <button
             onClick={() => setSearchOpen(false)}
-            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            className="absolute top-4 right-4 text-gray-700 hover:text-gray-700"
           >
             <FaTimes className="text-3xl" />
           </button>
 
 
           <div className="flex items-center justify-center h-full">
-            <form onSubmit={handleSearchSubmit} className="w-full max-w-2xl flex gap-4">
+            <form onSubmit={handleSearchSubmit} className="w-full max-w-6xl flex gap-2">
               <input
                 type="text"
-                placeholder="Search by keyword"
-                className="w-full p-4 border-b-2 border-[#81C408] focus:outline-none text-xl"
+                placeholder="keyword"
+                className="w-full bg-[#FFFFFF] rounded-xl p-4 border-b-2 border-[#81C408] focus:outline-none text-xl"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoFocus
               />
               <button
                 type="submit"
-                className="mt-4 bg-[#81C408] text-white px-6 py-3 rounded-md hover:bg-[#6da80a]"
+                className="mt-1 bg-gray-500 text-white px-6 py-3 rounded-xl hover:bg-[#6da80a]"
               >
                 Search
               </button>
@@ -84,26 +122,26 @@ const SmartHeader: React.FC = () => {
       {/* =========================================== */}
 
       {/* Existing top bar - unchanged */}
-      <div className={`transition-all sticky flex items-center justify-center duration-3000 ${topBarVisible || atTop ? "translate-y-0" : "-translate-y-full hidden"}`}>
-        <div className="max-w-6xl min-w-[90%]">
-          <div className="bg-[#81C408] rounded-tl-[99px] rounded-br-[99px] rounded-tr-[36px] rounded-bl-[36px] py-3 px-4">
+      <div className={`transition-all sticky flex items-center justify-center duration-8000 ${topBarVisible || atTop ? "translate-y-0" : "-translate-y-full hidden"}`}>
+        <div className="max-w-[1320px] w-full mx-auto ">
+          <div className="bg-[#81C408] rounded-tl-[99px] rounded-br-[99px] rounded-tr-[36px] rounded-bl-[36px] py-4 px-6">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-white text-xs sm:text-sm font-normal">
               <div className="flex flex-wrap items-center gap-4">
                 <div className="flex items-center gap-2">
                   <FaMapMarkerAlt className="w-4 h-4 text-[#FFB524]" />
-                  <span>123 Street, New York</span>
+                  <span className="font-opensans">123 Street, New York</span>
                 </div>
                 <div className="hidden sm:flex items-center gap-2">
                   <FaEnvelope className="w-4 h-4 text-[#FFB524]" />
-                  <a href="mailto:Email@example.com">Email@example.com</a>
+                  <a href="mailto:Email@example.com" className="font-Open-Sans">Email@Example.com</a>
                 </div>
               </div>
               <div className="flex items-center gap-2 sm:gap-4 whitespace-nowrap text-xs sm:text-sm">
-                <a href="#" className="hover:underline">Privacy Policy</a>
+                <a href="#" className="font-opensans hover:underline">Privacy Policy</a>
                 <span className="hidden sm:inline">/</span>
-                <a href="#" className="hover:underline">Terms of Use</a>
+                <a href="#" className="font-opensans hover:underline">Terms of Use</a>
                 <span className="hidden md:inline">/</span>
-                <a href="#" className="hover:underline">Sales and Refunds</a>
+                <a href="#" className="font-opensans hover:underline">Sales and Refunds</a>
               </div>
             </div>
           </div>
@@ -111,13 +149,10 @@ const SmartHeader: React.FC = () => {
       </div>
 
       {/* Main header */}
-      <header className={`bg-[white] flex justify-center items-center h-auto sm:h-[100px] transition-all duration-300 ${!topBarVisible && !atTop ? `mt-[-${TOPBAR_HEIGHT}px]` : ""}`}>
-        <div className="w-[90%] flex justify-between item-center">
-          {/* Logo - unchanged */}
-          {/* <div className="text-2xl sm:text-4xl font-Raleway font-bold text-[#81C408]">
-            Fruitables
-          </div> */}
-          <div className="text-2xl sm:text-4xl   font-bold text-[#81C408]" style={{ fontFamily: "'Raleway', 'Pecifico' , 'system-ui'" }}>
+      <header className={`bg-[#FFFFFF] flex justify-center items-center lg:h-[100px] sm:h-[100px] transition-all duration-300 ${!topBarVisible && !atTop ? `mt-[-${TOPBAR_HEIGHT}px]` : ""}`}>
+        <div className="max-w-[1320px] w-full mx-auto flex justify-between item-center">
+      
+          <div className="text-2xl sm:text-4xl font-bold text-[#81C408]" style={{ fontFamily: "'Raleway', 'Pecifico' , 'system-ui'" }}>
             Fruitables
           </div>
 
@@ -153,7 +188,7 @@ const SmartHeader: React.FC = () => {
             {/* CHANGED: Wrapped search icon in button and added click handler */}
             <button
               onClick={() => setSearchOpen(true)}
-              className="border border-[#FFB524] rounded-full p-2 text-2xl sm:text-4xl text-[#81C408] hover:bg-[#FFB524] cursor-pointer"
+              className="border border-[#FFB524] rounded-full p-3 text-3xl sm:text-4xl text-[#81C408] hover:bg-[#FFB524] cursor-pointer"
             >
               <FaSearch className="text-sm" />
             </button>

@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <div
       className="bg-white rounded-xl overflow-hidden transition-all duration-300 
   hover:shadow-[0_0_40px_rgba(64,64,64,0.7),0_0_20px_rgba(64,64,64,0.5)] 
-  w-full border border-[#FDC700]"
+  w-full max-w-[330px] h-[500px] border border-[#FDC700]"
     >
 
 
@@ -31,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <img
             src={image}
             alt={name}
-            className="w-full h-48 object-cover transition-transform duration-500 hover:scale-125"
+            className="w-full h-[230px] object-cover transition-transform duration-500 hover:scale-125"
           />
           <span className="absolute top-4 left-4 bg-[#FFB524] text-white text-xs px-4 py-2 rounded-xl">Fruits</span>
         </div>

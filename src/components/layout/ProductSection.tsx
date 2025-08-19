@@ -101,9 +101,9 @@ const ProductSection: React.FC = () => {
                 : products.filter((p) => p.category === selectedCategory);
 
                 return (
-                    <section className='max-w-7xl mx-auto px-4 mt-20'>
+                    <section className='bg-[#FFFFF] mx-auto px-4 mt-20'>
 
-                      <div  className='max-w-6xl mx-auto'>
+                      <div  className='max-w-full w-[1320px] mx-auto'>
 
                         <div className='flex md:flex-row justify-between mb-5'>
                             <h2 className='text-[30px] font-semibold text-[#45595B] mb-4'>
@@ -126,6 +126,7 @@ const ProductSection: React.FC = () => {
                                     </button>
                                 ))}
                             </div>
+                            
                         </div>
 
                         <div className="grid grid-cols-1 text-center sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6
@@ -142,8 +143,10 @@ const ProductSection: React.FC = () => {
                                 />
                             ))}
                         </div>
-                      </div>
+                        
 
+
+                      </div>
                     </section>
                 )
             }

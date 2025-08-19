@@ -17,8 +17,8 @@ const CaruselProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
   <div
-  className="bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_70px_rgba(128,128,128,0.6),0_0_30px_rgba(128,128,128,0.4)] transition-all
-  w-full sm-w-[300px] lg:w-[260px] border border-[#81C408] mt-8 "
+  className="bg-[#ffffff] rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(0,0,0,0.6),0_0_10px_rgba(0,0,0,0.1)] transition-all
+                 w-full sm-w-[300px] lg:w-[305px] lg:h-[455px] border border-[#81C408] mt-8 mb-4"
 >
 
       <div className="overflow-hidden">

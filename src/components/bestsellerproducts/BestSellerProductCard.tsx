@@ -19,8 +19,8 @@ const BestSellerProductCard: React.FC<ProductCardProps> = ({ product, onAddToCar
 
 
   return (
-    <div className='max-w-7xl mx-auto'>
-      <div className="max-w-6xl mx-auto flex bg-[#F4F6F8] rounded-xl ">
+    <div className=''>
+      <div className=" w-[416px] h-[220px] p-6 flex bg-[#F4F6F8] rounded-xl ">
 
       <div className="">
         <img

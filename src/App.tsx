@@ -21,26 +21,28 @@ function App() {
 
   return (
     <>
-    <div className='max-w-6xl mx-auto'>
 
       {/* <ShyrianCodingSchool />  */}
       {/* <SheriyanCodingLandingPage /> */}
       {/* <TopBar /> */}
       {/* <LandingPageHeader /> */}
-       <Navbar />
-      <HeroBanner /> 
-      <FeatureHighlights /> 
 
+
+       <Navbar />
+
+      <HeroBanner />
+
+      <FeatureHighlights /> 
       <ProductSection />
       <CardsGrid />
       <CaruselProductsDisplay />
       <PromoBanner />
 
       <BestsellerProductsSection />
+      
       <BestsellerProductTwo />
       <StatsSection />
       <OurTestimonial />
-          </div>
       <Footer /> 
 
 

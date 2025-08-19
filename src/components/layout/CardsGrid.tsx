@@ -34,14 +34,14 @@ const CardsGrid: React.FC = () => {
   ];
 
   return (
-    <div className="w-full  bg-[red] flex justify-center items-center p-6">
-      <div className="grid bg-[#FFFFFF] grid-cols-1 md:grid-cols-3 gap-14">
+    <div className="w-full  bg-[#ffffff] flex justify-center items-center p-26">
+      <div className=" max-w-full w-[1320] lg:h-[655px] mt-25  grid grid-cols-1 md:grid-cols-3 gap-10">
         {cards.map((card, index) => (
           <div
             key={index}
-            className="w-[330px] h-[460px] md:w-[300px] lg:w-[330px] rounded-xl border border-gray-200 shadow-md overflow-hidden flex flex-col bg-red"
+            className="w-[330px] h-[460px] md:w-[300px] lg:w-[416px] lg:h-[463px] rounded-xl border border-gray-200 shadow-md overflow-hidden flex flex-col bg-red"
           >
-            {/* Image Section */}
+            
             <div className="bg-transparent flex justify-center items-center p-4">
               <img
                 src={card.image}
@@ -50,12 +50,12 @@ const CardsGrid: React.FC = () => {
               />
             </div>
 
-            {/* Footer Section */}
+          
             <div
               className="relative h-[130px]"
               style={{ backgroundColor: card.footerColor }}
             >
-              {/* Badge */}
+              
               <div
                 className="absolute w-[250px] h-[120px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg px-6 py-6 text-center "
                 style={{ backgroundColor: card.badgeColor }}
@@ -71,7 +71,7 @@ const CardsGrid: React.FC = () => {
                 </p>
 
               </div>
-              {/* Spacer for Footer Height */}
+              
               <div className="h-16"></div>
             </div>
           </div>

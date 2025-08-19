@@ -120,9 +120,9 @@ const CaruselProductsDisplay: React.FC = () => {
   };
 
   return (
-    <section className='w-full  px-4  mt-15'>
+    <section className='w-full  px-4 '>
 
-      <div className=' w-full mx-auto'>
+      <div className='max-w-full w-[1320px] mx-auto h-[655px] py-10'>
 
 
       <div className='flex gap-3 justify-between items-center '>

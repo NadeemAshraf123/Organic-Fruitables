@@ -27,60 +27,58 @@ const BestsellerProductTwo: React.FC<BestsellerProductsSectionProps> = ({
   onAddToCart,
 }) => {
   return (
-    <section className="mx-auto max-w-7xl px-2">
+    <section className="w-full px-2">
 
-      <div className="mx-auto max-w-6xl  ">
-        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center">
+      <div className="mx-auto max-w-[1320px] w-full  ">
+
+        <div className="  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center">
           {products.map((product) => (
             <div
               key={product.id}
               className="bg-transparent rounded-lg flex flex-col items-center "
             >
-              {/* Image */}
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-[230px] h-[150px] object-cover rounded-md"
+                className="w-[306px] h-[214px] object-cover rounded-md"
               />
 
-              {/* Name */}
-              <h3 className="mt-4 text-md font-semibold text-[#747d88]">
+          
+              <h3 className="mt-4 text-[20px] font-semibold text-[#747d88]">
                 {product.name}
               </h3>
 
-              {/* Rating */}
               <div className="flex justify-center items-center mt-1">
                 {[...Array(5)].map((_, i) => (
                   <span
                     key={i}
                     className={
-                      i < product.rating ? "text-[#81C408] text-1xl" : "text-[#747D88] text-1xl"
+                      i < product.rating ? "text-[#81C408] text-[20px]" : "text-[#747D88] text-[20px]"
                     }
                   >
-                    <MdStar className=" w-4 h-4" />
+                    <MdStar className=" w-6 h-6" />
                     {/* ★ */}
                   </span>
                 ))}
               </div>
 
-              {/* Price */}
-              <p className="mt-1 text-md font-bold text-[#747D88]">
-                {product.price} <span className="text-lg text-[#747D88] font-bold">$</span>
+              <p className="mt-2 text-[20px] font-bold text-[#747D88]">
+                {product.price} <span className="text-[20px] text-[#747D88] font-Raleway font-bold">$</span>
               </p>
 
-              {/* Button */}
               <button
                 onClick={() => onAddToCart?.(product)}
-                className="mt-1 flex items-center gap-1 border border-yellow-400 text-[#81C408] 
-                font-xm py- px-3 rounded-full cursor-pointer hover:bg-[#FFB524] hover:text-[#FFFFFF]"
+                className="mt-2 flex items-center gap-1 border border-yellow-400 text-[#81C408] 
+                font-xm py-1 px-4 rounded-full cursor-pointer hover:bg-[#FFB524] hover:text-[#FFFFFF]"
               >
-                {/* <div className="flex"> */}
-                <span className="w-3 h-3 text-[#81C408] mb-3 mr-2">🛒</span> Add to cart
+                <span className="w-3 h-3 text-gray-500 mb-3 mr-2">🛒</span> Add to cart
               </button>
-              {/* </div> */}
+
             </div>
           ))}
         </div>
+
+
       </div>
     </section>
   );
