@@ -32,11 +32,12 @@ function App() {
 
       <HeroBanner />
 
-      <FeatureHighlights /> 
+     <FeatureHighlights /> 
       <ProductSection />
-      <CardsGrid />
+
+       <CardsGrid />
       <CaruselProductsDisplay />
-      <PromoBanner />
+      <PromoBanner /> 
 
       <BestsellerProductsSection />
       

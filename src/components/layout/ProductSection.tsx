@@ -89,7 +89,7 @@ const products: Product[] = [
   },
 ];
 
-const categories = ['All Products', 'Fruits' , 'Vegetables', 'Bread', 'Meat'];
+const categories = ['All Products','Vegetables' , 'Fruits' , 'Bread', 'Meat'];
 
 
 const ProductSection: React.FC = () => {
@@ -105,21 +105,21 @@ const ProductSection: React.FC = () => {
 
                       <div  className='max-w-full w-[1320px] mx-auto'>
 
-                        <div className='flex md:flex-row justify-between mb-5'>
-                            <h2 className='text-[30px] font-semibold text-[#45595B] mb-4'>
+                        <div className='flex flex-col md:flex-row justify-between mb-5'>
+                            <h2 className='text-[27px] font-semibold text-[#45595B] mb-10'>
                     
                                   Our Organic Products
                             </h2>
 
-                            <div className='flex gap-16 flex-wrap'>
+                            <div className='flex gap-6 flex-wrap'>
                                 {categories.map((cat) => (
                                     <button 
                                       key={cat}
                                       onClick={() => setSelectedCategory(cat)}
-                                      className={`px-4 py-2 h-fit text-left rounded-full border ${
+                                      className={`px-8 py-2 h-fit text-left rounded-full border ${
                                         selectedCategory === cat
                                         ? 'bg-[#FDC700] text-white'
-                                        : 'bg-transparent text-[#456D84] border-0'
+                                        : 'bg-gray-100 text-[#456D84] border-0'
                                       } transition-colors duration-500`}
                                     >
                                         {cat}

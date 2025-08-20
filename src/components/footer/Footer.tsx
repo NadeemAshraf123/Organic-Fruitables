@@ -6,7 +6,9 @@ import { FaCcVisa, FaCcMastercard, FaCcPaypal } from "react-icons/fa";
 
 const Footer: React.FC = () => {
     return (
-        <footer className="bg-[#45595B] text-white pt-16 pb-10 px-6 md:px-12 lg:px-20">
+        <footer className="bg-[#45595B] w-full text-white pt-16 pb-10 px-6 md:px-12 lg:px-20">
+
+            <div className='max-w-[1320px] w-full mx-auto'>
 
             <div className="flex flex-col lg:flex-row justify-between items-left gap-6 mb-12">
                 <div className="text-left lg:text-left">
@@ -22,7 +24,7 @@ const Footer: React.FC = () => {
                     />
                     <button
                         type="submit"
-                        className="absolute top-7.5 right-0 transform -translate-y-1/2 bg-[#81C408] text-white font-semibold px-6 py-5 rounded-full hover:bg-[#FFB524] transition text-sm"
+                        className="absolute top-7 right-0 transform -translate-y-1/2 bg-[#81C408] text-white font-semibold px-10 md:px-6  py-4.5 md:py-4.5 rounded-full hover:bg-[#FFB524] transition text-sm"
                     >
                         Submit Now
                     </button>
@@ -132,7 +134,7 @@ const Footer: React.FC = () => {
             </div>
 
 
-
+                </div>
         </footer>
     );
 };

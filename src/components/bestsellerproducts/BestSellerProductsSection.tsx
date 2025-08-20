@@ -69,7 +69,7 @@ const BestsellerProductsSection: React.FC<BestsellerProductsSectionProps> = ({
 
     <section className="py-16 bg-[#FFFFFF]">
       <div className="max-w-[1320px] w-full mx-auto">
-      <h2 className="text-center text-[56px] font-Sans md:text-[43px] font-bold  text-[#45595B]">
+      <h2 className="text-center text-[33px] font-Sans md:text-[43px] font-bold  text-[#45595B]">
         Bestseller Products
       </h2>
       <p className="mx-auto mt-4 text-[16px] text-center text-gray-500">

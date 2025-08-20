@@ -122,15 +122,15 @@ const CaruselProductsDisplay: React.FC = () => {
   return (
     <section className='w-full  px-4 '>
 
-      <div className='max-w-full w-[1320px] mx-auto h-[655px] py-10'>
+      <div className='max-w-full w-[1320px] mx-auto h-[655px] '>
 
 
       <div className='flex gap-3 justify-between items-center '>
-        <h2 className='text-4xl font-semibold text-[#45595B]'>
-          Fresh Organic Vegetables
+        <h2 className=' text-[27px] md:text-4xl font-lightbold text-[#45595B]'>
+          Fresh Organic <span className='flex md:flex-0'> Vegetables </span> 
         </h2>
 
-        <div className='flex gap-3 mt-5'>
+        <div className='flex gap-3 mt-20'>
           <button
             onClick={scrollLeft}
             className='bg-transparent text-[15px] font-[bold] border border-[#FFB524] hover:bg-[#FFB524] hover:text-[#FFFFFF] text-[#81C408] px-4  rounded-full transition'

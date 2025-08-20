@@ -61,6 +61,56 @@ const TestimonialCarousel = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+
+
+
+
+
+
+
+
+  const navigate = (direction: 'prev' | 'next') => {
+  if (isTransitioning) return;
+  setIsTransitioning(true);
+
+  const step = isMobile ? 1 : 2;
+  setCurrentIndex(prev => {
+    if (direction === 'next') {
+      return (prev + step) % testimonials.length;
+    } else {
+      return (prev - step + testimonials.length) % testimonials.length;
+    }
+  });
+
+  setTimeout(() => setIsTransitioning(false), 500);
+};
+
+// const navigate = (direction: 'prev' | 'next') => {
+//   if (isTransitioning) return;
+//   setIsTransitioning(true);
+
+//   const step = isMobile ? 1 : 2;
+//   setCurrentIndex(prev => {
+//     if (direction === 'next') {
+//       return (prev + step) % testimonials.length;
+//     } else {
+//       return (prev - step + testimonials.length) % testimonials.length;
+//     }
+//   });
+
+//   setTimeout(() => setIsTransitioning(false), 500); // match transition duration
+// };
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      navigate("next");
+    }, 500)
+
+    return () => clearInterval(interval);
+  } , [isMobile]);
 
   // Detect screen size changes
   useEffect(() => {
@@ -86,20 +136,11 @@ const TestimonialCarousel = () => {
     ];
   };
 
-  // Navigation handler
-  const navigate = (direction: 'prev' | 'next') => {
-    const step = isMobile ? 1 : 2;
-    setCurrentIndex(prev => {
-      if (direction === 'next') {
-        return (prev + step) % testimonials.length;
-      } else {
-        return (prev - step + testimonials.length) % testimonials.length;
-      }
-    });
-  };
 
   return (
-    <section className=" w-full py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-20">
+    <section className=" w-full py-12 px-4 mb-20">
+      
+      <div  className='max-w-[1320px] mx-auto w-full'>
       {/* Header */}
       <div className="mb-10">
         <div className="text-center">
@@ -161,6 +202,9 @@ const TestimonialCarousel = () => {
             </div>
           </div>
         ))}
+      </div>
+
+
       </div>
     </section>
   );
