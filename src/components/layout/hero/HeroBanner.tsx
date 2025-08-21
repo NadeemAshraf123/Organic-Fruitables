@@ -27,21 +27,24 @@ const HeroBanner: React.FC = () => {
         setCurrentIndex((prev) => (prev + 1) % images.length);
     };
 
+    
     return (
         <section
             style={{ backgroundImage: `url(${herobackroundImg})` }}
             className="bg-cover bg-center min-h-[533px]"
         >
-            <div className="w-full p-6 py-40  md:max-w-[1320px] md:w-full mx-auto md:mt-40 md:py-16">
+            <div className="w-full p-6 py-0 mx-auto  md:max-w-[1320px] md:w-full md:mx-auto  md:mt-40 md:py-16">
+
+
                 <div className="flex flex-col lg:flex-row  justify-between gap-8 lg:gap-16 ">
                     
                     {/* Left Side - Text Content */}
-                    <div className="flex-1 text-left w-full">
+                    <div className="flex-1 text-left w-full mx-auto mt-20">
                         <h1 className="text-[22px] md:text-[24px] lg:text-[24px] text-[#FFB524] mb-4 font-medium">
                             100% Organic Foods
                         </h1>
-                        <h2 className="text-[36px] font-bold font-sans-serif md:text-[60px] lg:text-[60px] text-[#81C408] mb-8 leading-tight">
-                            Organic Veggies &  <span className="block font-bold text-[37px] md:text-[64px]" style={{fontFamily: "inherit", fontWeight:"bolder"}}>Fruits Foods </span>
+                        <h2 className="text-[36px] font-bold lg:font-lightbold font-sans-serif md:text-[44px] md:mx-auto lg:text-[63px] text-[#81C408] mb-8 leading-tight">
+                            Organic Veggies &  <span className=" block  font-bold text-[37px] md:text-[44px] lg:text-[58px] md:inline" style={{fontFamily: "inherit", fontWeight:"bolder"}}>Fruits Foods </span>
                         </h2>
 
                         <form className="relative w-[245px] md:w-[552px]   lg:w-[552px] max-w-full" onSubmit={(e) => e.preventDefault()}>
@@ -62,13 +65,13 @@ const HeroBanner: React.FC = () => {
 
 
                     {/* Right Side - Image Carousel */}
-                    <div className="flex-1 relative md:max-w-lg md:ml-40 mt-20 w-full mx-auto">
+                    <div className="flex-1 relative md:max-w-[696px] lg:max-w-[512px] md:mx-auto mt-20 w-full mx-auto">
                         <div className="relative overflow-hidden rounded-2xl">
                             <img
                                 src={images[currentIndex]?.image}
                                 style={{background:'#ffb524'}}
                                 alt="Organic food selection"
-                                className="w-full md:h-[400px] md:h-[341px] object-cover transition-opacity duration-500"
+                                className="w-full md:h-[460px] lg:h-[309px] object-cover transition-opacity duration-500"
                             />
                             
                         
@@ -98,6 +101,9 @@ const HeroBanner: React.FC = () => {
                     </div>
 
                 </div>
+
+
+
             </div>
         </section>
     );

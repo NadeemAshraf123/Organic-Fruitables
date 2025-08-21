@@ -42,7 +42,7 @@ function App() {
       <BestsellerProductsSection />
       
       <BestsellerProductTwo />
-      <StatsSection />
+      <StatsSection /> 
       <OurTestimonial />
       <Footer /> 
 

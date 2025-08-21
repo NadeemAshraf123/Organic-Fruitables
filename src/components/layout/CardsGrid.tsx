@@ -34,19 +34,19 @@ const CardsGrid: React.FC = () => {
   ];
 
   return (
-    <div className="w-full  bg-[#ffffff] flex justify-center items-center md:p-26">
-      <div className=" md:max-w-full md:w-[1320] lg:h-[655px] mt-10  grid grid-cols-1 md:grid-cols-3 gap-10">
+    <div className="w-full  bg-[#ffffff] flex justify-center items-center mt-10 lg:mt-20 lg:mb-15 mb-20">
+      <div className=" mt-5 mx-auto md:max-w-full  md:w-[1320] md:gap-20 lg:gap-10 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {cards.map((card, index) => (
           <div
             key={index}
-            className="w-[330px] h-[460px] md:w-[300px] lg:w-[416px] lg:h-[463px] rounded-xl border border-gray-100 shadow-md overflow-hidden flex flex-col bg-red"
+            className="mt-5 w-[270px]  sm:w-[330px] sm:h-[460px] lg:h-[410px] lg:w-[414px] md:w-[416px]  rounded-xl border border-gray-100 shadow-md overflow-hidden flex flex-col"
           >
             
-            <div className="bg-transparent flex justify-center items-center p-4">
+            <div className="bg-transparent flex justify-center items-center">
               <img
                 src={card.image}
                 alt={card.title}
-                className="object-contain w-full h-[300px]"
+                className="object-contain w-full sm:h-[334px] lg:h-[283px]"
               />
             </div>
 
@@ -72,7 +72,7 @@ const CardsGrid: React.FC = () => {
 
               </div>
               
-              <div className="h-16"></div>
+              <div className="h-16 lg:w-[416px] lg:h-[130px]"></div>
             </div>
           </div>
         ))}

@@ -29,9 +29,9 @@ const BestsellerProductTwo: React.FC<BestsellerProductsSectionProps> = ({
   return (
     <section className="w-full px-2">
 
-      <div className="mx-auto max-w-[1320px] w-full  ">
+      <div className="mx-auto max-w-[1320px] w-full">
 
-        <div className="  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center">
+        <div className="  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap- lg:gap- place-items-center">
           {products.map((product) => (
             <div
               key={product.id}
@@ -40,15 +40,15 @@ const BestsellerProductTwo: React.FC<BestsellerProductsSectionProps> = ({
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-[306px] h-[214px] object-cover rounded-md"
+                className="w-[306px] h-[214px] md:w-[336px] md:h-[235px] lg:w-[306px] lg:h-[214px] object-cover rounded-md"
               />
 
           
-              <h3 className="mt-4 text-[20px] font-semibold text-[#747d88]">
+              <h3 className="mt-4 md:mt-5 text-[20px] font-sans text-[#747d88]">
                 {product.name}
               </h3>
 
-              <div className="flex justify-center items-center mt-1">
+              <div className="flex justify-center items-center mt-1 md:mt-2">
                 {[...Array(5)].map((_, i) => (
                   <span
                     key={i}
@@ -63,7 +63,7 @@ const BestsellerProductTwo: React.FC<BestsellerProductsSectionProps> = ({
               </div>
 
               <p className="mt-2 text-[20px] font-bold text-[#747D88]">
-                {product.price} <span className="text-[20px] text-[#747D88] font-Raleway font-bold">$</span>
+                {product.price} <span className="text-[20px] md:text-[24px] text-[#747D88] font-mono font-bold">$</span>
               </p>
 
               <button
@@ -71,7 +71,7 @@ const BestsellerProductTwo: React.FC<BestsellerProductsSectionProps> = ({
                 className="mt-2 flex items-center gap-1 border border-yellow-400 text-[#81C408] 
                 font-xm py-1 px-4 rounded-full cursor-pointer hover:bg-[#FFB524] hover:text-[#FFFFFF]"
               >
-                <span className="w-3 h-3 text-gray-500 mb-3 mr-2">🛒</span> Add to cart
+                <span className="w-3 h-3 text-gray-500 mb-3 font-serif mr-2">🛒</span> Add to cart
               </button>
 
             </div>

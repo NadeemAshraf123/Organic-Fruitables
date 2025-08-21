@@ -16,84 +16,58 @@ const SmartHeader: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobilePagesOpen, setMobilePagesOpen] = useState(false);
   const [pagesOpen, setPagesOpen] = useState(false);
-  // NEW: State for search functionality
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const TOPBAR_HEIGHT = 56;
+  const TOPBAR_HEIGHT = 56; // Height of the top bar in pixels
   const pagesRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const currentScrollPos = window.pageYOffset;
-  //     setAtTop(currentScrollPos === 0);
-
-  //     if (currentScrollPos === 0) {
-  //       setTopBarVisible(true);
-  //       return;
-  //     }
-
-  //     const isScrollingUp = currentScrollPos < prevScrollPos;
-
-  //     if (currentScrollPos > 100) {
-  //       setTopBarVisible(isScrollingUp);
-  //     }
-
-  //     setPrevScrollPos(currentScrollPos);
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll, { passive: true });
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, [prevScrollPos]);
-
+  // Scroll handling for top bar only
   useEffect(() => {
-    const handleClickoutside = (event: MouseEvent) => {
-      if (
-        pagesRef.current &&
-        !pagesRef.current.contains(event.target as Node)
-      ) {
-        setPagesOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickoutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickoutside);
-    };
-  });
-  useEffect(() => {
-    let hideTimeout: NodeJS.Timeout;
-
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
       setAtTop(currentScrollPos === 0);
 
+      // Always show topbar when at top
       if (currentScrollPos === 0) {
         setTopBarVisible(true);
+        setPrevScrollPos(currentScrollPos);
         return;
       }
 
+      // Determine scroll direction
       const isScrollingUp = currentScrollPos < prevScrollPos;
 
-      if (currentScrollPos > 100) {
-        if (isScrollingUp) {
-          setTopBarVisible(true);
-          clearTimeout(hideTimeout);
-        } else {
-          hideTimeout = setTimeout(() => {
-            setTopBarVisible(false);
-          }, 100);
-        }
+      // Show/hide topbar based on scroll direction with threshold
+      if (Math.abs(currentScrollPos - prevScrollPos) > 10) {
+        setTopBarVisible(isScrollingUp);
       }
 
       setPrevScrollPos(currentScrollPos);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      clearTimeout(hideTimeout);
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollPos]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (pagesRef.current && !pagesRef.current.contains(event.target as Node)) {
+        setPagesOpen(false);
+      }
+      
+      if (searchRef.current && !searchRef.current.contains(event.target as Node) && searchOpen) {
+        setSearchOpen(false);
+      }
+    };
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [searchOpen]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,38 +76,79 @@ const SmartHeader: React.FC = () => {
   };
 
   return (
-    <div
-      className={`fixed top-0 left-0 right-0 z-50 bg-[#FFFFFF] transition-all duration-100 ${
-        !topBarVisible && !atTop ? "shadow-md" : ""
-      } h-fit`}
-    >
+    <div className="fixed top-0 left-0 right-0 z-50">
+      {/* Top Bar - This is the part that hides/shows on scroll */}
+      <div
+        className={`transition-all duration-300 ${
+          topBarVisible || atTop ? "translate-y-0" : "-translate-y-full"
+        } hidden sm:block`}
+        style={{ height: `${TOPBAR_HEIGHT}px` }}
+      >
+        <div className="h-full bg-[#FFFFFF]">
+          <div className="md:max-w-[1290px] md:w-full mx-auto h-full">
+            <div className="bg-[#81C408] rounded-tl-[99px] rounded-br-[99px] rounded-tr-[36px] rounded-bl-[36px] py-4 px-6 h-full">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-white text-xs sm:text-sm font-normal h-full">
+                <div className="flex flex-wrap items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <FaMapMarkerAlt className="w-4 h-4 text-[#FFB524]" />
+                    <span className="font-opensans">123 Street, New York</span>
+                  </div>
+                  <div className="hidden sm:flex items-center gap-2">
+                    <FaEnvelope className="w-4 h-4 text-[#FFB524]" />
+                    <a href="mailto:Email@example.com" className="font-Open-Sans">
+                      Email@Example.com
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 sm:gap-4 whitespace-nowrap text-xs sm:text-sm">
+                  <a href="#" className="font-opensans hover:underline">
+                    Privacy Policy
+                  </a>
+                  <span className="hidden sm:inline">/</span>
+                  <a href="#" className="font-opensans hover:underline">
+                    Terms of Use
+                  </a>
+                  <span className="hidden md:inline">/</span>
+                  <a href="#" className="font-opensans hover:underline">
+                    Sales and Refunds
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Search Overlay */}
       {searchOpen && (
-        <div className="fixed inset-0 bg-[rgba(237,231,231,0.89)] z-50 p-4">
-          <p className="text-xl text-gray-900">Search by Keywords</p>
-
-          <button
-            onClick={() => setSearchOpen(false)}
-            className="absolute top-4 right-4 text-gray-700 hover:text-gray-700"
-          >
-            <FaTimes className="text-3xl" />
-          </button>
-
-          <div className="flex items-center justify-center h-full">
-            <form
-              onSubmit={handleSearchSubmit}
-              className="w-full max-w-6xl flex gap-2"
-            >
+        <div 
+          ref={searchRef}
+          className="fixed inset-0 bg-[rgba(237,231,231,0.89)] z-50 p-4 flex items-center justify-center"
+        >
+          <div className="bg-white rounded-xl p-6 max-w-2xl w-full shadow-lg">
+            <div className="flex justify-between items-center mb-4">
+              <p className="text-xl text-gray-900 font-semibold">Search by Keywords</p>
+              <button
+                onClick={() => setSearchOpen(false)}
+                className="text-gray-700 hover:text-gray-900"
+                aria-label="Close search"
+              >
+                <FaTimes className="text-2xl" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleSearchSubmit} className="flex gap-2">
               <input
                 type="text"
-                placeholder="keyword"
-                className="w-full bg-[#FFFFFF] rounded-xl p-4 border-b-2 border-[#81C408] focus:outline-none text-xl"
+                placeholder="Enter keyword..."
+                className="w-full bg-[#FFFFFF] rounded-xl p-4 border-2 border-[#81C408] focus:outline-none text-lg"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoFocus
               />
               <button
                 type="submit"
-                className="mt-1 bg-gray-500 text-white px-6 py-3 rounded-xl hover:bg-[#6da80a]"
+                className="bg-[#81C408] text-white px-6 py-4 rounded-xl hover:bg-[#6da80a] transition-colors"
               >
                 Search
               </button>
@@ -141,223 +156,203 @@ const SmartHeader: React.FC = () => {
           </div>
         </div>
       )}
-      {/* =========================================== */}
-
-      {/* Existing top bar - unchanged */}
+      
+      {/* Main Header - This moves up/down with the top bar */}
       <div
-        className={`transition-all sticky flex items-center justify-center duration-1000 ${
-          topBarVisible || atTop ? "translate-y-0" : "-translate-y-full hidden"
-        } hidden sm:flex`}
-      >
-        <div className="md:max-w-[1290px] md:w-full mx-auto ">
-          <div className="bg-[#81C408] rounded-tl-[99px] rounded-br-[99px] rounded-tr-[36px] rounded-bl-[36px] py-4 px-6">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-white text-xs sm:text-sm font-normal">
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <FaMapMarkerAlt className="w-4 h-4 text-[#FFB524]" />
-                  <span className="font-opensans">123 Street, New York</span>
-                </div>
-                <div className="hidden sm:flex items-center gap-2">
-                  <FaEnvelope className="w-4 h-4 text-[#FFB524]" />
-                  <a href="mailto:Email@example.com" className="font-Open-Sans">
-                    Email@Example.com
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 sm:gap-4 whitespace-nowrap text-xs sm:text-sm">
-                <a href="#" className="font-opensans hover:underline">
-                  Privacy Policy
-                </a>
-                <span className="hidden sm:inline">/</span>
-                <a href="#" className="font-opensans hover:underline">
-                  Terms of Use
-                </a>
-                <span className="hidden md:inline">/</span>
-                <a href="#" className="font-opensans hover:underline">
-                  Sales and Refunds
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main header */}
-      <header
-        className={`bg-[#FFFFFF] flex justify-center items-center lg:h-[100px] sm:h-[100px] transition-all duration-300 ${
-          !topBarVisible && !atTop ? `mt-[-${TOPBAR_HEIGHT}px]` : ""
+        className={`transition-all duration-300 bg-[#FFFFFF] ${
+          topBarVisible || atTop ? "mt-0" : "mt-[-56px]"
         }`}
       >
-        <div className=" p-5 max-w-[1320px] w-full mx-auto flex justify-between item-center">
-          <div
-            className="text-[27px]  md:text-[40px] font-bold text-[#81C408]"
-            style={{ fontFamily: "'Raleway', 'Pecifico' , 'system-ui'" }}
-          >
-            Fruitables
-          </div>
+        <header className={`flex justify-center items-center lg:h-[100px] h-[80px] ${!atTop ? "shadow-md" : ""}`}>
+          <div className="p-5 max-w-[1320px] w-full mx-auto flex justify-between items-center">
+            <div
+              className="text-[27px] md:text-[40px] font-bold text-[#81C408]"
+              style={{ fontFamily: "'Raleway', 'Pecifico', 'system-ui'" }}
+            >
+              Fruitables
+            </div>
 
-          {/* Desktop Navigation - unchanged */}
-          <nav className="hidden md:flex space-x-6 text-gray-700 items-center text-sm sm:text-base">
-            <a href="#" className="hover:text-[#81C408]">
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-6 text-gray-700 items-center text-sm sm:text-base">
+              <a href="#" className="hover:text-[#81C408]">
+                Home
+              </a>
+              <a href="#" className="hover:text-[#81C408]">
+                Shop
+              </a>
+              <a href="#" className="hover:text-[#81C408]">
+                Shop Detail
+              </a>
+              <div className="relative" ref={pagesRef}>
+                <button
+                  onClick={() => setPagesOpen(!pagesOpen)}
+                  className="flex items-center space-x-1 text-gray-700 hover:text-[#81C408] cursor-pointer"
+                  aria-expanded={pagesOpen}
+                >
+                  <span>Pages</span>
+                  <MdKeyboardArrowDown
+                    className={`transition-transform duration-200 ${
+                      pagesOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {pagesOpen && (
+                  <div className="absolute top-full left-0 mt-2 w-44 bg-white shadow-lg rounded-md z-10 border border-gray-200">
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
+                    >
+                      Cart
+                    </a>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
+                    >
+                      Checkout
+                    </a>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
+                    >
+                      Testimonial
+                    </a>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
+                    >
+                      404 Page
+                    </a>
+                  </div>
+                )}
+              </div>
+              <a href="#" className="hover:text-[#81C408]">
+                Contact
+              </a>
+            </nav>
+
+            {/* Icons section */}
+            <div className="hidden md:flex items-center space-x-4 text-gray-700">
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="border border-[#FFB524] rounded-full p-3 text-[#81C408] hover:bg-[#FFB524] cursor-pointer transition-colors"
+                aria-label="Search"
+              >
+                <FaSearch className="text-sm" />
+              </button>
+              <div className="relative">
+                <button 
+                  className="hover:text-green-600 text-[#81C408] text-2xl"
+                  aria-label="Shopping cart"
+                >
+                  <FaShoppingCart className="text-2xl" />
+                </button>
+                <span className="absolute -top-2 -right-3 bg-[#FFB524] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  3
+                </span>
+              </div>
+              <button 
+                className="hover:text-green-600 text-[#81C408] text-2xl"
+                aria-label="User account"
+              >
+                <FaUser className="text-2xl" />
+              </button>
+            </div>
+
+            {/* Mobile Hamburger Button */}
+            <div className="md:hidden flex items-center gap-3">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-md text-gray-700 hover:bg-gray-100"
+                aria-label="Toggle menu"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white shadow-lg p-4 space-y-3 border-t border-gray-200">
+            <a href="#" className="block py-2 hover:text-[#81C408]">
               Home
             </a>
-            <a href="#" className="hover:text-[#81C408]">
+            <a href="#" className="block py-2 hover:text-[#81C408]">
               Shop
             </a>
-            <a href="#" className="hover:text-[#81C408]">
+            <a href="#" className="block py-2 hover:text-[#81C408]">
               Shop Detail
             </a>
-            <div className="relative" ref={pagesRef}>
+            <div>
               <button
-                onClick={() => setPagesOpen(!pagesOpen)}
-                className="flex items-center space-x-1 text-gray-700 hover:text-[#81C408] cursor-pointer"
+                onClick={() => setMobilePagesOpen(!mobilePagesOpen)}
+                className="w-full flex justify-between items-center py-2 hover:text-[#81C408]"
+                aria-expanded={mobilePagesOpen}
               >
-                <span>Pages</span>
+                Pages
                 <MdKeyboardArrowDown
                   className={`transition-transform duration-200 ${
-                    pagesOpen ? "rotate-180" : ""
+                    mobilePagesOpen ? "rotate-180" : ""
                   }`}
                 />
               </button>
-              {pagesOpen && (
-                <div className="absolute top-full left-0 mt-2 w-44 bg-[#F3F4F6] shadow-lg rounded-md z-10">
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:text-[#81C408] hover:bg-[#FFB524]"
-                  >
+              {mobilePagesOpen && (
+                <div className="pl-4 mt-2 space-y-2">
+                  <a href="#" className="block py-2 hover:text-[#81C408]">
                     Cart
                   </a>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:text-[#81C408] hover:bg-[#FFB524]"
-                  >
+                  <a href="#" className="block py-2 hover:text-[#81C408]">
                     Checkout
                   </a>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:text-[#81C408] hover:bg-[#FFB524]"
-                  >
+                  <a href="#" className="block py-2 hover:text-[#81C408]">
                     Testimonial
                   </a>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:text-[#81C408] hover:bg-[#FFB524]"
-                  >
+                  <a href="#" className="block py-2 hover:text-[#81C408]">
                     404 Page
                   </a>
                 </div>
               )}
             </div>
-            <a href="#" className="hover:text-[#81C408]">
+            <a href="#" className="block py-2 hover:text-[#81C408]">
               Contact
             </a>
-          </nav>
 
-          {/* Icons section - MODIFIED search icon */}
-          <div className="hidden md:flex items-center space-x-6 text-gray-700">
-            {/* CHANGED: Wrapped search icon in button and added click handler */}
-            <button
-              onClick={() => setSearchOpen(true)}
-              className="border border-[#FFB524] rounded-full p-3 text-3xl sm:text-4xl text-[#81C408] hover:bg-[#FFB524] cursor-pointer"
-            >
-              <FaSearch className="text-sm" />
-            </button>
-            <div className="relative">
-              <FaShoppingCart className="hover:text-green-600 text-[#81C408] text-2xl sm:text-[34px] cursor-pointer" />
-              <span className="absolute -top-2 -right-3 bg-[#FFB524] hover:bg-green-600 text-white text-xs rounded-full px-1 cursor-pointer">
-                3
-              </span>
-            </div>
-            <FaUser className="hover:text-green-600 text-[#81C408] text-2xl sm:text-[34px] cursor-pointer" />
-          </div>
-
-          {/* Mobile Hamburger Button - unchanged */}
-          <div className="md:hidden flex items-center gap-3">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md text-gray-700 hover:bg-gray-100"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            {/* Mobile Icons Row */}
+            <div className="flex items-center justify-around pt-4 border-t border-gray-200 mt-4">
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="border border-[#FFB524] rounded-full p-2 text-[#81C408] hover:bg-[#FFB524]"
+                aria-label="Search"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Menu - unchanged */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg p-4 space-y-3">
-          <a href="#" className="block hover:text-[#81C408]">
-            Home
-          </a>
-          <a href="#" className="block hover:text-[#81C408]">
-            Shop
-          </a>
-          <a href="#" className="block hover:text-[#81C408]">
-            Shop Detail
-          </a>
-          <div>
-            <button
-              onClick={() => setMobilePagesOpen(!mobilePagesOpen)}
-              className="w-full flex justify-between items-center hover:text-[#81C408]"
-            >
-              Pages
-              <MdKeyboardArrowDown
-                className={`transition-transform duration-200 ${
-                  mobilePagesOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {mobilePagesOpen && (
-              <div className="pl-4 mt-2 bg-amber-500 space-y-2">
-                <a href="#" className="block hover:text-[#81C408]">
-                  Cart
-                </a>
-                <a href="#" className="block hover:text-[#81C408]">
-                  Checkout
-                </a>
-                <a href="#" className="block hover:text-[#81C408]">
-                  Testimonial
-                </a>
-                <a href="#" className="block hover:text-[#81C408]">
-                  404 Page
-                </a>
+                <FaSearch />
+              </button>
+              <div className="relative">
+                <button className="text-[#81C408]" aria-label="Shopping cart">
+                  <FaShoppingCart className="text-xl" />
+                </button>
+                <span className="absolute -top-2 -right-3 bg-[#FFB524] text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  3
+                </span>
               </div>
-            )}
-          </div>
-          <a href="#" className="block hover:text-[#81C408]">
-            Contact
-          </a>
-
-          {/* Mobile Icons Row - Added at the bottom of mobile menu */}
-          <div className="flex items-center justify-around pt-4 border-t border-gray-200 mt-4">
-            <button
-              onClick={() => setSearchOpen(true)}
-              className="border border-[#FFB524] rounded-full p-2 text-[#81C408] hover:bg-[#FFB524]"
-            >
-              <FaSearch />
-            </button>
-            <div className="relative">
-              <FaShoppingCart className="text-[#81C408] text-xl" />
-              <span className="absolute -top-2 -right-3 bg-[#FFB524] text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                3
-              </span>
+              <button className="text-[#81C408]" aria-label="User account">
+                <FaUser className="text-xl" />
+              </button>
             </div>
-            <FaUser className="text-[#81C408] text-xl" />
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

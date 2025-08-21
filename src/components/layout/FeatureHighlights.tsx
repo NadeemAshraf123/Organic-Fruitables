@@ -40,7 +40,7 @@ const FeatureHighlights: React.FC = () => {
                         key={index}
                         className= 'bg-[#F4F6F8] rounded-xl shadow-lg p-8 flex flex-col items-center text-center min-h-[280px] relative'
                         >
-                             <div className='bg-yellow-400 w-[50px] h-[50px] rounded-md absolute top-[100px] left-[50%] -translate-x-[50%] rotate-[45deg] z-0'>lpc</div>
+                             <div className='bg-yellow-400 w-[50px] h-[50px] absolute top-[97px] left-[50%] -translate-x-[50%] rotate-[45deg] z-0'>lpc</div>
                          <div className='bg-yellow-400 rounded-full w-27 h-27 flex items-center justify-center mb-6 z-10 relative '>
                             {feature.icon}
                             </div>   

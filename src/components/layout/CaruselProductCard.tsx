@@ -32,12 +32,12 @@ const CaruselProductCard: React.FC<ProductCardProps> = ({
         </div>
       </div>
 
-      <div className="p-4 space-y-2">
-        <h3 className="text-2xl font-lighterbold text-gray-800 ">{name}</h3>
-        <p className="text-sm text-gray-600 h-[80px]">{description}</p>
+      <div className="p-4  space-y-2">
+        <h3 className="text-2xl text-center  font-lighterbold text-gray-800 ">{name}</h3>
+        <p className="text-sm text-center text-gray-600 h-[80px]">{description}</p>
         <div className=" flex flex-col items-start mt-4">
-          <span className="text-md font-semibold text-black mt-4">{price}</span>
-          <button className="text-[#81C408] px-6 py-2 rounded-full hover:bg-[#ffb524] transition-colors duration-200 border border-[#ffb524]">
+          <span className="text-lg mx-auto  font-semibold text-black mt-5">{price}</span>
+          <button className="text-[#81C408] mx-auto mt-3  px-6 py-2 rounded-full hover:bg-[#ffb524] transition-colors duration-200 border border-[#ffb524]">
             Add to cart
           </button>
         </div>
