@@ -1,0 +1,277 @@
+.formContainer {
+  max-width: 1320px;
+  width: 50%;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #E0ECFF;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.categorypageheading {
+    text-align: center;
+    color: rgb(11, 127, 236);
+    color: #0056B3;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.errorText {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: red;
+}
+
+.button {
+  padding: 0.6rem 1.2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.formContainer {
+  padding: 1rem;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+  padding-right: 0.5rem;
+}
+.input:focus {
+  outline: none;
+  border-color: #66afe9; 
+  box-shadow: 0 0 4px rgba(102, 175, 233, 0.6); 
+}
+
+
+.ratingContainer {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.star {
+  font-size: 35px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star.filled {
+  color: gold;
+}
+
+.star:hover {
+  color: gold;
+}
+
+
+
+
+/*================= Product Table Display ============ */
+
+/* searchfeilds  */
+
+.searchbars {
+  display: flex;
+  justify-content: space-evenly;
+}
+.ProductPageSearchInputfields {
+    margin-right: 10px;
+}
+
+.ProductPageSearchInputfields{
+   border-radius: 6px;
+  padding: 4px;
+
+}
+/* .ProductPageSearchInputfields::placeholder{
+  color: #0056b3;
+} */
+
+.ProductPageSearchInputfields:focus{
+
+  /* border-color: #0b7fdf;
+  outline: none;
+  color: #66afe9; */
+
+}
+
+
+.resetbutton{
+  margin-left: 25px;
+  padding: 5px 10px ;
+  background-color: #007bff;
+  color:white ;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 4px;
+
+
+}
+
+
+.Allbuttonsgeneralstyling {
+  cursor: pointer;
+  border: none;
+  background-color: #2b7eeb;
+  border-radius: 6px;
+  color: white;
+  padding: 8px 8px;
+}
+
+.AddProductstableheading {
+  text-align: center;
+  color: #4CAF50;
+  color: #007bff;
+}
+
+.table {
+  width: 90%;
+  margin: 2rem auto;
+  border-collapse: collapse;
+  background-color: #fff;
+  border: 1px solid #ccc;
+
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #4CAF50;
+  background-color: #007bff;
+  color: white;
+
+}
+
+
+
+
+
+
+/* modal */ 
+
+.modalBackdrop {
+ position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  overflow: auto;
+  padding: 20px;
+}
+
+.modalContent {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalContent h3 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #007bff;
+  font-size: 1.4rem;
+}
+
+.modalinput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.modalformGroup {
+  margin-bottom: 1.5rem;
+}
+
+.modalButton {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1rem; 
+  position: sticky;
+  bottom: 0;
+  background: white;
+}
+
+.modalsavebutton,
+.modalcancelbutton {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.modalsavebutton {
+  background-color: #1f7af0;
+  color: white;
+}
+
+.modalsavebutton:disabled {
+  background-color: #5d99e7;
+  cursor: not-allowed;
+}
+
+.modalcancelbutton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.radioGroup label {
+  margin-right: 1rem;
+}
+
+.modalinput:focus {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 4px rgba(102, 175, 233, 0.6); 
+}
+
+

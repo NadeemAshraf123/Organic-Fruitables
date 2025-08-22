@@ -36,7 +36,7 @@ const HeroBanner: React.FC = () => {
             <div className="w-full p-6 py-0 mx-auto  md:max-w-[1320px] md:w-full md:mx-auto  md:mt-40 md:py-16">
 
 
-                <div className="flex flex-col lg:flex-row  justify-between gap-8 lg:gap-16 ">
+                <div className="flex flex-col lg:flex-row  justify-between md:justify-center gap-8 lg:gap-16 ">
                     
                     {/* Left Side - Text Content */}
                     <div className="flex-1 text-left w-full mx-auto mt-20">
@@ -71,7 +71,7 @@ const HeroBanner: React.FC = () => {
                                 src={images[currentIndex]?.image}
                                 style={{background:'#ffb524'}}
                                 alt="Organic food selection"
-                                className="w-full md:h-[460px] lg:h-[309px] object-cover transition-opacity duration-500"
+                                className="w-full md:h-[460px] lg:h-[341px] object-cover transition-opacity duration-500"
                             />
                             
                         

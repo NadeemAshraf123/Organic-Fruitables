@@ -63,14 +63,6 @@ const TestimonialCarousel = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-
-
-
-
-
-
-
-
   const navigate = (direction: 'prev' | 'next') => {
   if (isTransitioning) return;
   setIsTransitioning(true);
@@ -86,22 +78,6 @@ const TestimonialCarousel = () => {
 
   setTimeout(() => setIsTransitioning(false), 500);
 };
-
-// const navigate = (direction: 'prev' | 'next') => {
-//   if (isTransitioning) return;
-//   setIsTransitioning(true);
-
-//   const step = isMobile ? 1 : 2;
-//   setCurrentIndex(prev => {
-//     if (direction === 'next') {
-//       return (prev + step) % testimonials.length;
-//     } else {
-//       return (prev - step + testimonials.length) % testimonials.length;
-//     }
-//   });
-
-//   setTimeout(() => setIsTransitioning(false), 500); // match transition duration
-// };
 
 
   useEffect(() => {

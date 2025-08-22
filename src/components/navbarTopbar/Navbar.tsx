@@ -8,6 +8,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom"; // Import Router components
 
 const SmartHeader: React.FC = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -18,6 +19,8 @@ const SmartHeader: React.FC = () => {
   const [pagesOpen, setPagesOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const navigate = useNavigate(); // Initialize navigate function
 
   const TOPBAR_HEIGHT = 56; // Height of the top bar in pixels
   const pagesRef = useRef<HTMLDivElement>(null);
@@ -73,6 +76,19 @@ const SmartHeader: React.FC = () => {
     e.preventDefault();
     console.log("Searching for:", searchQuery);
     setSearchOpen(false);
+  };
+
+  // Navigation handlers
+  const handleAddProduct = () => {
+    navigate("/add-product");
+    setPagesOpen(false);
+    setMobilePagesOpen(false);
+  };
+
+  const handleAddCategory = () => {
+    navigate("/add-category");
+    setPagesOpen(false);
+    setMobilePagesOpen(false);
   };
 
   return (
@@ -165,24 +181,25 @@ const SmartHeader: React.FC = () => {
       >
         <header className={`flex justify-center items-center lg:h-[100px] h-[80px] ${!atTop ? "shadow-md" : ""}`}>
           <div className="p-5 max-w-[1320px] w-full mx-auto flex justify-between items-center">
-            <div
+            <Link 
+              to="/"
               className="text-[27px] md:text-[40px] font-bold text-[#81C408]"
               style={{ fontFamily: "'Raleway', 'Pecifico', 'system-ui'" }}
             >
               Fruitables
-            </div>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-6 text-gray-700 items-center text-sm sm:text-base">
-              <a href="#" className="hover:text-[#81C408]">
+              <Link to="/" className="hover:text-[#81C408]">
                 Home
-              </a>
-              <a href="#" className="hover:text-[#81C408]">
+              </Link>
+              <Link to="/shop" className="hover:text-[#81C408]">
                 Shop
-              </a>
-              <a href="#" className="hover:text-[#81C408]">
+              </Link>
+              <Link to="/shop-detail" className="hover:text-[#81C408]">
                 Shop Detail
-              </a>
+              </Link>
               <div className="relative" ref={pagesRef}>
                 <button
                   onClick={() => setPagesOpen(!pagesOpen)}
@@ -198,36 +215,38 @@ const SmartHeader: React.FC = () => {
                 </button>
                 {pagesOpen && (
                   <div className="absolute top-full left-0 mt-2 w-44 bg-white shadow-lg rounded-md z-10 border border-gray-200">
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
+                    <button
+                      onClick={handleAddProduct}
+                      className="block w-full text-left px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
                     >
-                      Cart
-                    </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
+                      Add Product
+                    </button>
+                    <button
+                      onClick={handleAddCategory}
+                      className="block w-full text-left px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
                     >
-                      Checkout
-                    </a>
-                    <a
-                      href="#"
+                      Add Category
+                    </button>
+                    <Link
+                      to="/testimonial"
                       className="block px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
+                      onClick={() => setPagesOpen(false)}
                     >
                       Testimonial
-                    </a>
-                    <a
-                      href="#"
+                    </Link>
+                    <Link
+                      to="/404"
                       className="block px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
+                      onClick={() => setPagesOpen(false)}
                     >
                       404 Page
-                    </a>
+                    </Link>
                   </div>
                 )}
               </div>
-              <a href="#" className="hover:text-[#81C408]">
+              <Link to="/contact" className="hover:text-[#81C408]">
                 Contact
-              </a>
+              </Link>
             </nav>
 
             {/* Icons section */}
@@ -286,15 +305,15 @@ const SmartHeader: React.FC = () => {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden bg-white shadow-lg p-4 space-y-3 border-t border-gray-200">
-            <a href="#" className="block py-2 hover:text-[#81C408]">
+            <Link to="/" className="block py-2 hover:text-[#81C408]" onClick={() => setMobileMenuOpen(false)}>
               Home
-            </a>
-            <a href="#" className="block py-2 hover:text-[#81C408]">
+            </Link>
+            <Link to="/shop" className="block py-2 hover:text-[#81C408]" onClick={() => setMobileMenuOpen(false)}>
               Shop
-            </a>
-            <a href="#" className="block py-2 hover:text-[#81C408]">
+            </Link>
+            <Link to="/shop-detail" className="block py-2 hover:text-[#81C408]" onClick={() => setMobileMenuOpen(false)}>
               Shop Detail
-            </a>
+            </Link>
             <div>
               <button
                 onClick={() => setMobilePagesOpen(!mobilePagesOpen)}
@@ -310,24 +329,38 @@ const SmartHeader: React.FC = () => {
               </button>
               {mobilePagesOpen && (
                 <div className="pl-4 mt-2 space-y-2">
-                  <a href="#" className="block py-2 hover:text-[#81C408]">
-                    Cart
-                  </a>
-                  <a href="#" className="block py-2 hover:text-[#81C408]">
-                    Checkout
-                  </a>
-                  <a href="#" className="block py-2 hover:text-[#81C408]">
+                  <button
+                    onClick={handleAddProduct}
+                    className="block w-full text-left py-2 hover:text-[#81C408]"
+                  >
+                    Add Product
+                  </button>
+                  <button
+                    onClick={handleAddCategory}
+                    className="block w-full text-left py-2 hover:text-[#81C408]"
+                  >
+                    Add Category
+                  </button>
+                  <Link 
+                    to="/testimonial" 
+                    className="block py-2 hover:text-[#81C408]"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
                     Testimonial
-                  </a>
-                  <a href="#" className="block py-2 hover:text-[#81C408]">
+                  </Link>
+                  <Link 
+                    to="/404" 
+                    className="block py-2 hover:text-[#81C408]"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
                     404 Page
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>
-            <a href="#" className="block py-2 hover:text-[#81C408]">
+            <Link to="/contact" className="block py-2 hover:text-[#81C408]" onClick={() => setMobileMenuOpen(false)}>
               Contact
-            </a>
+            </Link>
 
             {/* Mobile Icons Row */}
             <div className="flex items-center justify-around pt-4 border-t border-gray-200 mt-4">
