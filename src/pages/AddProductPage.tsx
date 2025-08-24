@@ -166,11 +166,6 @@ const AddProductPage = () => {
   };
 
 
-
-
-
-
-
   const deleteProduct = (id: string) => {
     const filtered = tableProducts.filter((p) => p.id !== id);
     localStorage.setItem("products", JSON.stringify(filtered));
@@ -228,7 +223,7 @@ const AddProductPage = () => {
   return (
     <>
       {/* add product  */}
-      <h3 style={{ textAlign: 'center', color: '#007BFF', marginTop:"180px", fontFamily:"sans-serif",fontSize:"35px",fontWeight:"bolder"}}>Add product & Display Table Form</h3>
+      <h3 style={{ textAlign: 'center', color: '#81C408', marginTop:"180px", fontFamily:"sans-serif",fontSize:"35px",fontWeight:"bolder"}}>Add product & Display Table Form</h3>
 
 
       <form onSubmit={handleSubmit} className={styles.formContainer}>
@@ -262,33 +257,6 @@ const AddProductPage = () => {
           )}
         </div>
 
-        {/* <div className={styles.formGroup}>
-          <label className={styles.label}>
-            Category:
-            <select
-              multiple
-              value={productCategory}
-              onChange={(e) => {
-                const selectedValues = Array.from(e.target.selectedOptions, option => option.value);
-                setProductCategory(selectedValues);
-              }}
-              className={styles.input}
-            >
-              <option value="" disabled hidden>Select Category</option>
-              {usersCategories
-                .filter((category) => category.isActive === true)
-                .map((category, index) => (
-                  <option key={index} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-            </select>
-          </label>
-          {errors.productCategory && (
-            <div className={styles.errorText}>{errors.productCategory}</div>
-          )}
-        </div> */}
-
         <select
           value={productCategory?.id || ""}
           onChange={(e) => {
@@ -309,6 +277,7 @@ const AddProductPage = () => {
 
 
         <div className={styles.formGroup}>
+          <div className={styles.productImageDiv}></div>
           <label className={styles.label}>
             Product Image:
             <input
@@ -401,7 +370,7 @@ const AddProductPage = () => {
             ))}
         </select>
 
-        <label htmlFor="featuredSelect">
+        <label htmlFor="featuredSelect" className={styles.Featured}>
           Is Featured:
           <select
             value={searchFeatured}

@@ -34,7 +34,8 @@
 
 .button {
   padding: 0.6rem 1.2rem;
-  background-color: #007bff;
+  /* background-color: #007bff; */
+  background-color: #81C408;
   color: white;
   border: none;
   border-radius: 4px;
@@ -43,7 +44,8 @@
 }
 
 .button:hover {
-  background-color: #0056b3;
+  /* background-color: #0056b3; */
+  background-color: #28a745;
 }
 
 
@@ -59,15 +61,19 @@
 .categorypagesearchinputfields {
   border-radius: 6px;
   padding: 4px;
+  border: 1px solid #81C408;
  
 }
 .categorypagesearchinputfields::placeholder{
-  color: #0056B3;
+  /* color: #0056B3; */
+  color: #81C408;
 }
 .categorypagesearchinputfields:focus {
-  border-color: #0b7fdf;
+  /* border-color: #0b7fdf; */
+  border-color: #81C408;
   outline: none;
-  color: #66afe9;
+  /* color: #66afe9; */
+  color: #81C408;
 }
 
 
@@ -82,7 +88,8 @@
 
 .categorypagesearchbars, label{
 
-  color: #007bff;
+  /* color: #007bff; */
+  color: #81C408;
   font-size: large;
   font-weight: 600;
 }
@@ -92,7 +99,8 @@
 .resetbutton{
   margin-left: 25px;
   padding: 5px 10px ;
-  background-color: #007bff;
+  /* background-color: #007bff; */
+  background-color: #81C408;
   color:white ;
   border: none;
   border-radius: 5px;
@@ -102,7 +110,8 @@
 
 }
 .resetbutton:hover{
-  background-color: #0056B3;
+  /* background-color: #0056B3; */
+  background-color: #28a745;
 }
 
 
@@ -111,8 +120,9 @@
     font-size: 40px;
     font: bolder;
     text-align: center;
-    color: rgb(11, 127, 236);
-    color: #0056B3;
+    /* color: rgb(11, 127, 236); */
+    /* color: #0056B3; */
+    color: #81C408;
     
 }
 .table {
@@ -132,11 +142,13 @@
 }
 
 .table th {
-  background-color: #007bff;
+  /* background-color: #007bff; */
+  background-color: #81C408;
   color: white;
 }
 .categoryeditbutton {
-  background-color: #007bff;
+  /* background-color: #007bff; */
+  background-color: #81C408;
   color: white;
   border: none;
   border-radius: 8px;
@@ -178,7 +190,9 @@
   margin-bottom: 1.5rem;
   text-align: center;
   font-size: 1.4rem;
-  color: #007bff;
+  /* color: #007bff; */
+  color: #81C408;
+
 }
 
 .modalinput {
@@ -194,8 +208,9 @@
 
 .modalinput:focus {
   outline: none;
-  border-color: #66afe9;
-  box-shadow: 0 0 4px rgba(102, 175, 233, 0.6);
+  /* border-color: #66afe9; */
+  border-color: #81C408;
+  /* box-shadow: 0 0 4px rgba(102, 175, 233, 0.6); */
 }
 
 .modalformGroup {
