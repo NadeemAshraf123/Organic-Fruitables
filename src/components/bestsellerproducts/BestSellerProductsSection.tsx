@@ -16,6 +16,7 @@ const demoProducts: any[] = [
     image:  `${oranges}`,
     rating: 4,
   },
+  
   {
     id: "2",
     name: "Organic Tomato",

@@ -8,9 +8,14 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom"; // Import Router components
+import { Link, useNavigate } from "react-router-dom";
 
-const SmartHeader: React.FC = () => {
+interface NavbarProps {
+  isAuthenticated : boolean;
+  onLogout: () => void;
+}
+
+const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [topBarVisible, setTopBarVisible] = useState(true);
   const [atTop, setAtTop] = useState(true);
@@ -20,9 +25,15 @@ const SmartHeader: React.FC = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate(); 
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('logedInUser');
+    onLogout();
+    navigate('/');
+  }
 
-  const TOPBAR_HEIGHT = 56; // Height of the top bar in pixels
+  const TOPBAR_HEIGHT = 56;
   const pagesRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -54,7 +65,7 @@ const SmartHeader: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollPos]);
 
-  // Close dropdown when clicking outside
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (pagesRef.current && !pagesRef.current.contains(event.target as Node)) {
@@ -78,7 +89,7 @@ const SmartHeader: React.FC = () => {
     setSearchOpen(false);
   };
 
-  // Navigation handlers
+
   const handleAddProduct = () => {
     navigate("/add-product");
     setPagesOpen(false);
@@ -200,6 +211,8 @@ const SmartHeader: React.FC = () => {
               <Link to="/shop-detail" className="hover:text-[#81C408]">
                 Shop Detail
               </Link>
+
+              {isAuthenticated && (
               <div className="relative" ref={pagesRef}>
                 <button
                   onClick={() => setPagesOpen(!pagesOpen)}
@@ -244,6 +257,9 @@ const SmartHeader: React.FC = () => {
                   </div>
                 )}
               </div>
+              )}
+
+
               <Link to="/contact" className="hover:text-[#81C408]">
                 Contact
               </Link>
@@ -251,6 +267,19 @@ const SmartHeader: React.FC = () => {
 
             {/* Icons section */}
             <div className="hidden md:flex items-center space-x-4 text-gray-700">
+
+              {/* <Link to= "/loginpage" className="hover:text-[#81C408]" > Login</Link> */}
+                  {isAuthenticated ? (
+                    <button onClick={handleLogout} className="nav-button hover:text-[#81C408]"> 
+                    Logout
+                    </button>
+                  ) : (
+                    <Link to="/loginpage" className="nav-button" >
+                      Login
+                    </Link>
+                  )}
+
+
               <button
                 onClick={() => setSearchOpen(true)}
                 className="border border-[#FFB524] rounded-full p-3 text-[#81C408] hover:bg-[#FFB524] cursor-pointer transition-colors"

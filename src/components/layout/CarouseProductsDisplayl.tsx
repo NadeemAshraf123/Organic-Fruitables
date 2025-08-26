@@ -149,13 +149,13 @@ const CaruselProductsDisplay: React.FC = () => {
       <div >
         <div
           ref={scrollRef}
-          className='flex gap-6 overflow-x-hidden scrollbar-hide scroll-smooth mt-0'
+          className='flex gap-8 overflow-x-hidden scrollbar-hide scroll-smooth mt-0'
 
         >
           {products.map((product) => (
             <div
               key={product.id}
-              className='min-w-[230px] max-w-[230px] gap-6 flex'
+              className=' flex'
             >
               <CaruselProductCard
                 name={product.name}

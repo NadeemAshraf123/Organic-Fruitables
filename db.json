@@ -1,0 +1,20 @@
+{
+  "fruitablesusers": [
+    {
+      "id": "c9a7",
+      "name": "Batool Fatima ",
+      "email": "batool123@gmail.com",
+      "password": "Batool123@",
+      "confirmPassword": "Batool123@",
+      "role": "admin"
+    },
+    {
+      "id": "8bb9",
+      "name": "Nadeem Ashraf",
+      "email": "amirshakeeliub@gmail.com",
+      "password": "Nadeem123@",
+      "confirmPassword": "Nadeem123@",
+      "role": "user"
+    }
+  ]
+}

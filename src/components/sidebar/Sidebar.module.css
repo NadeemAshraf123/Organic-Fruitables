@@ -1,0 +1,262 @@
+/* SidebarSelf.module.css - Fixed and Akademi Styled */
+.sidebar {
+  width: 250px;
+  height: calc(100vh - 30px);
+  background: linear-gradient(180deg, #6C5CE7 0%, #4D44B5 100%); 
+  color: white;
+  position: fixed;
+  /* top: 15px; */
+  /* left: 15px; */
+  transition: transform 0.3s ease-in-out;
+  z-index: 100;
+  box-shadow: 0 8px 32px rgba(77, 68, 181, 0.15); 
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: none;
+
+  box-sizing: border-box;
+}
+
+/* Mobile behavior - hide sidebar initially */
+@media (max-width: 991px) {
+  .sidebar {
+    left: -265px;
+    top: 15px;
+    height: calc(100vh - 30px);
+  }
+  
+  .sidebar.open {
+    transform: translateX(265px);
+  }
+}
+
+/* Desktop behavior - always visible */
+@media (min-width: 992px) {
+  .sidebar {
+    transform: translateX(0) !important;
+    left: 15px;
+    top: 15px;
+  }
+}
+
+/* Logo Section - Akademi Style */
+.logo {
+  padding: 24px 20px 32px 20px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* Menu Container */
+.menu {
+  list-style: none;
+  padding: 16px 0 0 0;
+  margin: 0;
+}
+
+/* Menu Items - Fixed to prevent horizontal scroll */
+.menuItem {
+  padding: 14px 12px 14px 20px;
+  margin: 4px 8px 4px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 12px 0 0 12px; 
+  position: relative;
+  max-width: calc(100% - 8px);
+  box-sizing: border-box;
+  border: none; 
+}
+
+/* Hover Effect - Akademi Style (Fixed) */
+.menuItem:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  transform: translateX(4px);
+  border-radius: 12px 0 0 12px;
+}
+
+/* Active State - Akademi Style (Fixed) */
+.active {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  border-radius: 12px 0 0 12px;
+  transform: translateX(4px);
+  box-shadow: inset 4px 0 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Icon Styling */
+.icon {
+  margin-right: 14px;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  min-width: 18px;
+}
+
+/* Active Icon */
+.active .icon {
+  color: #ffffff;
+}
+
+/* Hover Icon Effect */
+.menuItem:hover .icon {
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* Mobile Toggle Button - Updated */
+.mobileToggle {
+  display: none;
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  background: linear-gradient(135deg, #6C5CE7, #4D44B5);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 4px 12px rgba(77, 68, 181, 0.3);
+  transition: all 0.3s ease;
+}
+
+.mobileToggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(77, 68, 181, 0.4);
+}
+
+.mobileToggle.open {
+  left: 285px;
+  transition: left 0.3s ease-in-out;
+}
+
+/* Close Button - Enhanced */
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+/* Mobile Responsive */
+@media (max-width: 991px) {
+  .mobileToggle {
+    display: block;
+  }
+  
+  /* Show close button on mobile */
+  .closeButton {
+    display: flex;
+  }
+}
+
+/* Desktop - hide mobile elements */
+@media (min-width: 992px) {
+  .mobileToggle {
+    display: none;
+  }
+  
+  .closeButton {
+    display: none;
+  }
+}
+
+/* Main content adjustments for desktop */
+@media (min-width: 992px) {
+  .main-content {
+    margin-left: 280px;
+    transition: margin-left 0.3s ease-in-out;
+  }
+}
+
+/* Mobile main content */
+@media (max-width: 991px) {
+  .main-content {
+    margin-left: 0;
+    transition: margin-left 0.3s ease-in-out;
+  }
+}
+
+/* Overlay for mobile */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 90;
+  display: none;
+  backdrop-filter: blur(2px);
+}
+
+@media (max-width: 991px) {
+  .sidebar.open ~ .overlay {
+    display: block;
+  }
+}
+
+/* Custom Scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Menu item hover indicator */
+.menuItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+  border-radius: 0 2px 2px 0;
+}
+
+.menuItem.active::before,
+.menuItem:hover::before {
+  transform: scaleY(1);
+}
