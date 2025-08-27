@@ -51,7 +51,7 @@ const SignUpPage: React.FC = () => {
       if (res.ok) {
         alert('User registered successfully!');
         reset();
-        navigate("/loginpage");
+        navigate("/login");
       } else {
         alert('Failed to register user.');
       }
@@ -62,7 +62,7 @@ const SignUpPage: React.FC = () => {
 
   return (
     <div className={styles.signupContainer}>
-      {/* Background blur layer */}
+      
       <div 
         className={styles.backgroundBlur}
         style={{ 
@@ -73,7 +73,7 @@ const SignUpPage: React.FC = () => {
         }}
       ></div>
       
-      {/* Content overlay */}
+    
       <div className={styles.contentOverlay}>
         <div className={styles.container}>
           <h2 className={styles.titleheading}>Signup</h2>
@@ -124,7 +124,7 @@ const SignUpPage: React.FC = () => {
           </form>
           <div className={styles.signupFooter}>
             <div className={styles.signupText}>
-              <p className={styles.signuptext}> Already have an account? <Link to="/loginpage" className={styles.TologinPageLink}> LogIn </Link> </p>
+              <p className={styles.signuptext}> Already have an account? <Link to="/login" className={styles.TologinPageLink}> LogIn </Link> </p>
             </div>
           </div>
         </div>

@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useOutletContext } from "react-router-dom";
 import { FaEdit, FaTrash } from 'react-icons/fa'; // Import icons from react-icons
 import './AdminList.css';
 
+type ContextType = { searchTerm: string };
+
 const AuthenticatedUsers = () => {
+  const { searchTerm } = useOutletContext<ContextType>();
+
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editUser, setEditUser] = useState(null);
-  const [editFormData, setEditFormData] = useState({ name: '', email: '', password: '' });
+  const [editFormData, setEditFormData] = useState({ name: '', email: '', password: '' ,role:""});
 
   useEffect(() => {
-    fetch('http://localhost:3000/users')
+    fetch('http://localhost:3000/fruitablesusers')
       .then((res) => res.json())
       .then((data) => {
         setAdmins(data);
@@ -21,12 +26,15 @@ const AuthenticatedUsers = () => {
       });
   }, []);
 
+  const filteredAdmins = admins.filter((admin) => admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                                  admin.email.toLowerCase().includes(searchTerm.toLowerCase()))
+
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this user?');
     if (!confirmDelete) return;
 
     try {
-      await fetch(`http://localhost:3000/users/${id}`, {
+      await fetch(`http://localhost:3000/fruitablesusers/${id}`, {
         method: 'DELETE',
       });
       setAdmins(admins.filter((admin) => admin.id !== id));
@@ -38,13 +46,13 @@ const AuthenticatedUsers = () => {
 
   const handleEditClick = (admin) => {
     setEditUser(admin);
-    setEditFormData({ name: admin.name, email: admin.email, password: admin.password });
+    setEditFormData({ name: admin.name, email: admin.email, password: admin.password , role:""});
   };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/users/${editUser.id}`, {
+      const response = await fetch(`http://localhost:3000/fruitablesusers/${editUser.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +83,7 @@ const AuthenticatedUsers = () => {
 
   return (
     <div className="admin-table-container">        
-      {/* <h2 className="Admin-List-Heading">Admin List</h2> */}
+      
       <table className="admin-table">
         <thead>
           <tr>
@@ -83,11 +91,12 @@ const AuthenticatedUsers = () => {
             <th>Id</th>
             <th>Email</th>
             <th>Password</th>
+            <th>Role</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {admins.map((admin) => (
+          {filteredAdmins.map((admin) => (
             <tr key={admin.id}>
               <td>
                 <div className='user-name-cell'>
@@ -98,6 +107,7 @@ const AuthenticatedUsers = () => {
               <td>{admin.id}</td>
               <td>{admin.email}</td>
               <td>{admin.password}</td>
+              <td>{admin.role}</td>
               <td className="action-buttons">
                 <button 
                   className="edit-btn" 

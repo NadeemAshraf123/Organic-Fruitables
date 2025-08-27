@@ -3,11 +3,14 @@ import { Outlet } from "react-router-dom";
 import Sidebar from '../sidebar/Sidebar';
 import styles from './MainDashboard.module.css';
 import DashboardNavbar from '../dashboardnavbar/DashboardNavbar';
+// import AuthenticatedUsers from '../productDashboard/adminSection/AuthenticatedUsers';
 
-// const DashboardShell: React.FC = () => {
+
 const MainDashboard: React.FC = () => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,21 +35,21 @@ const MainDashboard: React.FC = () => {
    return (
     <div className={styles.container}>
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      {/* <div className={`${styles.mainContent} ${isSidebarOpen ? styles.sidebarOpen : ''}`}> */}
+    
         <div className={styles.mainContent}>
 
         <DashboardNavbar 
+          setSearchTerm = {setSearchTerm}
           toggleSidebar={toggleSidebar} 
           isSidebarOpen={isSidebarOpen} 
         />
         {isSidebarOpen && window.innerWidth < 992 && (
           <div className={styles.overlay} onClick={toggleSidebar} />
         )}
-        <Outlet />
+        <Outlet context={{ searchTerm }} />
       </div>
     </div>
   );
 };
 
 export default MainDashboard;
-// DashboardShell;

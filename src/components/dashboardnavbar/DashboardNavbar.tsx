@@ -7,7 +7,7 @@ import './DashboardNavbar.css';
 
 
 
-const DashboardNavbar = ( {toggleSidebar } ) => {
+const DashboardNavbar = ( {toggleSidebar, setSearchTerm } ) => {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const DashboardNavbar = ( {toggleSidebar } ) => {
             
              <div className='search-bar'>
                 <FontAwesomeIcon icon={faSearch} className='search-icon' />
-                <input type='text' placeholder='Search...' />
+                <input type='text' placeholder='Search...'  onChange={(e) => setSearchTerm(e.target.value)}/>
             </div>
         )}
     </div>

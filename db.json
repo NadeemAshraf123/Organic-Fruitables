@@ -15,6 +15,22 @@
       "password": "Nadeem123@",
       "confirmPassword": "Nadeem123@",
       "role": "user"
+    },
+    {
+      "id": "66e2",
+      "name": "Anam Ali ",
+      "email": "anamali123@gmail.com",
+      "password": "Anam123@",
+      "confirmPassword": "Anam123@",
+      "role": "user"
+    },
+    {
+      "id": "d482",
+      "name": "Imran Khan",
+      "email": "imran123@gmail.com",
+      "password": "Imran123@",
+      "confirmPassword": "Imran123@",
+      "role": "admin"
     }
   ]
 }

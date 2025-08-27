@@ -37,11 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
-      {/* {showClosedButton && ( */}
-      {/* // <button className={styles.closeButton} onClick={toggleSidebar}> */}
-      {/* &times; */}
-      {/* // </button> */}
-      {/* // )} */}
+     
       <h2 className={styles.logo}>Admin Panel</h2>
 
       <ul className={styles.menu}>

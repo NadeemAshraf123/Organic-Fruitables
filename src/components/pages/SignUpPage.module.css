@@ -4,6 +4,7 @@
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
+  margin-top: 150px;
 }
 
 /* Background blur layer - exactly like login page */
@@ -26,6 +27,7 @@
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  margin-top: 60px;
 }
 
 /* Updated container with glassmorphism effect like login */

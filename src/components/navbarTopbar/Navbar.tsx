@@ -205,10 +205,10 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               <Link to="/" className="hover:text-[#81C408]">
                 Home
               </Link>
-              <Link to="/shop" className="hover:text-[#81C408]">
+              <Link to="/" className="hover:text-[#81C408]">
                 Shop
               </Link>
-              <Link to="/shop-detail" className="hover:text-[#81C408]">
+              <Link to="/" className="hover:text-[#81C408]">
                 Shop Detail
               </Link>
 
@@ -274,7 +274,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                     Logout
                     </button>
                   ) : (
-                    <Link to="/loginpage" className="nav-button" >
+                    <Link to="/login" className="nav-button" >
                       Login
                     </Link>
                   )}
