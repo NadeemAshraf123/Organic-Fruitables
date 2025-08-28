@@ -17,8 +17,8 @@ import OurTestimonial from "./components/ourtestimonials/OurTesttimonial";
 import BestsellerProductsSection from "./components/bestsellerproducts/BestSellerProductsSection";
 import PromoBanner from "./components/promobanner/PromoBanner";
 import BestsellerProductTwo from "./components/bestsellerproducts/BestSellerProductTwo";
-import AddProductCategory from "./components/pages/AddProductCategory";
-import AddProductPage from "./components/pages/AddProductPage";
+// import AddProductCategory from "./components/pages/AddProductCategory";
+// import AddProductPage from "./components/pages/AddProductPage";
 import LoginPage from "./components/pages/LoginPage";
 import SignUpPage from "./components/pages/SignUpPage";
 
@@ -127,8 +127,8 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
           }
         />
 
-        <Route path="/add-product" element={<AddProductPage />} />
-        <Route path="/add-category" element={<AddProductCategory />} />
+        {/* <Route path="/add-product" element={<AddProductPage />} /> */}
+        {/* <Route path="/add-category" element={<AddProductCategory />} /> */}
         <Route
           path="/login"
           element={<LoginPage setIsAuthenticated={setIsAuthenticated} setUserRole={setUserRole} />}

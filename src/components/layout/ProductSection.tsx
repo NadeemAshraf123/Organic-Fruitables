@@ -15,44 +15,27 @@ const categories = ['All Products', 'Vegetables', 'Fruits', 'Bread', 'Meat'];
 const ProductSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Function to get products from localStorage
-  const getProductsFromStorage = (): Product[] => {
+
+useEffect(() => {
+  const fetchProducts = async () => {
     try {
-      const storedProducts = localStorage.getItem('products');
-      return storedProducts ? JSON.parse(storedProducts) : [];
+      setLoading(true);
+      const res = await fetch("http://localhost:3000/products");
+      const data = await res.json();
+      setProducts(data);
+
     } catch (error) {
-      console.error('Error reading products from localStorage:', error);
-      return [];
+      console.error("Error fetching products:", error);
+    } finally {
+      setLoading(false);
+
     }
-  };
+  }
+  fetchProducts();
+}, []);
 
-
-  useEffect(() => {
-
-    setProducts(getProductsFromStorage());
-
-  
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'products') {
-        setProducts(e.newValue ? JSON.parse(e.newValue) : []);
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    
-
-    const handleCustomStorageChange = () => {
-      setProducts(getProductsFromStorage());
-    };
-    
-    window.addEventListener('localStorageChange', handleCustomStorageChange as EventListener);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('localStorageChange', handleCustomStorageChange as EventListener);
-    };
-  }, []);
 
  const filteredProducts = 
   selectedCategory === 'All Products'

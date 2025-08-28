@@ -24,6 +24,7 @@ const schema = yup.object().shape({
     .oneOf([yup.ref('password')], 'Passwords must match')
     .required('Confirm your password'),
     role: yup.string().oneOf(['admin' , 'user']).required('Role is required'),
+    
 });
 
 const SignUpPage: React.FC = () => {

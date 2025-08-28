@@ -19,34 +19,90 @@ const AddProductCategory = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("categoryname") || "[]");
-    setCategoryList(stored);
+
+    const fetchCategories= async () => {
+      try{
+        const res = await fetch("http://localhost:300/categories");
+        if (!res.ok) throw new Error("Failed to fetch categories");
+        const data = await res.json();
+        setCategoryList(data);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+        toast.error("Could not load categories from server");
+      }
+    };
+    fetchCategories();
+    // const stored = JSON.parse(localStorage.getItem("categoryname") || "[]");
+    // setCategoryList(stored);
   }, []);
 
-  const handleCategorySubmit = (e: React.FormEvent) => {
+  // const handleCategorySubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (!validate()) return;
+
+  //   if (productImage) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const newCategory = {
+  //         id: uuidv4(),
+  //         name: productCategoryName,
+  //         image: reader.result as string,
+  //         isActive: isCategorized,
+  //       };
+
+  //       const existingCategories = [...categoryList, newCategory];
+  //       localStorage.setItem("categoryname", JSON.stringify(existingCategories));
+  //       setCategoryList(existingCategories);
+  //       toast.success("Category Added");
+  //       setShowAddModal(false);
+  //       resetForm();
+  //     };
+  //     reader.readAsDataURL(productImage);
+  //   }
+  // };
+
+  const handleCategorySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    console.log("check addd")
+    // if (!validate()) return;
 
-    if (productImage) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const newCategory = {
-          id: uuidv4(),
-          name: productCategoryName,
-          image: reader.result as string,
-          isActive: isCategorized,
-        };
+    // if (productImage) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = async () => {
+    //     const newCategory = {
+    //       name: productCategoryName,
+    //       image: reader.result as string,
+    //       isActive: isCategorized,
+    //     };
 
-        const existingCategories = [...categoryList, newCategory];
-        localStorage.setItem("categoryname", JSON.stringify(existingCategories));
-        setCategoryList(existingCategories);
-        toast.success("Category Added");
-        setShowAddModal(false);
-        resetForm();
-      };
-      reader.readAsDataURL(productImage);
-    }
+    //     try {
+    //       const res = await fetch("http://localhost:3000/categories", {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify(newCategory),
+    //       });
+
+    //       if (!res.ok) throw new Error ("Failed to add category");
+
+    //       const savedCategory = await res.json();
+    //       setCategoryList((prev) => [...prev, savedCategory]);
+    //       toast.success("category Added!");
+    //       setShowAddModal(false);
+    //       resetForm();
+
+    //     } catch (err) {
+    //       console.error("Add Category Error:", err);
+    //       toast.error("Could not add category");
+    //     }
+    //   };
+    //   reader.readAsDataURL(productImage);
+    // }
   };
+
+
+
+
+
 
   const resetForm = () => {
     setProductCategoryName("");
@@ -63,16 +119,46 @@ const AddProductCategory = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSaveEditedCategory = () => {
-    const updatedList = categoryList.map((cat) =>
-      cat.id === editingCategory.id ? editingCategory : cat
+  // const handleSaveEditedCategory = () => {
+  //   const updatedList = categoryList.map((cat) =>
+  //     cat.id === editingCategory.id ? editingCategory : cat
+  //   );
+  //   localStorage.setItem("categoryname", JSON.stringify(updatedList));
+  //   setCategoryList(updatedList);
+  //   toast.success("Category updated!");
+  //   setIsEditing(false);
+  //   setEditingCategory(null);
+  // };
+
+  const handleSaveEditedCategory = async () => {
+  if (!editingCategory) return;
+
+  try {
+    const res = await fetch(
+      `http://localhost:3000/categories/${editingCategory.id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editingCategory),
+      }
     );
-    localStorage.setItem("categoryname", JSON.stringify(updatedList));
-    setCategoryList(updatedList);
+
+    if (!res.ok) throw new Error("Failed to update category");
+
+    const updated = await res.json();
+    setCategoryList((prev) =>
+      prev.map((cat) => (cat.id === updated.id ? updated : cat))
+    );
     toast.success("Category updated!");
     setIsEditing(false);
     setEditingCategory(null);
-  };
+  } catch (err) {
+    console.error("Update Error:", err);
+    toast.error("Could not update category");
+  }
+};
+
+
 
   const deleteCategory = (id: string) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this category?");
@@ -252,10 +338,9 @@ const AddProductCategory = () => {
 
               <div className={styles.formActions}>
                 <button type="submit" className={styles.submitButton}>
-                  Add Category
+                  Add C
                 </button>
                 <button
-                  type="button"
                   onClick={() => setShowAddModal(false)}
                   className={styles.cancelButton}
                 >

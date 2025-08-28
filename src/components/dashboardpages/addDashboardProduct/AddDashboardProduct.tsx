@@ -26,48 +26,118 @@ const AddDashboardProduct = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   const storedProducts = JSON.parse(localStorage.getItem("products") || "[]");
+  //   const Categories = JSON.parse(localStorage.getItem("categoryname") || "[]");
+  //   setTableProducts(storedProducts);
+  //   setUsersCategories(Categories);
+  // }, []);
   useEffect(() => {
-    const storedProducts = JSON.parse(localStorage.getItem("products") || "[]");
-    const Categories = JSON.parse(localStorage.getItem("categoryname") || "[]");
-    setTableProducts(storedProducts);
-    setUsersCategories(Categories);
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-
-    if (productImages.length > 0) {
-      const imagePromises = productImages.map((file) => {
-        return new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      });
-
-      Promise.all(imagePromises).then((base64Images) => {
-        const newProduct = {
-          id: uuidv4(),
-          name: productName,
-          price: productPrice,
-          images: base64Images,
-          category: productCategory,
-          rating: productRating,
-          isFeatured: isFeatured === "true"
-        };
-
-        const existingProducts = JSON.parse(localStorage.getItem("products") || "[]");
-        existingProducts.push(newProduct);
-        localStorage.setItem("products", JSON.stringify(existingProducts));
-        setTableProducts(existingProducts);
-        toast.success("Product added successfully");
-        setShowAddModal(false);
-        resetForm();
-      });
+  const fetchData = async () => {
+    try {
+      const [productsRes, categoriesRes] = await Promise.all([
+        fetch("http://localhost:3000/products"),
+        fetch("http://localhost:3000/categories"),
+      ]);
+      const products = await productsRes.json();
+      const categories = await categoriesRes.json();
+      setTableProducts(products);
+      setUsersCategories(categories);
+    } catch (err) {
+      toast.error("Failed to fetch data from server");
+      console.error(err);
     }
   };
+  fetchData();
+}, []);
+
+
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (!validate()) return;
+
+  //   if (productImages.length > 0) {
+  //     const imagePromises = productImages.map((file) => {
+  //       return new Promise<string>((resolve, reject) => {
+  //         const reader = new FileReader();
+  //         reader.onloadend = () => resolve(reader.result as string);
+  //         reader.onerror = reject;
+  //         reader.readAsDataURL(file);
+  //       });
+  //     });
+
+  //     Promise.all(imagePromises).then((base64Images) => {
+  //       const newProduct = {
+  //         id: uuidv4(),
+  //         name: productName,
+  //         price: productPrice,
+  //         images: base64Images,
+  //         category: productCategory,
+  //         rating: productRating,
+  //         isFeatured: isFeatured === "true"
+  //       };
+
+  //       const existingProducts = JSON.parse(localStorage.getItem("products") || "[]");
+  //       existingProducts.push(newProduct);
+  //       localStorage.setItem("products", JSON.stringify(existingProducts));
+  //       setTableProducts(existingProducts);
+  //       toast.success("Product added successfully");
+  //       setShowAddModal(false);
+  //       resetForm();
+  //     });
+  //   }
+  // };
+
+  // 👇 Updated handleSubmit function
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (!validate()) return;
+
+  try {
+    // Convert images to Base64 first
+    const imagePromises = productImages.map((imageFile) => {
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(imageFile);
+      });
+    });
+
+    const base64Images = await Promise.all(imagePromises);
+
+    const newProduct = {
+      id: uuidv4(),
+      name: productName,
+      price: productPrice,
+      images: base64Images,
+      category: productCategory,
+      rating: productRating,
+      isFeatured: isFeatured === "true",
+    };
+
+
+    const res = await fetch("http://localhost:3000/products", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newProduct),
+    });
+
+    if (!res.ok) throw new Error("Failed to save product");
+
+    const savedProduct = await res.json();
+
+    setTableProducts((prev) => [...prev, savedProduct]);
+
+    toast.success("Product added successfully!");
+    setShowAddModal(false);
+    resetForm();
+  } catch (err) {
+    console.error("Error while saving product:", err);
+    toast.error("Could not save product. Try again!");
+  }
+};
+
 
   const resetForm = () => {
     setProductName("");
@@ -103,32 +173,62 @@ const AddDashboardProduct = () => {
     setIsEditing(true);
   };
 
-  const saveEditProduct = () => {
-    const updatedProduct = {
-      ...editingProduct,
-      category: productCategory
-    };
+const saveEditProduct = async () => {
+  if (!editingProduct) return;
 
-    const updatedList = tableProducts.map((p) =>
-      p.id === editingProduct.id ? updatedProduct : p
+  const updatedProduct = {
+    ...editingProduct,
+    category: productCategory,
+  };
+
+  try {
+    const res = await fetch(`http://localhost:3000/products/${editingProduct.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedProduct),
+    });
+
+    if (!res.ok) throw new Error("Failed to update product");
+
+    const savedProduct = await res.json();
+
+
+    setTableProducts((prev) =>
+      prev.map((p) => (p.id === savedProduct.id ? savedProduct : p))
     );
 
-    localStorage.setItem("products", JSON.stringify(updatedList));
-    setTableProducts(updatedList);
     setIsEditing(false);
     setEditingProduct(null);
-    toast.success("Product updated successfully");
-  };
+    toast.success("Product updated successfully!");
+  } catch (err) {
+    console.error("Update Error:", err);
+    toast.error("Could not update product");
+  }
+};
 
-  const deleteProduct = (id: string) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-    if (!confirmDelete) return;
 
-    const filtered = tableProducts.filter((p) => p.id !== id);
-    localStorage.setItem("products", JSON.stringify(filtered));
-    setTableProducts(filtered);
-    toast.success("Product deleted successfully");
-  };
+  const deleteProduct = async (id: string) => {
+  const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+  if (!confirmDelete) return;
+
+  try {
+    const res = await fetch(`http://localhost:3000/products/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error("Failed to delete product");
+
+  
+    setTableProducts((prev) => prev.filter((product) => product.id !== id));
+    toast.success("Product deleted successfully!");
+  } catch (err) {
+    console.error("Delete Error:", err);
+    toast.error("Could not delete product");
+  }
+};
+
+
+
 
   const filteredProducts = tableProducts.filter((item) => {
     const nameMatch = item.name.toLowerCase().includes(searchName.toLowerCase());
@@ -144,7 +244,7 @@ const AddDashboardProduct = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        {/* <h2 className={styles.title}>Product Management</h2> */}
+        
         <div className={styles.actions}>
           <div className={styles.searchContainer}>
             <FaSearch className={styles.searchIcon} />
@@ -244,7 +344,7 @@ const AddDashboardProduct = () => {
         </div>
       )}
 
-{/* ==========/////////////===============////////============//////////// */}
+
 
 
       {showAddModal && (
