@@ -5,11 +5,11 @@ const PromoBanner: React.FC = () => {
   return (
     <>
       <section className="w-full mx-auto bg-[#ffaa00] px-8 py-20">
-        {/* Left Section */}
+        
         <div className="flex flex-col md:flex-col lg:flex-row w-full md:max-w-[1320px] md:w-full lg:w-full mx-auto">
             
           <div className="flex flex-col text-white  md:mt-40 lg:mt-40 ">
-            {/* Heading */}
+          
             <div className="mb-6">
               <h2 className="text-[35px] font-semibold md:text-[64px] md:font-bold leading-tight">
                 Fresh Exotic Fruits
@@ -19,7 +19,7 @@ const PromoBanner: React.FC = () => {
               </h2>
             </div>
 
-            <p className="text-sm md:text-base text-[#45595B] opacity-90 mb-6 leading-relaxed">
+            <p className="md:text-base text-[#45595B] opacity-90 mb-6 leading-relaxed">
               The generated Lorem Ipsum is therefore always free from repetition
               injected humour,
               <br />

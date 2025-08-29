@@ -18,17 +18,18 @@ const CaruselProductCard: React.FC<ProductCardProps> = ({
   return (
   <div
   className="bg-[#ffffff] rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(0,0,0,0.6),0_0_10px_rgba(0,0,0,0.1)] transition-all
-                 w-full sm-w-[300px] lg:w-[305px] lg:h-[455px] border border-[#81C408] mt-8 mb-4"
+                w-full max-w-[290px] md:max-w-[320px] lg:max-w-[300px]
+                  border border-[#81C408] mt-8 mb-4"
 >
 
-      <div className="overflow-hidden">
+      <div className="overflow-hidden mt-">
         <div className='relative'>
         <img
           src={image}
           alt={name}
           className="w-full h-48 object-cover transition-transform duration-500 hover:scale-125"
         />
-        <span className="absolute top-2 right-4 bg-[#81C408] text-white text-xs px-3 py-1 rounded-full">{category}</span>
+        <span className="absolute top-2 right-4 bg-[#408] text-white text-xs px-3 py-1 rounded-full">{category}</span>
         </div>
       </div>
 

@@ -31,7 +31,7 @@ const BestsellerProductTwo: React.FC<BestsellerProductsSectionProps> = ({
 
       <div className="mx-auto max-w-[1320px] w-full">
 
-        <div className="  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap- lg:gap- place-items-center">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 lg:gap-8 place-items-center">
           {products.map((product) => (
             <div
               key={product.id}
@@ -40,7 +40,7 @@ const BestsellerProductTwo: React.FC<BestsellerProductsSectionProps> = ({
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-[306px] h-[214px] md:w-[336px] md:h-[235px] lg:w-[306px] lg:h-[214px] object-cover rounded-md"
+                className=" mt-5 w-[306px] h-[214px] md:w-[336px] md:h-[235px] lg:w-[456px] lg:h-[300px] xl:h-[214px]  object-cover rounded-md"
               />
 
           

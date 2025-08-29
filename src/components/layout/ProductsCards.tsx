@@ -37,13 +37,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
       </div>
 
-      <div className="p-4 space-y-4">
+      <div className="p-4 space-y">
         <h3 className="text-[21px] font-semibold text-gray-800">{name}</h3>
         
-        {/* Category display in the card content */}
-        <div className="text-sm text-gray-500 font-medium">
+      
+        {/* <div className="text-sm text-gray-500 font-medium">
           Category: {category}
-        </div>
+        </div> */}
         
         <p className="text-sm text-gray-600 h-[80px]">{description}</p>
         <div className="flex flex-row gap-10 md:flex-col items-center mt-4">

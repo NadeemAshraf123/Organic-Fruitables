@@ -81,19 +81,18 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
     setUserRole("");
   };
 
-  // Custom protection for dashboard routes
+  
   const DashboardGuard = ({ children }) => {
     if (!isAuthenticated) {
-      // Unauthenticated users go to login
+
       return <Navigate to="/login" replace />;
     }
     
     if (userRole === "admin") {
-      // Admin users can access dashboard
+
       return children;
     }
     
-    // Regular authenticated users go to home page
     return <Navigate to="/" replace />;
   };
 

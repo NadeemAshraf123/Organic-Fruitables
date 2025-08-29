@@ -30,7 +30,6 @@ useEffect(() => {
       console.error("Error fetching products:", error);
     } finally {
       setLoading(false);
-
     }
   }
   fetchProducts();
@@ -77,7 +76,7 @@ useEffect(() => {
                 image={product.images && product.images.length > 0 ? product.images[0] : ''}
                 category={product.category.name}
                 price={`$${product.price}`}
-                description={product.description || 'Fresh organic product'}
+                description={product.description || 'Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.'}
               />
             ))
           ) : (

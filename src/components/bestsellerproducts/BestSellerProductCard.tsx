@@ -20,7 +20,7 @@ const BestSellerProductCard: React.FC<ProductCardProps> = ({ product, onAddToCar
 
   return (
     // <div className=''>
-      <div className=" w-[272px] h-[249px] sm:w-[327px] mx-auto sm:h-auto md:w-[696px] md:h-[360px] lg:w-[416px] lg:h-[220px]  sm:p-6 md:p-6 flex bg-[#F4F6F8] rounded-xl ">
+      <div className=" w-[272px] h-[249px] sm:w-[327px] mx-auto sm:h-auto md:w-[696px] md:h-[360px] lg:w-[456px] lg:h-[240px] xl:w-[416px]  sm:p-6 md:p-6 flex bg-[#F4F6F8] rounded-xl ">
 
       <div className="">
         <img

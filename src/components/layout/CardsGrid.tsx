@@ -35,18 +35,18 @@ const CardsGrid: React.FC = () => {
 
   return (
     <div className="w-full  bg-[#ffffff] flex justify-center items-center mt-10 lg:mt-20 lg:mb-15 mb-20">
-      <div className=" mt-5 mx-auto md:max-w-full  md:w-[1320] md:gap-10 lg:gap-10 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className=" mt-10 mx-auto md:max-w-full  md:w-[1320] md:gap-10 lg:gap-10 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {cards.map((card, index) => (
           <div
             key={index}
-            className="mt-5 w-[270px] mx-auto sm:w-[330px] sm:h-[460px] lg:h-[410px] lg:w-[414px] md:w-[334px] md:h-[397px]  rounded-xl border border-gray-100 shadow-md overflow-hidden flex flex-col"
+            className="mt-5 w-[300px] mt-0 mx-auto sm:w-[340px] sm:h-[460px] lg:h-[410px] lg:w-[310px] xl:w-[415px]  md:w-full md:h-[397px]  rounded-xl border border-gray-100 shadow-md overflow-hidden flex flex-col"
           >
             
             <div className="bg-transparent flex justify-center items-center">
               <img
                 src={card.image}
                 alt={card.title}
-                className="object-contain w-full  sm:h-[334px] lg:h-[283px] md:h-[267px] md:w-[334px] lg:w-[490px]"
+                className="object-contain w-full  sm:h-[334px] lg:h-[283px] md:h-[267px] md:w-full lg:w-[490px]"
               />
             </div>
 
@@ -57,7 +57,8 @@ const CardsGrid: React.FC = () => {
             >
               
               <div
-                className="absolute w-[250px] h-[120px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg px-6 py-6 text-center "
+                className="absolute w-[250px] h-[120px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg px-6  
+                           flex flex-col justify-center items-center text-center "
                 style={{ backgroundColor: card.badgeColor }}
               >
                 <p
