@@ -193,7 +193,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
         <header className={`flex justify-center items-center lg:h-[100px] h-[80px] ${!atTop ? "shadow-md" : ""}`}>
           <div className="p-5 max-w-[1320px] w-full mx-auto flex justify-between items-center">
             <Link 
-              to="/"
+              to="/counter"
               className="text-[27px] md:text-[40px] font-bold text-[#81C408]"
               style={{ fontFamily: "'Raleway', 'Pecifico', 'system-ui'" }}
             >
@@ -205,7 +205,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               <Link to="/" className="hover:text-[#81C408]">
                 Home
               </Link>
-              <Link to="/" className="hover:text-[#81C408]">
+              <Link to="/reduxdashboard" className="hover:text-[#81C408]">
                 Shop
               </Link>
               <Link to="/" className="hover:text-[#81C408]">

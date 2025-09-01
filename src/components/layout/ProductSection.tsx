@@ -1,45 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../features/products/ProductsSlice'
+import type { RootState } from '../../app/Store'
 import ProductCard from './ProductsCards';
-
-interface Product {
-  id: string;
-  name: string;
-  images: string[];
-  category: { name: string };
-  price: string;
-  description?: string;
-}
 
 const categories = ['All Products', 'Vegetables', 'Fruits', 'Bread', 'Meat'];
 
 const ProductSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Products');
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
+  const { items: products, loading, error } = useSelector((state: RootState) => state.products);
 
-useEffect(() => {
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch("http://localhost:3000/products");
-      const data = await res.json();
-      setProducts(data);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    } finally {
-      setLoading(false);
-    }
-  }
-  fetchProducts();
-}, []);
-
-
- const filteredProducts = 
-  selectedCategory === 'All Products'
-    ? products
-    : products.filter((p) => p.category.name === selectedCategory);
+  const filteredProducts =
+    selectedCategory === 'All Products'
+      ? products
+      : products.filter((p) => p.category?.name === selectedCategory);
 
   return (
     <section className='bg-[#FFFFF] mx-auto px-4 mt-20'>
@@ -51,13 +31,13 @@ useEffect(() => {
 
           <div className='flex gap-6 flex-wrap'>
             {categories.map((cat) => (
-              <button 
+              <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-8 py-2 h-fit text-left rounded-full border ${
                   selectedCategory === cat
-                  ? 'bg-[#FDC700] text-white'
-                  : 'bg-gray-100 text-[#456D84] border-0'
+                    ? 'bg-[#FDC700] text-white'
+                    : 'bg-gray-100 text-[#456D84] border-0'
                 } transition-colors duration-500`}
               >
                 {cat}
@@ -67,14 +47,18 @@ useEffect(() => {
         </div>
 
         <div className="grid grid-cols-1 text-center sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
-          {filteredProducts.length > 0 ? (
+          {loading ? (
+            <p className="text-gray-500 text-lg">Loading products...</p>
+          ) : error ? (
+            <p className="text-red-500 text-lg">Error: {error}</p>
+          ) : filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
-              <ProductCard 
+              <ProductCard
                 key={product.id}
                 id={product.id}
                 name={product.name}
-                image={product.images && product.images.length > 0 ? product.images[0] : ''}
-                category={product.category.name}
+                image={product.images?.[0] || ''}
+                category={product.category?.name || 'Uncategorized'}
                 price={`$${product.price}`}
                 description={product.description || 'Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.'}
               />

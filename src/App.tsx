@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { Provider } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Store } from './app/Store';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import "./App.css";
 import MainDashboard from "./components/mainLayout/MainDashboard";
@@ -21,6 +24,8 @@ import BestsellerProductTwo from "./components/bestsellerproducts/BestSellerProd
 // import AddProductPage from "./components/pages/AddProductPage";
 import LoginPage from "./components/pages/LoginPage";
 import SignUpPage from "./components/pages/SignUpPage";
+import FirstCounter from "./features/counter/FirstCounter";
+import ProductreduxDashboard from "./features/products/ProductreduxDashboard";
 
 import ProtectedRoute from "./components/protectroutes/ProtectedRoutes";
 import AddDashboardCategory from "./components/dashboardpages/addDashboardCategory/AddDashboardCategory";
@@ -98,6 +103,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
 
   return (
     <>
+    <Provider store={Store}>
       {!hideNavbar && (
         <Navbar
           isAuthenticated={isAuthenticated}
@@ -128,6 +134,8 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
 
         {/* <Route path="/add-product" element={<AddProductPage />} /> */}
         {/* <Route path="/add-category" element={<AddProductCategory />} /> */}
+        <Route path="/counter" element={ <FirstCounter /> }/>
+        <Route path="/reduxdashboard" element={ <ProductreduxDashboard /> }/>
         <Route
           path="/login"
           element={<LoginPage setIsAuthenticated={setIsAuthenticated} setUserRole={setUserRole} />}
@@ -152,6 +160,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
         {/* Redirect any unknown routes to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </Provider>
     </>
   );
 }
