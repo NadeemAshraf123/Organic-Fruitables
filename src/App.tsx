@@ -132,8 +132,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
           }
         />
 
-        {/* <Route path="/add-product" element={<AddProductPage />} /> */}
-        {/* <Route path="/add-category" element={<AddProductCategory />} /> */}
+        
         <Route path="/counter" element={ <FirstCounter /> }/>
         <Route path="/reduxdashboard" element={ <ProductreduxDashboard /> }/>
         <Route

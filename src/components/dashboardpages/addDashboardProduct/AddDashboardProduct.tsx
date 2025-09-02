@@ -26,12 +26,7 @@ const AddDashboardProduct = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const storedProducts = JSON.parse(localStorage.getItem("products") || "[]");
-  //   const Categories = JSON.parse(localStorage.getItem("categoryname") || "[]");
-  //   setTableProducts(storedProducts);
-  //   setUsersCategories(Categories);
-  // }, []);
+  
   useEffect(() => {
   const fetchData = async () => {
     try {

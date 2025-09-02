@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../../features/products/ProductsSlice'
-import type { RootState } from '../../app/Store'
+import { fetchProducts } from '../../features/products/ProductsSlice';
+import type { RootState } from '../../app/Store';
 import ProductCard from './ProductsCards';
 
 const categories = ['All Products', 'Vegetables', 'Fruits', 'Bread', 'Meat'];

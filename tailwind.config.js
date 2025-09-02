@@ -11,6 +11,9 @@ export default {
         roboto: ["Roboto", "sans-serif"],
         pro: ['Source Sans Pro', 'sans-serif'],
       },
+      screens:{
+        'xl1440': '1440px',
+      }
     },
   },
   plugins: [],

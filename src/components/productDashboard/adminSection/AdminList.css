@@ -12,13 +12,6 @@
   
 }
 
-/* Table Heading */
-/* .Admin-List-Heading {
-  font-size: 1.5rem;
-  color: #333;
-  padding-bottom: 10px;
-} */
-
 /* Table Styling */
 .admin-table {
   width: 100%;
@@ -159,6 +152,7 @@ p {
   .admin-table-container {
     padding: 10px;
     margin: 0;
+    overflow-x: scroll;
   }
   .Admin-List-Heading {
     font-size: 1.2rem;
