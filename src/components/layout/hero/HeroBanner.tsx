@@ -34,7 +34,8 @@ const HeroBanner: React.FC = () => {
     >
       <div className="w-full p-6 py-0 mx-auto  md:max-w-[1320px] md:w-full md:mx-auto  md:mt-10 lg:mt-30 md:py-16">
         <div className="flex flex-col lg:flex-row  justify-between md:justify-center gap-8 lg:gap-16 ">
-          <div className="flex-1 text-left w-full mx-auto mt-20">
+
+          <div className="flex-1 text-left w-full md:w-[696px] lg:w-full mx-auto mt-20">
             <h1 className="text-[22px] md:text-[24px] lg:text-[24px] text-[#FFB524] mb-4 font-medium">
               100% Organic Foods
             </h1>
@@ -62,6 +63,8 @@ const HeroBanner: React.FC = () => {
               </button>
             </form>
           </div>
+
+
 
           <div className="flex-1 relative md:max-w-[696px] lg:max-w-[512px] md:mx-auto mt-20 w-full mx-auto">
             <div className="relative overflow-hidden rounded-2xl">

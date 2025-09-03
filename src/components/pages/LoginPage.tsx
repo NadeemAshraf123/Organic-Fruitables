@@ -56,19 +56,19 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, setUserRole }
         return;
       }
 
-      // ✅ Successful login
+      
       setMessage("Login successful!");
       setMessageType("success");
 
-      // Save to localStorage
+      
       localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("userEmail", user.email); // so App.tsx can fetch role later if needed
+      localStorage.setItem("userEmail", user.email);
 
-      // Update state
+    
       setIsAuthenticated(true);
       setUserRole(user.role);
 
-      // Redirect based on role
+    
       setTimeout(() => {
         if (user.role === 'admin') {
           navigate('/dashboard', { replace: true });

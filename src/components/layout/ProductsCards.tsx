@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../../features/cart/CartSlice';
 import { ShoppingBag } from "lucide-react";
 
 interface ProductCardProps {
@@ -10,14 +12,20 @@ interface ProductCardProps {
   description: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  id,
-  name,
-  image,
-  category,
-  price,
-  description,
-}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ id, name, image, category, price, description}) => {
+        const dispatch = useDispatch() ;
+  
+  const handleAddToCart = () => {
+        dispatch(addToCart({
+          id: ProductCard.displayName,
+          name: ProductCard.name,
+          price: ProductCard.price,
+          image: ProductCard.image,
+          quantity: 1,
+        }));
+    };
+
+
   return (
     <div
       className="bg-white rounded-xl overflow-hidden transition-all duration-300 
@@ -52,6 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </span>
 
           <button
+          onClick={handleAddToCart}
             type="button"
             className="rounded-full border border-amber-400 px-3 py-1 text-[#81C408] hover:bg-[#FFB524] hover:text-[#FFFFFF] focus:outline-none focus:ring-4 focus:ring-amber-200"
           >

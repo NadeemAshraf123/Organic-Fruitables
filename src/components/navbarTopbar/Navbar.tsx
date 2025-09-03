@@ -98,7 +98,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
   };
 
   const handleAddProduct = () => {
-    navigate("/");
+    navigate("/cart");
     setPagesOpen(false);
     setMobilePagesOpen(false);
   };
@@ -410,6 +410,20 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
             >
               Contact
             </Link>
+
+
+              {isAuthenticated ? (
+                <button
+                  onClick={handleLogout}
+                  className="nav-button hover:text-[#81C408]"
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link to="/login" className="nav-button">
+                  Login
+                </Link>
+              )}
 
           
             <div className="flex items-center justify-start pt-4 border-t border-gray-200 mt-4">

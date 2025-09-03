@@ -35,7 +35,7 @@ const CardsGrid: React.FC = () => {
 
   return (
     <div className="w-full  bg-[#ffffff] flex justify-center items-center mt-10 lg:mt-20 lg:mb-15 mb-20">
-      <div className=" mt-10 mx-auto md:max-w-full  md:w-[1320] md:gap-10 lg:gap-10 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className=" mt-10 mx-auto md:max-w-full  md:w-[1320] md:gap-10 lg:gap-5 xl:gap-10 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {cards.map((card, index) => (
           <div
             key={index}

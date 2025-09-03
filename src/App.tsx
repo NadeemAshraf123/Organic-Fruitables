@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Provider } from 'react-redux';
+import { CartProvider } from "./features/cart/CartContext";
 import { useDispatch, useSelector } from 'react-redux';
 import { Store } from './app/Store';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
@@ -30,6 +31,7 @@ import ProductreduxDashboard from "./features/products/ProductreduxDashboard";
 import ProtectedRoute from "./components/protectroutes/ProtectedRoutes";
 import AddDashboardCategory from "./components/dashboardpages/addDashboardCategory/AddDashboardCategory";
 import AddDashboardProduct from "./components/dashboardpages/addDashboardProduct/AddDashboardProduct";
+import Cart from "./features/cart/Cart";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
@@ -103,6 +105,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
 
   return (
     <>
+    <CartProvider>
     <Provider store={Store}>
       {!hideNavbar && (
         <Navbar
@@ -134,6 +137,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
 
         
         <Route path="/counter" element={ <FirstCounter /> }/>
+        <Route path="/cart" element={ <Cart /> } />
         <Route path="/reduxdashboard" element={ <ProductreduxDashboard /> }/>
         <Route
           path="/login"
@@ -160,6 +164,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       </Provider>
+      </CartProvider>
     </>
   );
 }

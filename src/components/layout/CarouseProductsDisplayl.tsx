@@ -99,11 +99,11 @@ useEffect(() => {
       <div className="max-w-full w-[1320px] mx-auto min-h-[500px] md:h-[655px]">
         
 
-        <div className="flex flex-col md:flex-row gap-3 justify-between items-start md:items-center mb-6">
+        <div className="flex flex-col md:flex-row gap-3 justify-between md:items-center mb-6">
           <h2 className="text-2xl md:text-[27px] lg:text-4xl font-lightbold text-[#45595B]">
             Fresh Organic <span className="block md:inline">Vegetables</span>
           </h2>
-          <div className="flex items-center gap-4 md:gap-6">
+          <div className="flex justify-end gap-4 md:gap-6">
             <button
               onClick={scrollLeft}
               className="w-16 h-8 bg-transparent font-bold border border-[#FFB524] hover:bg-[#FFB524] hover:text-white text-[#81C408] rounded-full flex items-center justify-center transition"
