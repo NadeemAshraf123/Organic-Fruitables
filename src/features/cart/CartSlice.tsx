@@ -15,11 +15,30 @@ interface CartState {
   totalPrice: number;
 }
 
-const initialState: CartState = {
-  items: [],
-  totalItems: 0,
-  totalPrice: 0,
+
+const loadCart = (): CartState => {
+  try {
+    const stored = localStorage.getItem("cart");
+    return stored? JSON.parse(stored) : { items: [], totalItems: 0, totalPrice: 0};
+  } catch {
+    return { items: [], totalItems: 0, totalPrice: 0};
+  }
 }
+
+const saveCart = (state: CartState) => {
+  localStorage.setItem("cart", JSON.stringify(state));
+};
+
+
+const initialState: CartState = loadCart();
+
+
+
+// const initialState: CartState = {
+//   items: [],
+//   totalItems: 0,
+//   totalPrice: 0,
+// }
 
 const recalcTotals = (state: CartState) => {
   state.totalItems = state.items.reduce((sum, it) => sum + it.quantity, 0);
@@ -45,11 +64,14 @@ const CartSlice = createSlice({
 
       } 
       recalcTotals(state);
+      saveCart(state);
     },
 
     removeFromCart: (state, action: PayloadAction<{ id: string }>) => {
       state.items = state.items.filter((it) => it.id !== action.payload.id);
       recalcTotals(state);
+
+      saveCart(state);
     },
 
     updateQuantity: (state, action: PayloadAction<{ id: string; quantity: number }>) => {
@@ -58,12 +80,17 @@ const CartSlice = createSlice({
 
       it.quantity = Math.max(1, action.payload.quantity);
       recalcTotals(state);
+
+      saveCart(state);
     },
 
     clearCart: (state) => {
       state.items = [];
       recalcTotals(state);
+
+      saveCart(state);
     },
+
 
   },
 });

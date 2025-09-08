@@ -17,6 +17,425 @@
       "role": "admin"
     }
   ],
+  "orders": [
+    {
+      "id": "e75b",
+      "items": [
+        {
+          "id": 1,
+          "name": "Fresh Grapes",
+          "price": 4.99,
+          "image": "/src/assets/products/grapes.jpg",
+          "quantity": 2
+        },
+        {
+          "id": 2,
+          "name": "Parsely",
+          "price": 2.49,
+          "image": "/src/assets/caruselimages/parsely.jpg",
+          "quantity": 2
+        },
+        {
+          "id": "1",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "2",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/redBarries.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 21.200000000000003,
+      "status": "pending",
+      "createdAt": "2025-09-08T08:18:40.731Z"
+    },
+    {
+      "id": "7e14",
+      "items": [
+        {
+          "id": 2,
+          "name": "Parsely",
+          "price": 2.49,
+          "image": "/src/assets/caruselimages/parsely.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 2.49,
+      "status": "pending",
+      "createdAt": "2025-09-08T10:19:10.755Z"
+    },
+    {
+      "id": "2730",
+      "items": [
+        {
+          "id": 5,
+          "name": "Bananas",
+          "price": 1.29,
+          "image": "/src/assets/caruselimages/bananas.png",
+          "quantity": 2
+        },
+        {
+          "id": 4,
+          "name": "Bell Paper",
+          "price": 2.49,
+          "image": "/src/assets/caruselimages/bellPaper.jpg",
+          "quantity": 1
+        },
+        {
+          "id": 3,
+          "name": "Potatoes",
+          "price": 1.99,
+          "image": "/src/assets/caruselimages/potatoes.jpg",
+          "quantity": 2
+        },
+        {
+          "id": 7,
+          "name": "Potatoes",
+          "price": 2.49,
+          "image": "/src/assets/caruselimages/potatoes.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 11.540000000000001,
+      "status": "pending",
+      "createdAt": "2025-09-08T10:20:34.437Z"
+    },
+    {
+      "id": "47db",
+      "items": [
+        {
+          "id": 11,
+          "name": "Bell Paper",
+          "price": 2.49,
+          "image": "/src/assets/caruselimages/bellPaper.jpg",
+          "quantity": 1
+        },
+        {
+          "id": 12,
+          "name": "Bananas",
+          "price": 1.29,
+          "image": "/src/assets/caruselimages/bananas.png",
+          "quantity": 1
+        },
+        {
+          "id": 13,
+          "name": "Tomatoes",
+          "price": 1.29,
+          "image": "/src/assets/caruselimages/tomatoes.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 5.07,
+      "status": "pending",
+      "createdAt": "2025-09-08T10:21:55.470Z"
+    },
+    {
+      "id": "d7c6",
+      "items": [
+        {
+          "id": "2",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/redBarries.jpg",
+          "quantity": 2
+        },
+        {
+          "id": "3",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/grapes.jpg",
+          "quantity": 3
+        }
+      ],
+      "total": 15.6,
+      "status": "pending",
+      "createdAt": "2025-09-08T10:41:26.146Z"
+    },
+    {
+      "id": "c26a",
+      "items": [
+        {
+          "id": "4",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/appricot.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "3",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/grapes.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "6",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 9.36,
+      "status": "pending",
+      "createdAt": "2025-09-08T10:42:47.981Z"
+    },
+    {
+      "id": "fbcf",
+      "items": [
+        {
+          "id": "6",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "4",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/appricot.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "1",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "2",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/redBarries.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 12.48,
+      "status": "pending",
+      "createdAt": "2025-09-08T11:47:24.157Z"
+    },
+    {
+      "id": "b21c",
+      "items": [
+        {
+          "id": "1",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "2",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/redBarries.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "3",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/grapes.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "4",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/appricot.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "5",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/applefruite.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "6",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 18.720000000000002,
+      "status": "pending",
+      "createdAt": "2025-09-08T12:08:03.648Z"
+    },
+    {
+      "id": "fdd1",
+      "items": [
+        {
+          "id": "1",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 2
+        },
+        {
+          "id": "2",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/redBarries.jpg",
+          "quantity": 2
+        },
+        {
+          "id": "4",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/appricot.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "3",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/grapes.jpg",
+          "quantity": 2
+        },
+        {
+          "id": "5",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/applefruite.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "6",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 28.080000000000005,
+      "status": "pending",
+      "createdAt": "2025-09-08T12:09:13.319Z"
+    },
+    {
+      "id": "6ffe",
+      "items": [
+        {
+          "id": 6,
+          "name": "Tomatoes",
+          "price": 1.29,
+          "image": "/src/assets/caruselimages/tomatoes.jpg",
+          "quantity": 1
+        },
+        {
+          "id": 7,
+          "name": "Potatoes",
+          "price": 2.49,
+          "image": "/src/assets/caruselimages/potatoes.jpg",
+          "quantity": 1
+        },
+        {
+          "id": 5,
+          "name": "Bananas",
+          "price": 1.29,
+          "image": "/src/assets/caruselimages/bananas.png",
+          "quantity": 1
+        },
+        {
+          "id": 8,
+          "name": "Fresh Grapes",
+          "price": 4.99,
+          "image": "/src/assets/products/grapes.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "5",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/applefruite.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "4",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/appricot.jpg",
+          "quantity": 2
+        },
+        {
+          "id": "6",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 2
+        },
+        {
+          "id": "2",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/redBarries.jpg",
+          "quantity": 3
+        }
+      ],
+      "total": 35.02,
+      "status": "pending",
+      "createdAt": "2025-09-08T14:25:18.624Z"
+    },
+    {
+      "id": "4e5f",
+      "items": [
+        {
+          "id": "5",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/applefruite.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "4",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/appricot.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "6",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "3",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/grapes.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "2",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/redBarries.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "1",
+          "name": "Organic Tomato",
+          "price": 3.12,
+          "image": "/src/assets/products/oranges.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 18.720000000000002,
+      "status": "pending",
+      "createdAt": "2025-09-08T14:27:36.378Z"
+    }
+  ],
   "categories": [
     {
       "id": "493b",

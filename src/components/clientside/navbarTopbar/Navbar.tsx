@@ -28,7 +28,6 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-
   const totalItems = useAppSelector((state) => state.cart.totalItems);
 
   const navigate = useNavigate();
@@ -42,38 +41,34 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
   const menuRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     function handleClickOutSide(event: MouseEvent) {
-        if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-          setMobileMenuOpen(false);
-        }
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMobileMenuOpen(false);
+      }
     }
 
     document.addEventListener("mousedown", handleClickOutSide);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutSide);
-    }
-  }, []); 
+      document.removeEventListener("mousedown", handleClickOutSide);
+    };
+  }, []);
 
   const TOPBAR_HEIGHT = 56;
   const pagesRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
       setAtTop(currentScrollPos === 0);
 
-      
       if (currentScrollPos === 0) {
         setTopBarVisible(true);
         setPrevScrollPos(currentScrollPos);
         return;
       }
 
-      
       const isScrollingUp = currentScrollPos < prevScrollPos;
 
-      
       if (Math.abs(currentScrollPos - prevScrollPos) > 10) {
         setTopBarVisible(isScrollingUp);
       }
@@ -129,11 +124,10 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
 
   const handleCartClick = () => {
     navigate("/cart");
-  }
+  };
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50">
-    
       <div
         className={`transition-all duration-300 ${
           topBarVisible || atTop ? "translate-y-0" : "-translate-y-full"
@@ -217,7 +211,6 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
         </div>
       )}
 
-      
       <div
         className={`transition-all duration-300 bg-[#FFFFFF] ${
           topBarVisible || atTop ? "mt-0" : "mt-[-56px]"
@@ -237,7 +230,6 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               Fruitables
             </Link>
 
-          
             <nav className="hidden xl:flex justify-center space-x-6 text-gray-700 items-center text-sm sm:text-base">
               <Link to="/" className="hover:text-[#81C408]">
                 Home
@@ -277,6 +269,14 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                       >
                         Checkout
                       </button>
+
+                      <Link
+                        to="/order-history"
+                        className="block w-full text-left px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
+                      >
+                        View Order History
+                      </Link>
+
                       <Link
                         to="/testimonial"
                         className="block px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
@@ -299,11 +299,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               <Link to="/contact" className="hover:text-[#81C408]">
                 Contact
               </Link>
-
-
             </nav>
-
-
 
             <div className="hidden xl:flex items-center space-x-4 text-gray-700">
               {isAuthenticated ? (
@@ -335,11 +331,11 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                 >
                   <FaShoppingCart className="text-3xl" />
                 </button>
-                { totalItems > 0 && (
-                <span className="absolute -top-2 -right-3 bg-[#FFB524] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {totalItems}
-                </span>
-              )}
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-3 bg-[#FFB524] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
               </div>
 
               <button
@@ -349,22 +345,27 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                 <FaUser className="text-3xl" />
               </button>
             </div>
-          
+
             <div className="xl:hidden flex items-center gap-3">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="  rounded-md text-gray-700 hover:bg-gray-100 border border-gray-100"
                 aria-label="Toggle menu"
               >
-                <FontAwesomeIcon icon={faBars} className="text-[#81C408] w-10 h-6 p-1" />
+                <FontAwesomeIcon
+                  icon={faBars}
+                  className="text-[#81C408] w-10 h-6 p-1"
+                />
               </button>
             </div>
           </div>
         </header>
 
-      
         {mobileMenuOpen && (
-          <div ref={menuRef} className="xl:hidden bg-white shadow-lg p-4 space-y-3 border-t border-gray-200">
+          <div
+            ref={menuRef}
+            className="xl:hidden bg-white shadow-lg p-4 space-y-3 border-t border-gray-200"
+          >
             <Link
               to="/"
               className="block py-2 hover:text-[#81C408]"
@@ -420,6 +421,14 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                   >
                     Testimonial
                   </Link>
+
+                  <Link
+                    to="/order-history"
+                    className="block w-full text-left py-2 hover:text-[#81C408] hover:bg-gray-100"
+                  >
+                    View Order History
+                  </Link>
+
                   <Link
                     to="/404"
                     className="block py-2 hover:text-[#81C408]"
@@ -438,21 +447,19 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               Contact
             </Link>
 
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogout}
+                className="nav-button hover:text-[#81C408]"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" className="nav-button">
+                Login
+              </Link>
+            )}
 
-              {isAuthenticated ? (
-                <button
-                  onClick={handleLogout}
-                  className="nav-button hover:text-[#81C408]"
-                >
-                  Logout
-                </button>
-              ) : (
-                <Link to="/login" className="nav-button">
-                  Login
-                </Link>
-              )}
-
-          
             <div className="flex items-center justify-start pt-4 border-t border-gray-200 mt-4">
               <button
                 onClick={() => setSearchOpen(true)}
@@ -471,13 +478,16 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                   <FaShoppingCart className="text-3xl hover:text-green-600" />
                 </button>
 
-              {totalItems > 0 && (
-                <span className="absolute -top-2 -right-3 bg-[#FFB524] text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                  {totalItems}
-                </span>
-              )}
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-3 bg-[#FFB524] text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
               </div>
-              <button className="text-[#81C408] ml-6 mb-1 hover:text-green-600" aria-label="User account">
+              <button
+                className="text-[#81C408] ml-6 mb-1 hover:text-green-600"
+                aria-label="User account"
+              >
                 <FaUser className="text-3xl" />
               </button>
             </div>
