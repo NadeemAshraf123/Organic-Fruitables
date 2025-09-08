@@ -1,37 +1,34 @@
 import { useState, useEffect } from "react";
-import { Provider } from 'react-redux';
-import { CartProvider } from "./features/cart/CartContext";
-import { useDispatch, useSelector } from 'react-redux';
 import { Store } from './app/Store';
+
+import { Provider } from 'react-redux';
+// import { CartProvider } from "./features/cart/CartContext";
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import "./App.css";
-import MainDashboard from "./components/mainLayout/MainDashboard";
-import AuthenticatedUsers from "./components/productDashboard/adminSection/AuthenticatedUsers";
-import TopBar from "./components/layout/TopBar";
-import LandingPageHeader from "./components/layout/LandingPageHeader";
-import HeroBanner from "./components/layout/hero/HeroBanner";
-import FeatureHighlights from "./components/layout/FeatureHighlights";
-import ProductSection from "./components/layout/ProductSection";
-import CardsGrid from "./components/layout/CardsGrid";
-import CaruselProductsDisplay from "./components/layout/CarouseProductsDisplayl";
-import Footer from "./components/footer/Footer";
-import Navbar from "./components/navbarTopbar/Navbar";
-import StatsSection from "./components/statssection/StatsSection";
-import OurTestimonial from "./components/ourtestimonials/OurTesttimonial";
-import BestsellerProductsSection from "./components/bestsellerproducts/BestSellerProductsSection";
-import PromoBanner from "./components/promobanner/PromoBanner";
-import BestsellerProductTwo from "./components/bestsellerproducts/BestSellerProductTwo";
-// import AddProductCategory from "./components/pages/AddProductCategory";
-// import AddProductPage from "./components/pages/AddProductPage";
-import LoginPage from "./components/pages/LoginPage";
-import SignUpPage from "./components/pages/SignUpPage";
+import MainDashboard from "./components/adminSide/mainDashboard/MainDashboard";
+import AuthenticatedUsers from "./components/adminSide/adminSection/AuthenticatedUsers";
+import HeroBanner from "./components/clientside/hero/HeroBanner";
+import FeatureHighlights from "./components/clientside/featuresHighlight/FeatureHighlights";
+import ProductSection from "./components/clientside/productDisplaySection/ProductSection";
+import CardsGrid from "./components/clientside/cardgrid/CardsGrid";
+import CaruselProductsDisplay from "./components/clientside/caruselProducts/CarouseProductsDisplayl";
+import Footer from "./components/clientside/footer/Footer";
+import Navbar from "./components/clientside/navbarTopbar/Navbar";
+import StatsSection from "./components/clientside/statssection/StatsSection";
+import OurTestimonial from "./components/clientside/ourtestimonials/OurTesttimonial";
+import BestsellerProductsSection from "./components/clientside/bestsellerproducts/BestSellerProductsSection";
+import PromoBanner from "./components/clientside/promobanner/PromoBanner";
+import BestsellerProductTwo from "./components/clientside/bestsellerproducts/BestSellerProductTwo";
+import LoginPage from "./components/clientloginSignUp/LoginPage";
+import SignUpPage from "./components/clientloginSignUp/SignUpPage";
 import FirstCounter from "./features/counter/FirstCounter";
 import ProductreduxDashboard from "./features/products/ProductreduxDashboard";
 
-import ProtectedRoute from "./components/protectroutes/ProtectedRoutes";
-import AddDashboardCategory from "./components/dashboardpages/addDashboardCategory/AddDashboardCategory";
-import AddDashboardProduct from "./components/dashboardpages/addDashboardProduct/AddDashboardProduct";
-import Cart from "./features/cart/Cart";
+import ProtectedRoute from "./components/adminSide/protectroutes/ProtectedRoutes";
+import AddDashboardCategory from "./components/adminSide/dashboardpages/addDashboardCategory/AddDashboardCategory";
+import AddDashboardProduct from "./components/adminSide/dashboardpages/addDashboardProduct/AddDashboardProduct";
+import Cart from "./components/clientside/pages/Cart";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
@@ -105,7 +102,6 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
 
   return (
     <>
-    <CartProvider>
     <Provider store={Store}>
       {!hideNavbar && (
         <Navbar
@@ -164,7 +160,6 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       </Provider>
-      </CartProvider>
     </>
   );
 }
