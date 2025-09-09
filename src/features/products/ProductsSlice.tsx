@@ -3,13 +3,16 @@ import axios from 'axios';
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
   const response = await axios.get('http://localhost:3000/products');
-  return response.data;
+  return response.data.map((p: any) => ({ 
+    ...p,
+    price: Number(p.price),
+  }));
 });
 
 const productsSlice = createSlice({
   name: 'products',
   initialState: {
-    items: [],
+    items: [] as any[],
     loading: false,
     error: null,
   },

@@ -129,7 +129,7 @@ const handlePlaceOrder = async () => {
           <div className="border-t pt-4 mt-4">
             <p className="text-xl font-semibold flex justify-between">
               <span>Total:</span>
-              <span>${orderTotal.toFixed(2)}</span>
+              <span>${(Number(orderTotal) || 0).toFixed(2)}</span>
             </p>
           </div>
         </div>

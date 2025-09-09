@@ -10,7 +10,7 @@ interface ProductCardProps {
   name: string;
   image: string;
   category: string;
-  price: string;
+  price: number;
   description: string;
 }
 
@@ -65,8 +65,8 @@ const dispatch = useAppDispatch();
 
           <button
           onClick={() => dispatch(addToCart({
-            id, name, price: Number(price), image,})
-        )}
+            id, name, price, image,quantity: 1
+          }))}
             type="button"
             className="rounded-full border border-amber-400 px-3 py-1 text-[#81C408] hover:bg-[#FFB524] hover:text-[#FFFFFF] focus:outline-none focus:ring-4 focus:ring-amber-200"
           >

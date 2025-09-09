@@ -110,14 +110,14 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
     setSearchOpen(false);
   };
 
-  const handleAddProduct = () => {
+  const navigateToCartPage = () => {
     navigate("/cart");
     setPagesOpen(false);
     setMobilePagesOpen(false);
   };
 
-  const handleAddCategory = () => {
-    navigate("/");
+  const navigateToCheckOutPage = () => {
+    navigate("/check-out");
     setPagesOpen(false);
     setMobilePagesOpen(false);
   };
@@ -125,6 +125,19 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
   const handleCartClick = () => {
     navigate("/cart");
   };
+  const handleNotFoundPage = () => {
+    setPagesOpen(false);
+    setMobilePagesOpen(false);
+  }
+  const handleCurrentUserPage = () => {
+    navigate('/current-user-profile-page');
+    setPagesOpen(false);
+    setMobilePagesOpen(false);
+  }
+  const handleViewHistoryPage = () => {
+     setPagesOpen(false);
+    setMobilePagesOpen(false);
+  }
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50">
@@ -258,13 +271,13 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                   {pagesOpen && (
                     <div className="absolute top-full left-0 mt-2 w-44 bg-white shadow-lg rounded-md z-10 border border-gray-200">
                       <button
-                        onClick={handleAddProduct}
+                        onClick={navigateToCartPage}
                         className="block w-full text-left px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
                       >
                         Cart
                       </button>
                       <button
-                        onClick={handleAddCategory}
+                        onClick={navigateToCheckOutPage}
                         className="block w-full text-left px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
                       >
                         Checkout
@@ -273,6 +286,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                       <Link
                         to="/order-history"
                         className="block w-full text-left px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
+                        onClick={handleViewHistoryPage}
                       >
                         View Order History
                       </Link>
@@ -285,9 +299,9 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                         Testimonial
                       </Link>
                       <Link
-                        to="/404"
+                        to="/not-found-page"
                         className="block px-4 py-2 hover:text-[#81C408] hover:bg-gray-100"
-                        onClick={() => setPagesOpen(false)}
+                        onClick={handleNotFoundPage}
                       >
                         404 Page
                       </Link>
@@ -341,6 +355,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               <button
                 className="hover:text-green-600 text-[#81C408] text-2xl"
                 aria-label="User account"
+                onClick={handleCurrentUserPage}
               >
                 <FaUser className="text-3xl" />
               </button>
@@ -403,13 +418,13 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               {mobilePagesOpen && (
                 <div className="pl-4 mt-2 space-y-2 bg-gray-100 border-gray-200 border-1 rounded-xl">
                   <button
-                    onClick={handleAddProduct}
+                    onClick={navigateToCartPage}
                     className="block w-full text-left hover:text-[#81C408] hover:bg-gray-100"
                   >
                     Cart
                   </button>
                   <button
-                    onClick={handleAddCategory}
+                    onClick={navigateToCheckOutPage}
                     className="block w-full text-left hover:text-[#81C408]"
                   >
                     Checkout
@@ -425,14 +440,15 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                   <Link
                     to="/order-history"
                     className="block w-full text-left py-2 hover:text-[#81C408] hover:bg-gray-100"
+                    onClick={handleViewHistoryPage}
                   >
                     View Order History
                   </Link>
 
                   <Link
-                    to="/404"
+                    to="/not-found-page"
                     className="block py-2 hover:text-[#81C408]"
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={handleNotFoundPage}
                   >
                     404 Page
                   </Link>
@@ -487,6 +503,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               <button
                 className="text-[#81C408] ml-6 mb-1 hover:text-green-600"
                 aria-label="User account"
+                onClick={handleCurrentUserPage}
               >
                 <FaUser className="text-3xl" />
               </button>

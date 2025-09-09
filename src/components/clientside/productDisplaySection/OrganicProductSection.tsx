@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../../features/products/ProductsSlice';
 import type { RootState } from '../../../app/Store';
-import ProductCard from './ProductsCards';
+import ProductCard from './OrganicProductsCards';
 
 const categories = ['All Products', 'Vegetables', 'Fruits', 'Bread', 'Meat'];
 
-const ProductSection: React.FC = () => {
+const OrganicProductSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const dispatch = useDispatch();
 
@@ -59,7 +59,7 @@ const ProductSection: React.FC = () => {
                 name={product.name}
                 image={product.images?.[0] || ''}
                 category={product.category?.name || 'Uncategorized'}
-                price={`$${product.price}`}
+                price={Number(product.price)}
                 description={product.description || 'Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.'}
               />
             ))
@@ -74,4 +74,4 @@ const ProductSection: React.FC = () => {
   );
 };
 
-export default ProductSection;
+export default OrganicProductSection;

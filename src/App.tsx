@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { Store } from './app/Store';
-
 import { Provider } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
 import "./App.css";
 import MainDashboard from "./components/adminSide/mainDashboard/MainDashboard";
 import AuthenticatedUsers from "./components/adminSide/adminSection/AuthenticatedUsers";
 import HeroBanner from "./components/clientside/hero/HeroBanner";
 import FeatureHighlights from "./components/clientside/featuresHighlight/FeatureHighlights";
-import ProductSection from "./components/clientside/productDisplaySection/ProductSection";
+import ProductSection from "./components/clientside/productDisplaySection/OrganicProductSection";
 import CardsGrid from "./components/clientside/cardgrid/CardsGrid";
 import CaruselProductsDisplay from "./components/clientside/caruselProducts/CarouseProductsDisplayl";
 import Footer from "./components/clientside/footer/Footer";
@@ -31,6 +30,8 @@ import Cart from "./components/clientside/pages/Cart";
 import OrderConfirmation from "./components/clientside/pages/OrderConfirmation";
 import OrderHistory from "./components/clientside/pages/OrderHistoryPage";
 import CheckOutPage from "./components/clientside/pages/CheckOutPage";
+import NotFoundPage from "./components/clientside/pages/NotFoundPage";
+import CurrentUserProfilePage from "./components/clientside/pages/CurrentUserProfilePage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
@@ -102,6 +103,14 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
     return <Navigate to="/" replace />;
   };
 
+  const AuthGuard = ({ children }) => {
+    if (!isAuthenticated) {
+      return <Navigate to="/login" replace  />
+    }
+
+    return children;
+  }
+
   return (
     <>
     <Provider store={Store}>
@@ -133,12 +142,17 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
           }
         />
 
-        
+        <Route element={ <AuthGuard> <Outlet /> </AuthGuard>} >
         <Route path="/counter" element={ <FirstCounter /> }/>
         <Route path="/cart" element={ <Cart /> } />
         <Route path="/order-confirmation" element={ <OrderConfirmation /> } />
         <Route path="/order-history" element={ <OrderHistory /> } />
         <Route path="/check-out" element={ <CheckOutPage />  }  />
+        <Route path="/current-user-profile-page" element={ <CurrentUserProfilePage /> } />
+        </Route>
+
+
+        <Route path="/not-found-page"  element={ <NotFoundPage /> }  />  
         <Route path="/reduxdashboard" element={ <ProductreduxDashboard /> }/>
         <Route
           path="/login"

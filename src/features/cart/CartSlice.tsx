@@ -109,6 +109,12 @@ const CartSlice = createSlice({
     state.items.forEach(item => item.selected = false);
     saveCart(state);
   },
+
+  removeSelectedItems: (state) => {
+    state.items = state.items.filter(item => !item.selected)
+    recalcTotals(state);
+    saveCart(state);
+  },
 },
 });
 
@@ -120,6 +126,6 @@ export const {
   toggleItemSelection,
   selectAllItems, 
   deselectAllItems,
-  removeSelectedItems 
+  removeSelectedItems,
 } = CartSlice.actions;
 export default CartSlice.reducer;
