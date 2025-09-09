@@ -7,6 +7,7 @@ export interface CartItem {
   price: number;
   image?: string;
   quantity: number;
+  selected: boolean;
 }
 
 interface CartState {
@@ -60,7 +61,7 @@ const CartSlice = createSlice({
       if (existing) {
         existing.quantity += quantity;
       } else {
-        state.items.push({ id, name, price, image, quantity });
+        state.items.push({ id, name, price, image, quantity, selected: true });
 
       } 
       recalcTotals(state);
@@ -91,9 +92,34 @@ const CartSlice = createSlice({
       saveCart(state);
     },
 
-
+    toggleItemSelection: (state, action: PayloadAction<{ id: string }>) => {
+      const item = state.items.find(item => item.id === action.payload.id);
+      if (item) {
+        item.selected = !item.selected;
+        saveCart(state);
+      }
   },
+
+  selectAllItems: (state) => {
+    state.items.forEach(item => item.selected = true);
+    saveCart(state);
+  },
+
+  deselectedAllItems: (state) => {
+    state.items.forEach(item => item.selected = false);
+    saveCart(state);
+  },
+},
 });
 
-export const { addToCart, removeFromCart, updateQuantity, clearCart } = CartSlice.actions;
+export const { 
+  addToCart, 
+  removeFromCart, 
+  updateQuantity, 
+  clearCart, 
+  toggleItemSelection,
+  selectAllItems, 
+  deselectAllItems,
+  removeSelectedItems 
+} = CartSlice.actions;
 export default CartSlice.reducer;

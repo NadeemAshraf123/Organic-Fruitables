@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import { useAppSelector } from "../../../app/Hooks";
+import { useAppSelector, useAppDispatch } from "../../../app/Hooks";
+import { removeSelectedItems, clearCart } from "../../../features/cart/CartSlice";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
 const CheckOutPage: React.FC = () => {
-  const { items, totalPrice } = useAppSelector((state) => state.cart);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  
+  const orderItems = location.state?.orderItems || useAppSelector((state) => state.cart.items);
+  const orderTotal = location.state?.orderTotal || useAppSelector((state) => state.cart.totalPrice);
+  
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [checkoutStep, setCheckoutStep] = useState<"shipping" | "payment">(
-    "shipping"
-  );
+  const [checkoutStep, setCheckoutStep] = useState<"shipping" | "payment">("shipping");
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -24,7 +32,6 @@ const CheckOutPage: React.FC = () => {
       ...prevData,
       [name]: value,
     }));
-
 
     if (errors[name]) {
       setErrors((prevErrors) => {
@@ -67,16 +74,47 @@ const CheckOutPage: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+
+const handlePlaceOrder = async () => {
+  const orderPayload = {
+    items: orderItems,
+    total: orderTotal,
+    status: "pending",
+    shippingAddress: formData,
+    createdAt: new Date().toISOString()
+  };
+  
+  try {
+    await axios.post("http://localhost:3000/orders", orderPayload);
+    
+    setOrderPlaced(true);
+    setTimeout(() => {
+      navigate("/order-confirmation");
+    }, 2000);
+  } catch (error) {
+    console.log("Order placement failed", error);
+    alert("Order placement failed. Please try again.");
+  }
+};
+
+  if (orderPlaced) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 mt-20 text-center">
+        <h1 className="text-3xl font-bold mb-4 text-green-600">Order Placed Successfully!</h1>
+        <p className="text-lg">Redirecting to order confirmation...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto p-6 mt-20">
       <h1 className="text-3xl font-bold mb-8 text-center">Secure Checkout</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-    
         <div className="bg-white p-6 rounded-xl shadow-md">
           <h2 className="text-xl font-semibold mb-4 border-b pb-2">Your Order</h2>
           <ul className="divide-y">
-            {items.map((item) => (
+            {orderItems.map((item) => (
               <li key={item.id} className="py-4 flex justify-between">
                 <div>
                   <p className="font-medium">{item.name}</p>
@@ -91,19 +129,15 @@ const CheckOutPage: React.FC = () => {
           <div className="border-t pt-4 mt-4">
             <p className="text-xl font-semibold flex justify-between">
               <span>Total:</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>${orderTotal.toFixed(2)}</span>
             </p>
           </div>
         </div>
 
-        
         {checkoutStep === "shipping" && (
           <div className="bg-white p-6 rounded-xl shadow-md">
-            <h2 className="text-xl font-semibold mb-4 border-b pb-2">
-              Shipping Address
-            </h2>
+            <h2 className="text-xl font-semibold mb-4 border-b pb-2">Shipping Address</h2>
             <form onSubmit={handleShippingSubmit} className="space-y-4">
-            
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                   Email Address *
@@ -124,7 +158,6 @@ const CheckOutPage: React.FC = () => {
                 )}
               </div>
 
-              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -164,11 +197,10 @@ const CheckOutPage: React.FC = () => {
                 </div>
               </div>
 
-              
               <div>
                 <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
                   Street Address *
-                </label>
+                  </label>
                 <input
                   type="text"
                   id="address"
@@ -184,7 +216,6 @@ const CheckOutPage: React.FC = () => {
                 )}
               </div>
 
-            
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
@@ -224,7 +255,6 @@ const CheckOutPage: React.FC = () => {
                 </div>
               </div>
 
-            
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                   Phone Number (Optional)
@@ -255,12 +285,9 @@ const CheckOutPage: React.FC = () => {
           </div>
         )}
 
-        
         {checkoutStep === "payment" && (
           <div className="bg-white p-6 rounded-xl shadow-md">
-            <h2 className="text-xl font-semibold mb-4 border-b pb-2">
-              Payment Method
-            </h2>
+            <h2 className="text-xl font-semibold mb-4 border-b pb-2">Payment Method</h2>
             <div className="space-y-3">
               <label className="flex items-center gap-3 p-4 border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">
                 <input
@@ -291,7 +318,7 @@ const CheckOutPage: React.FC = () => {
               </label>
             </div>
             <button
-              onClick={() => alert("Order placed successfully!")}
+              onClick={handlePlaceOrder}
               className="w-full mt-6 bg-green-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-green-700 transition-colors"
             >
               Place Order
