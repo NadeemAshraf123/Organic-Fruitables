@@ -32,6 +32,7 @@ import OrderHistory from "./components/clientside/pages/OrderHistoryPage";
 import CheckOutPage from "./components/clientside/pages/CheckOutPage";
 import NotFoundPage from "./components/clientside/pages/NotFoundPage";
 import CurrentUserProfilePage from "./components/clientside/pages/CurrentUserProfilePage";
+import OrderManagement from "./components/clientside/pages/OrderManagement";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
@@ -149,6 +150,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole
         <Route path="/order-history" element={ <OrderHistory /> } />
         <Route path="/check-out" element={ <CheckOutPage />  }  />
         <Route path="/current-user-profile-page" element={ <CurrentUserProfilePage /> } />
+        <Route path="/order-management" element={ <OrderManagement /> } />
         </Route>
 
 

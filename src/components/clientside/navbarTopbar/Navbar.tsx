@@ -250,8 +250,8 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               <Link to="/reduxdashboard" className="hover:text-[#81C408]">
                 Shop
               </Link>
-              <Link to="/" className="hover:text-[#81C408]">
-                Shop Detail
+              <Link to="/order-management" className="hover:text-[#81C408]">
+                Order Management
               </Link>
 
               {isAuthenticated && (
@@ -396,11 +396,11 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               Shop
             </Link>
             <Link
-              to="/shop-detail"
+              to="/order-management"
               className="block py-2 hover:text-[#81C408]"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Shop Detail
+              Order Management
             </Link>
             <div>
               <button

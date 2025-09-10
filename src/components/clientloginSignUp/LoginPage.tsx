@@ -62,7 +62,12 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, setUserRole }
 
       
       localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("userEmail", user.email);
+      localStorage.setItem("user" , JSON.stringify({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      }));
 
     
       setIsAuthenticated(true);
@@ -86,7 +91,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, setUserRole }
     }
   };
 
+
+
   return (
+
     <div className="login-container">
       <div
         className="background-blur"

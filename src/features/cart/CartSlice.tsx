@@ -35,11 +35,6 @@ const initialState: CartState = loadCart();
 
 
 
-// const initialState: CartState = {
-//   items: [],
-//   totalItems: 0,
-//   totalPrice: 0,
-// }
 
 const recalcTotals = (state: CartState) => {
   state.totalItems = state.items.reduce((sum, it) => sum + it.quantity, 0);
@@ -105,7 +100,7 @@ const CartSlice = createSlice({
     saveCart(state);
   },
 
-  deselectedAllItems: (state) => {
+  deselectAllItems: (state) => {
     state.items.forEach(item => item.selected = false);
     saveCart(state);
   },

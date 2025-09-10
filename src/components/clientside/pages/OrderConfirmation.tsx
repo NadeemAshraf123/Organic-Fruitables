@@ -3,129 +3,268 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../features/currentuser/CurrentUserSlice";
 import type { RootState } from "../../../app/Store";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const OrderConfirmation: React.FC = () => {
-  const [latestOrder, setLatestOrder] = useState(null);
-  const [showMessage, setShowMessage] = useState(true);
-  const [showUserInfo, setShowUserInfo] = useState(false);
-  const navigate = useNavigate();
+  const [orders, setOrders] = useState<any[]>([]);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+  const [activeTab, setActiveTab] = useState<"current" | "history" | "user">(
+    "current"
+  );
+  const [phase, setPhase] = useState<"confirmation" | "tabs">("confirmation");
 
-
-  const currentUser = useSelector((state: RootState) => state.currentUser);
   const dispatch = useDispatch();
+  const currentUser = useSelector((state: RootState) => state.currentUser);
+
+  
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+    if (stored && (!currentUser || !currentUser.id)) {
+      try {
+        const parsed = JSON.parse(stored);
+        dispatch(setCurrentUser(parsed));
+      } catch (err) {
+        console.warn("Failed to parse stored user", err);
+      }
+    }
+  }, [dispatch, currentUser]);
+
+  
+  useEffect(() => {
+    const fetchUserOrders = async (userId: string) => {
+      setLoadingOrders(true);
+      try {
+        const res = await axios.get(
+          `http://localhost:3000/orders?userId=${userId}&sort=createdAt&order=asc`
+        );
+        console.log("orders", res);
+        setOrders(Array.isArray(res.data) ? res.data : []);
+      } catch (error) {
+        console.error("Failed to fetch user orders", error);
+        setOrders([]);
+      } finally {
+        setLoadingOrders(false);
+      }
+    };
+
+    const userId =
+      currentUser?.id ??
+      (() => {
+        const stored = localStorage.getItem("user");
+        if (!stored) return null;
+        try {
+          return JSON.parse(stored).id;
+        } catch {
+          return null;
+        }
+      })();
+
+    if (userId) {
+      fetchUserOrders(userId);
+    }
+  }, [currentUser?.id]);
+
 
   useEffect(() => {
-    const fetchLatestOrder = async () => {
-      try {
-        const res = await axios.get("http://localhost:3000/orders?_sort=createdAt&_order=desc&_limit=1");
-        setLatestOrder(res.data[0]);
-      } catch (error) {
-        console.error("Failed to fetch latest order", error);
-      }
-    };
+    if (phase === "confirmation") {
+      const timer = setTimeout(() => {
+        setPhase("tabs");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [phase]);
 
-    const currentuser = async () => {
-      const email = localStorage.getItem("userEmail");
-      if (!email || currentUser) 
-        return;
+  
+  const undeliveredOrders = orders.filter(
+    (order) => order.status !== "delivered"
+  );
+  const deliveredOrders = orders.filter(
+    (order) => order.status === "delivered"
+  );
 
-      try {
-        const res = await axios.get(`http://localhost:3000/fruitablesusers?email=${email}`);
-        const data = res.data;
-        if (data.length > 0) {
-          dispatch(setCurrentUser(data[0]));
-        }
-      } catch (error) {
-        console.log("Failed to fetched user:", error);
-      }
-    };
-
-    fetchLatestOrder();
-    currentuser();
-
-
-
-const timer = setTimeout(() => {
-  setShowMessage(false);
-}, 3000);
-
-return () => clearTimeout(timer);
-  }, []);
-
+  const fmt = (v: any) => {
+    const n = typeof v === "number" ? v : Number(v);
+    return (isNaN(n) ? 0 : n).toFixed(2);
+  };
 
   return (
-  
-    <div className="flex flex-col md:flex-row gap-6 mt-50 px-2">
+    <div className="flex justify-center items-center min-h-[70vh] px-4 mt-20">
+      
+      {phase === "confirmation" && (
+        <div className="bg-white p-6 mt-25 rounded-xl shadow-md text-center w-full max-w-lg">
+          <h2 className="text-2xl font-bold text-green-700 mb-4">
+            Order Placed Successfully!
+          </h2>
+          <p className="text-gray-700 mb-6">
+            Your order has been received and is currently{" "}
+            <strong>pending</strong>.
+          </p>
 
-     
- <div className="md:w-1/2 bg-gray-100 p-4 rounded shadow">
-
-   <div className="flex items-center justify-start gap-4 mb-2">
-  <button
-    onClick={() => setShowUserInfo(prev => !prev)}
-    className="text-[#81C408] font-semibold cursor-pointer hover:text-[#4d7504]"
-  >
-    {showUserInfo ? "Hide Info" : "Active User"}
-  </button>
-   <button
-      // onClick={() => navigate("/orders")}
-      className="text-[#81C408] font-semibold cursor-pointer hover:text-[#4d7504]"
-    >
-      Orders
-    </button>
-     <button
-      // onClick={() => navigate("/orders")}
-      className="text-[#81C408] font-semibold cursor-pointer hover:text-[#4d7504]"
-    >
-      Orders History
-    </button>
-  </div>
-
-  {showUserInfo && currentUser && (
-    <div className="mt-4 text-left">
-      <p><strong>ID:</strong> {currentUser.id}</p>
-      <p><strong>Name:</strong> {currentUser.name}</p>
-      <p><strong>Email:</strong> {currentUser.email}</p>
-      <p><strong>Role:</strong> {currentUser.role}</p>
-    </div>
-  )}
-
-  {!currentUser && (
-    <p className="text-red-600 mt-4">No user is logged in.</p>
-  )}
-</div>
-
-
-
-
-    <div className="md:w-2/3 bg-white p-6 rounded-xl shadow-md">
-      {showMessage && (
-      <h2 id="order" className="text-2xl font-bold text-green-700 mb-4"
-        >
-         Order Placed Successfully!
-      </h2>
+          {undeliveredOrders.length > 0 && (
+            <div className="bg-gray-50 p-4 rounded-lg shadow-inner">
+              <h3 className="text-lg font-semibold mb-2">Latest Order</h3>
+              <ul className="list-disc pl-6 text-left">
+                {undeliveredOrders[0].items.map((item: any) => (
+                  <li key={item.id}>
+                    {item.name} × {item.quantity} — ${fmt(item.price)}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 font-semibold">
+                Total: ${fmt(undeliveredOrders[0].total)}
+              </p>
+              <p className="text-sm text-gray-500 mt-2">
+                Placed at:{" "}
+                {new Date(undeliveredOrders[0].createdAt).toLocaleString()}
+              </p>
+            </div>
+          )}
+        </div>
       )}
 
-      <p className="text-gray-700 mb-6">Your order has been received and is currently <strong>pending</strong>.</p>
+    
+      {phase === "tabs" && (
+        <div className="w-full max-w-4xl mt-30">
+          
+          <div className="flex justify-center space-x-6 mb-6">
+            <button
+              onClick={() => setActiveTab("user")}
+              className={`font-semibold cursor-pointer ${
+                activeTab === "user"
+                  ? "text-[#81C408] underline"
+                  : "text-gray-700"
+              }`}
+            >
+              Active User
+            </button>
+            <button
+              onClick={() => setActiveTab("current")}
+              className={`font-semibold cursor-pointer ${
+                activeTab === "current"
+                  ? "text-[#81C408] underline"
+                  : "text-gray-700"
+              }`}
+            >
+              Orders
+            </button>
+            <button
+              onClick={() => setActiveTab("history")}
+              className={`font-semibold cursor-pointer ${
+                activeTab === "history"
+                  ? "text-[#81C408] underline"
+                  : "text-gray-700"
+              }`}
+            >
+              Orders History
+            </button>
+          </div>
 
-      {latestOrder && (
-        <div className="bg-white p-4 rounded-xl shadow-md">
-          <h3 className="text-lg font-semibold mb-2">Order Summary</h3>
-          <ul className="list-disc pl-6">
-            {latestOrder.items.map((item: any) => (
-              <li key={item.id}>
-                {item.name} × {item.quantity} — ${item.price.toFixed(2)}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-4 font-semibold">Total: ${latestOrder.total.toFixed(2)}</p>
-          <p className="text-sm text-gray-500 mt-2">Placed at: {new Date(latestOrder.createdAt).toLocaleString()}</p>
+      
+          <div className="bg-white p-6 rounded-xl shadow-md">
+          
+            {activeTab === "user" && (
+              currentUser?.id ? (
+                <div className="text-left">
+                  <p>
+                    <strong>ID:</strong> {currentUser.id}
+                  </p>
+                  <p>
+                    <strong>Name:</strong> {currentUser.name}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {currentUser.email}
+                  </p>
+                  <p>
+                    <strong>Role:</strong> {currentUser.role}
+                  </p>
+                </div>
+              ) : (
+                <p className="text-red-600">No user is logged in.</p>
+              )
+            )}
+
+          
+            {activeTab === "current" && (
+              <>
+                {loadingOrders ? (
+                  <p>Loading undelivered orders...</p>
+                ) : undeliveredOrders.length === 0 ? (
+                  <p>No undelivered orders found.</p>
+                ) : (
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold mb-2">
+                      Undelivered Orders
+                    </h3>
+                    {undeliveredOrders.map((order) => (
+                      <div
+                        key={order.id}
+                        className="bg-gray-50 p-4 rounded-lg shadow"
+                      >
+                        <p className="font-medium">Order ID: {order.id}</p>
+                        <p className="text-sm text-gray-500">
+                          Placed: {new Date(order.createdAt).toLocaleString()}
+                        </p>
+                        <p className="text-sm">
+                          Status:{" "}
+                          <span className="font-semibold">{order.status}</span>
+                        </p>
+                        <ul className="list-disc pl-6 mt-2">
+                          {order.items.map((item: any) => (
+                            <li key={item.id}>
+                              {item.name} × {item.quantity} — ${fmt(item.price)}
+                            </li>
+                          ))}
+                        </ul>
+                        <p className="mt-2 font-semibold">
+                          Total: ${fmt(order.total)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+
+            
+            {activeTab === "history" && (
+              <>
+                {loadingOrders ? (
+                  <p>Loading delivered orders...</p>
+                ) : deliveredOrders.length === 0 ? (
+                  <p>No delivered orders found.</p>
+                ) : (
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold mb-2">
+                      Delivered Orders
+                    </h3>
+                    {deliveredOrders.map((order) => (
+                      <div
+                        key={order.id}
+                        className="bg-gray-50 p-4 rounded-lg shadow"
+                      >
+                        <p className="font-medium">Order ID: {order.id}</p>
+                        <p className="text-sm text-gray-500">
+                          Placed: {new Date(order.createdAt).toLocaleString()}
+                        </p>
+                        <ul className="list-disc pl-6 mt-2">
+                          {order.items.map((item: any) => (
+                            <li key={item.id}>
+                              {item.name} × {item.quantity} — ${fmt(item.price)}
+                            </li>
+                          ))}
+                        </ul>
+                        <p className="mt-2 font-semibold">
+                          Total: ${fmt(order.total)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>
-
-    </div>    
   );
 };
 

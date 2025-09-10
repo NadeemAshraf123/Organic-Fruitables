@@ -59,7 +59,7 @@ const OrganicProductSection: React.FC = () => {
                 name={product.name}
                 image={product.images?.[0] || ''}
                 category={product.category?.name || 'Uncategorized'}
-                price={Number(product.price)}
+                price={product.price ? parseFloat(product.price) : 0} 
                 description={product.description || 'Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.'}
               />
             ))

@@ -76,7 +76,17 @@ const CheckOutPage: React.FC = () => {
 
 
 const handlePlaceOrder = async () => {
+
+  const storedUser = localStorage.getItem("user");
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
+
+  if (!currentUser) {
+    alert("You must be logged in to place an order.");
+    navigate("/login");
+    return;
+  }
   const orderPayload = {
+    userId: currentUser.id,
     items: orderItems,
     total: orderTotal,
     status: "pending",
@@ -319,7 +329,7 @@ const handlePlaceOrder = async () => {
             </div>
             <button
               onClick={handlePlaceOrder}
-              className="w-full mt-6 bg-green-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-green-700 transition-colors"
+              className="w-full mt-6 bg-green-600 cursor-pointer text-white font-semibold py-3 px-4 rounded-md hover:bg-green-700 transition-colors"
             >
               Place Order
             </button>
