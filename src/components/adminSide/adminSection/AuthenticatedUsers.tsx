@@ -11,7 +11,7 @@ const AuthenticatedUsers = () => {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editUser, setEditUser] = useState(null);
-  const [editFormData, setEditFormData] = useState({ name: '', email: '', password: '' ,role:""});
+  const [editFormData, setEditFormData] = useState({ name: '', email: '', password: '', role: "" });
 
   useEffect(() => {
     fetch('http://localhost:3000/fruitablesusers')
@@ -27,7 +27,7 @@ const AuthenticatedUsers = () => {
   }, []);
 
   const filteredAdmins = admins.filter((admin) => admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                                  admin.email.toLowerCase().includes(searchTerm.toLowerCase()))
+    admin.email.toLowerCase().includes(searchTerm.toLowerCase()))
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this user?');
@@ -46,7 +46,7 @@ const AuthenticatedUsers = () => {
 
   const handleEditClick = (admin) => {
     setEditUser(admin);
-    setEditFormData({ name: admin.name, email: admin.email, password: admin.password , role:""});
+    setEditFormData({ name: admin.name, email: admin.email, password: admin.password, role: "" });
   };
 
   const handleEditSubmit = async (e) => {
@@ -82,8 +82,8 @@ const AuthenticatedUsers = () => {
   if (loading) return <p>Loading admins data...</p>;
 
   return (
-    <div className="admin-table-container">        
-      
+    <div className="admin-table-container">
+
       <table className="admin-table">
         <thead>
           <tr>
@@ -109,15 +109,15 @@ const AuthenticatedUsers = () => {
               <td>{admin.password}</td>
               <td>{admin.role}</td>
               <td className="action-buttons">
-                <button 
-                  className="edit-btn" 
+                <button
+                  className="edit-btn"
                   onClick={() => handleEditClick(admin)}
                   aria-label="Edit"
                 >
                   <FaEdit />
                 </button>
-                <button 
-                  className="delete-btn" 
+                <button
+                  className="delete-btn"
                   onClick={() => handleDelete(admin.id)}
                   aria-label="Delete"
                 >

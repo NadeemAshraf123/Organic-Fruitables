@@ -36,7 +36,12 @@ import OrderManagement from "./components/clientside/pages/OrderManagement";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
-  const [userRole, setUserRole] = useState<string>("");
+  const [userData, setUserData] = useState<string>(JSON.parse(localStorage.getItem("user") || null));
+  console.log("userRole", userData);
+
+
+
+
 
   useEffect(() => {
     const syncAuth = async () => {
@@ -44,20 +49,20 @@ function App() {
       setIsAuthenticated(auth);
 
       if (auth) {
-        const email = localStorage.getItem("userEmail");
+        const email = userData?.email;
         if (email) {
           try {
             const res = await fetch(`http://localhost:3000/fruitablesusers?email=${email}`);
             const users = await res.json();
             if (users.length > 0) {
-              setUserRole(users[0].role);
+              // setUserRole(users[0].role);
             }
           } catch (error) {
             console.error("Failed to fetch user role:", error);
           }
         }
       } else {
-        setUserRole("");
+        // setUserRole("");
       }
     };
 
@@ -71,115 +76,136 @@ function App() {
       <AppContent
         isAuthenticated={isAuthenticated}
         setIsAuthenticated={setIsAuthenticated}
-        userRole={userRole}
-        setUserRole={setUserRole}
+        userData={userData}
+        setUserData={setUserData}
       />
     </Router>
   );
 }
 
-function AppContent({ isAuthenticated, setIsAuthenticated, userRole, setUserRole }) {
+function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData }) {
   const location = useLocation();
   const hideNavbar = location.pathname.startsWith("/dashboard");
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("userEmail");
+    // localStorage.removeItem("userEmail");
+    localStorage.removeItem("user");
     setIsAuthenticated(false);
-    setUserRole("");
+    setUserData(null);
   };
 
-  
-  const DashboardGuard = ({ children }) => {
-    if (!isAuthenticated) {
 
-      return <Navigate to="/login" replace />;
-    }
-    
-    if (userRole === "admin") {
+  const DashboardGuard = ({ children }) => {
+
+
+    if (userData?.role === "admin") {
 
       return children;
+    } else {
+      return <Navigate to="/" replace />;
     }
-    
-    return <Navigate to="/" replace />;
   };
 
   const AuthGuard = ({ children }) => {
     if (!isAuthenticated) {
-      return <Navigate to="/login" replace  />
+      return <Navigate to="/login" replace />
     }
 
     return children;
   }
 
+  const GuestGuard = ({ children }) => {
+
+    if (isAuthenticated) {
+      // If already logged in, go home or dashboard
+      return <Navigate to="/" replace />;
+    }
+
+    return children;
+  };
+
+   const DashboardAccessGuard = ({ children }) => {
+
+    if (isAuthenticated && userData?.role !== "admin") {
+      // If already logged in, go home or dashboard
+      return <Navigate to="/dashboard" replace />;
+    }
+
+    return children;
+  };
+
   return (
     <>
-    <Provider store={Store}>
-      {!hideNavbar && (
-        <Navbar
-          isAuthenticated={isAuthenticated}
-          onLogout={handleLogout}
-          userRole={userRole}
-        />
-      )}
+      <Provider store={Store}>
+        {!hideNavbar && (
+          <Navbar
+            isAuthenticated={isAuthenticated}
+            onLogout={handleLogout}
+            userData={userData}
+          />
+        )}
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <HeroBanner />
-              <FeatureHighlights />
-              <ProductSection />
-              <CardsGrid />
-              <CaruselProductsDisplay />
-              <PromoBanner />
-              <BestsellerProductsSection />
-              <BestsellerProductTwo />
-              <StatsSection />
-              <OurTestimonial />
-              <Footer />
-            </>
-          }
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <HeroBanner />
+                <FeatureHighlights />
+                <ProductSection />
+                <CardsGrid />
+                <CaruselProductsDisplay />
+                <PromoBanner />
+                <BestsellerProductsSection />
+                <BestsellerProductTwo />
+                <StatsSection />
+                <OurTestimonial />
+                <Footer />
+              </>
+            }
+          />
 
-        <Route element={ <AuthGuard> <Outlet /> </AuthGuard>} >
-        <Route path="/counter" element={ <FirstCounter /> }/>
-        <Route path="/cart" element={ <Cart /> } />
-        <Route path="/order-confirmation" element={ <OrderConfirmation /> } />
-        <Route path="/order-history" element={ <OrderHistory /> } />
-        <Route path="/check-out" element={ <CheckOutPage />  }  />
-        <Route path="/current-user-profile-page" element={ <CurrentUserProfilePage /> } />
-        <Route path="/order-management" element={ <OrderManagement /> } />
-        </Route>
+          <Route element={<AuthGuard> <Outlet /> </AuthGuard>} >
+            <Route path="/counter" element={<FirstCounter />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/order-confirmation" element={<OrderConfirmation />} />
+            <Route path="/order-history" element={<OrderHistory />} />
+            <Route path="/check-out" element={<CheckOutPage />} />
+            <Route path="/current-user-profile-page" element={<CurrentUserProfilePage />} />
+            <Route path="/order-management" element={<OrderManagement />} />
+            <Route
+              path="/dashboard"
+              element={
+                <DashboardGuard>
+                  <MainDashboard/>
+                </DashboardGuard>
+              }
+            >
+              <Route index element={<AuthenticatedUsers />} />
+              <Route path="authenticatedusers" element={<AuthenticatedUsers />} />
+              <Route path="adddashboardproduct" element={<AddDashboardProduct />} />
+              <Route path="adddashboardcategory" element={<AddDashboardCategory />} />
+            </Route>
+          </Route>
 
 
-        <Route path="/not-found-page"  element={ <NotFoundPage /> }  />  
-        <Route path="/reduxdashboard" element={ <ProductreduxDashboard /> }/>
-        <Route
-          path="/login"
-          element={<LoginPage setIsAuthenticated={setIsAuthenticated} setUserRole={setUserRole} />}
-        />
-        <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/not-found-page" element={<NotFoundPage />} />
+          <Route path="/reduxdashboard" element={<ProductreduxDashboard />} />
 
-    
-        <Route
-          path="/dashboard"
-          element={
-            <DashboardGuard>
-              <MainDashboard />
-            </DashboardGuard>
-          }
-        >
-          <Route index element={<AuthenticatedUsers />} />
-          <Route path="authenticatedusers" element={<AuthenticatedUsers />} />
-          <Route path="adddashboardproduct" element={<AddDashboardProduct />} />
-          <Route path="adddashboardcategory" element={<AddDashboardCategory />} />
-        </Route>
+          <Route
+            path="/login"
+            element={<GuestGuard><LoginPage setIsAuthenticated={setIsAuthenticated} setUserData={setUserData} /></GuestGuard>}
+          />
+          <Route path="/signup" element={
+            <GuestGuard>
+            <SignUpPage />
+            </GuestGuard>
+            } />
 
-      
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </Provider>
     </>
   );

@@ -11,7 +11,9 @@ const CurrentUserProfilePage: React.FC = () => {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      const email = localStorage.getItem("userEmail");
+      const user = localStorage.getItem("user");
+      const email=JSON.parse(user || '{}').email;
+      
       if (!email) return setLoading(false);
 
       try {

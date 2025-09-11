@@ -5,10 +5,10 @@ import './LoginPage.css';
 
 interface LoginPageProps {
   setIsAuthenticated: (value: boolean) => void;
-  setUserRole: (role: string) => void;
+  setUserData: (role: string) => void;
 }
 
-const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, setUserRole }) => {
+const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, setUserData }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [message, setMessage] = useState<string | null>(null);
@@ -71,7 +71,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, setUserRole }
 
     
       setIsAuthenticated(true);
-      setUserRole(user.role);
+      setUserData(user);
 
     
       setTimeout(() => {
