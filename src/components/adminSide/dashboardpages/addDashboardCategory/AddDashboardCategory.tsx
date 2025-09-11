@@ -291,7 +291,7 @@ const deleteCategory = async (id: string) => {
 
       
 
-      {/* Add Category Modal */}
+    
       {showAddModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>

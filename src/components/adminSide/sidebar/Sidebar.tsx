@@ -72,6 +72,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           <FaBoxOpen className={`${styles.icon} ${isActive("/dashboard/adddashboardcategory") ? styles.activeIcon : ""}`} />
           Add Category
         </li>
+
+
+         <li
+          className={`${styles.menuItem} ${isActive("/dashboard/ordermanagement") ? styles.active : ""}`}
+          onClick={() => { 
+                         navigate("/dashboard/ordermanagement")
+                         if (window.innerWidth < 992) toggleSidebar()
+                         }}
+        >
+          <FaBoxOpen className={`${styles.icon} ${isActive("/dashboard/ordermanagement") ? styles.activeIcon : ""}`} />
+          Order Management
+        </li>
       </ul>
     </div>
   );

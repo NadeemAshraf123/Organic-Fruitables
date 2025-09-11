@@ -106,6 +106,9 @@ const handlePlaceOrder = async () => {
     alert("Order placement failed. Please try again.");
   }
 };
+const handleFormSubmit =() => {
+
+}
 
   if (orderPlaced) {
     return (
@@ -121,30 +124,10 @@ const handlePlaceOrder = async () => {
       <h1 className="text-3xl font-bold mb-8 text-center">Secure Checkout</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-xl font-semibold mb-4 border-b pb-2">Your Order</h2>
-          <ul className="divide-y">
-            {orderItems.map((item) => (
-              <li key={item.id} className="py-4 flex justify-between">
-                <div>
-                  <p className="font-medium">{item.name}</p>
-                  <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
-                </div>
-                <p className="font-medium">
-                  ${(item.price * item.quantity).toFixed(2)}
-                </p>
-              </li>
-            ))}
-          </ul>
-          <div className="border-t pt-4 mt-4">
-            <p className="text-xl font-semibold flex justify-between">
-              <span>Total:</span>
-              <span>${(Number(orderTotal) || 0).toFixed(2)}</span>
-            </p>
-          </div>
-        </div>
 
-        {checkoutStep === "shipping" && (
+
+
+         {checkoutStep === "shipping" && (
           <div className="bg-white p-6 rounded-xl shadow-md">
             <h2 className="text-xl font-semibold mb-4 border-b pb-2">Shipping Address</h2>
             <form onSubmit={handleShippingSubmit} className="space-y-4">
@@ -285,15 +268,43 @@ const handlePlaceOrder = async () => {
                 )}
               </div>
 
-              <button
+           
+            </form>
+          </div>
+        )}
+
+
+        <div className="bg-white p-6 rounded-xl shadow-md">
+          <h2 className="text-xl font-semibold mb-4 border-b pb-2">Your Order</h2>
+          <ul className="divide-y">
+            {orderItems.map((item) => (
+              <li key={item.id} className="py-4 flex justify-between">
+                <div>
+                  <p className="font-medium">{item.name}</p>
+                  <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                </div>
+                <p className="font-medium">
+                  ${(item.price * item.quantity).toFixed(2)}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <div className="border-t pt-4 mt-4">
+            <p className="text-xl font-semibold flex justify-between">
+              <span>Total:</span>
+              <span>${(Number(orderTotal) || 0).toFixed(2)}</span>
+            </p>
+          </div>
+
+             <button
                 type="submit"
                 className="w-full bg-green-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-green-700 transition-colors"
               >
                 Continue to Payment
               </button>
-            </form>
-          </div>
-        )}
+        </div>
+
+       
 
         {checkoutStep === "payment" && (
           <div className="bg-white p-6 rounded-xl shadow-md">
@@ -335,6 +346,7 @@ const handlePlaceOrder = async () => {
             </button>
           </div>
         )}
+
       </div>
     </div>
   );

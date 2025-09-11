@@ -4,32 +4,13 @@
   background-color: #F3F4FF;
   height: auto;
   width: auto;
-  margin-left: 0px;
 }
-
-/* Header Styles */
-/* .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 15px;
-} */
-
-/* .title {
-  color: #2c3e50;
-  font-size: 22px;
-  font-weight: 600;
-  margin: 0;
-} */
 
 .actions {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-  /* align-items: center; */
-  /* gap: 15px; */
+
 }
 
 .searchContainer {
@@ -113,7 +94,6 @@
   background-color: #f9f9f9;
 }
 
-/* Table Cell Styles */
 .categoryImage {
   width: 40px;
   height: 40px;
@@ -138,7 +118,6 @@
   font-weight: 500;
 }
 
-/* Action Buttons */
 .actionButtons {
   display: flex;
   gap: 8px;
@@ -170,7 +149,7 @@
   background-color: rgba(231, 76, 60, 0.1);
 }
 
-/* No Categories */
+
 .noCategories {
   text-align: center;
   padding: 40px;
@@ -185,7 +164,7 @@
 
 
 
-/* Modal Overlay */
+
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -835,7 +814,7 @@
 /* Large Screens (≥1280px) */
 @media (min-width: 1280px) {
   .container {
-    max-width: 1200px;
+    max-width: full;
     margin: 0 auto;
   }
 

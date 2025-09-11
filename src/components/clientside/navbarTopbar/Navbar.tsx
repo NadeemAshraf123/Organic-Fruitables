@@ -130,7 +130,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
     setMobilePagesOpen(false);
   }
   const handleCurrentUserPage = () => {
-    navigate('/current-user-profile-page');
+    navigate('/order-confirmation');
     setPagesOpen(false);
     setMobilePagesOpen(false);
   }
@@ -250,9 +250,9 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               <Link to="/reduxdashboard" className="hover:text-[#81C408]">
                 Shop
               </Link>
-              <Link to="/order-management" className="hover:text-[#81C408]">
+              {/* <Link to="/order-management" className="hover:text-[#81C408]">
                 Order Management
-              </Link>
+              </Link> */}
 
               {isAuthenticated && (
                 <div className="relative" ref={pagesRef}>
@@ -310,7 +310,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                 </div>
               )}
 
-              <Link to="/contact" className="hover:text-[#81C408]">
+              <Link to="/contact-us" className="hover:text-[#81C408]">
                 Contact
               </Link>
             </nav>
@@ -395,13 +395,13 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
             >
               Shop
             </Link>
-            <Link
+            {/* <Link
               to="/order-management"
               className="block py-2 hover:text-[#81C408]"
               onClick={() => setMobileMenuOpen(false)}
             >
               Order Management
-            </Link>
+            </Link> */}
             <div>
               <button
                 onClick={() => setMobilePagesOpen(!mobilePagesOpen)}
@@ -456,7 +456,7 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
               )}
             </div>
             <Link
-              to="/contact"
+              to="/contact-us"
               className="block py-2 hover:text-[#81C408]"
               onClick={() => setMobileMenuOpen(false)}
             >

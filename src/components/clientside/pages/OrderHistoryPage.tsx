@@ -4,6 +4,7 @@ import axios from "axios";
 const OrderHistory: React.FC = () => {
   const [orders, setOrders] = useState([]);
   const userId = localStorage.getItem("loggedInUserId");
+  console.log("Amna id" , userId);
 
   useEffect(() => {
     const fetchOrders = async () => {

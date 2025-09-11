@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ContactPage: React.FC = () => {
+const ContactUs: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,10 +37,10 @@ const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-8 p-6 md:p-12 bg-gray-50">
-      {/* Left: Contact Info */}
+    <div className="  mt-27 flex flex-col md:flex-row gap-8 p-6 md:p-12 bg-gray-50">
+    
       <div className="md:w-1/2 space-y-4">
-        <h2 className="text-3xl font-bold text-[#81C408]">Contact Us</h2>
+        <h2 className="mt-10 text-3xl font-bold text-[#81C408]">Contact Us</h2>
         <p className="text-gray-700">We’d love to hear from you. Reach out anytime.</p>
         <div className="text-sm text-gray-600 space-y-2">
           <p><strong>📍 Address:</strong> PGRS Techno Park, HITEC City, Hyderabad, Telangana 500081</p>
@@ -56,8 +56,8 @@ const ContactPage: React.FC = () => {
         />
       </div>
 
-      {/* Right: Contact Form */}
-      <div className="md:w-1/2 bg-white p-6 rounded shadow-md">
+      
+      <div className=" md:w-1/2 bg-white p-6 rounded shadow-md ">
         <h3 className="text-xl font-semibold mb-4 text-[#81C408]">Get in Touch</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -119,9 +119,9 @@ const ContactPage: React.FC = () => {
   );
 };
 
-export default ContactPage;
+export default ContactUs;
 
 // individuals ports for all api's 
-// user icon component display 
+// user icon component display order-confirmation
 // success msg component below the nav items 
 // store folder 

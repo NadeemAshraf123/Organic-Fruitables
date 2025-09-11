@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Store } from './app/Store';
+import { Store } from "./app/Store";
 import { Provider } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
@@ -33,13 +33,14 @@ import CheckOutPage from "./components/clientside/pages/CheckOutPage";
 import NotFoundPage from "./components/clientside/pages/NotFoundPage";
 import CurrentUserProfilePage from "./components/clientside/pages/CurrentUserProfilePage";
 import OrderManagement from "./components/clientside/pages/OrderManagement";
+import ContactUs from "./components/clientside/pages/ContactUs";
 
 function App() {
+
+
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
   const [userData, setUserData] = useState<string>(JSON.parse(localStorage.getItem("user") || null));
   console.log("userRole", userData);
-
-
 
 
 
@@ -173,7 +174,6 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
             <Route path="/order-history" element={<OrderHistory />} />
             <Route path="/check-out" element={<CheckOutPage />} />
             <Route path="/current-user-profile-page" element={<CurrentUserProfilePage />} />
-            <Route path="/order-management" element={<OrderManagement />} />
             <Route
               path="/dashboard"
               element={
@@ -186,12 +186,15 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
               <Route path="authenticatedusers" element={<AuthenticatedUsers />} />
               <Route path="adddashboardproduct" element={<AddDashboardProduct />} />
               <Route path="adddashboardcategory" element={<AddDashboardCategory />} />
+              <Route path="ordermanagement" element={<OrderManagement />} />
+
             </Route>
           </Route>
 
 
           <Route path="/not-found-page" element={<NotFoundPage />} />
-          <Route path="/reduxdashboard" element={<ProductreduxDashboard />} />
+          <Route path="/contact-us" element={ <ContactUs />  } />
+          {/* <Route path="/reduxdashboard" element={<ProductreduxDashboard />} /> */}
 
           <Route
             path="/login"
