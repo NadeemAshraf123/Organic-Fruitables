@@ -8,9 +8,7 @@ import MainDashboard from "./components/adminSide/mainDashboard/MainDashboard";
 import AuthenticatedUsers from "./components/adminSide/adminSection/AuthenticatedUsers";
 import HeroBanner from "./components/clientside/hero/HeroBanner";
 import FeatureHighlights from "./components/clientside/featuresHighlight/FeatureHighlights";
-import ProductSection from "./components/clientside/productDisplaySection/OrganicProductSection";
 import CardsGrid from "./components/clientside/cardgrid/CardsGrid";
-import CaruselProductsDisplay from "./components/clientside/caruselProducts/CarouseProductsDisplayl";
 import Footer from "./components/clientside/footer/Footer";
 import Navbar from "./components/clientside/navbarTopbar/Navbar";
 import StatsSection from "./components/clientside/statssection/StatsSection";
@@ -21,7 +19,6 @@ import BestsellerProductTwo from "./components/clientside/bestsellerproducts/Bes
 import LoginPage from "./components/clientloginSignUp/LoginPage";
 import SignUpPage from "./components/clientloginSignUp/SignUpPage";
 import FirstCounter from "./features/counter/FirstCounter";
-import ProductreduxDashboard from "./features/products/ProductreduxDashboard";
 
 import ProtectedRoute from "./components/adminSide/protectroutes/ProtectedRoutes";
 import AddDashboardCategory from "./components/adminSide/dashboardpages/addDashboardCategory/AddDashboardCategory";
@@ -34,6 +31,8 @@ import NotFoundPage from "./components/clientside/pages/NotFoundPage";
 import CurrentUserProfilePage from "./components/clientside/pages/CurrentUserProfilePage";
 import OrderManagement from "./components/clientside/pages/OrderManagement";
 import ContactUs from "./components/clientside/pages/ContactUs";
+import OurOrganicProducts from "./components/clientside/ourorganicproducts/OurOrganicProducts";
+import FreshOrganicVegatables from "./components/clientside/freshorganicegatables/FreshOrganicVegatables";
 
 function App() {
 
@@ -119,7 +118,6 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
   const GuestGuard = ({ children }) => {
 
     if (isAuthenticated) {
-      // If already logged in, go home or dashboard
       return <Navigate to="/" replace />;
     }
 
@@ -129,7 +127,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
    const DashboardAccessGuard = ({ children }) => {
 
     if (isAuthenticated && userData?.role !== "admin") {
-      // If already logged in, go home or dashboard
+    
       return <Navigate to="/dashboard" replace />;
     }
 
@@ -154,9 +152,9 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
               <>
                 <HeroBanner />
                 <FeatureHighlights />
-                <ProductSection />
+                <OurOrganicProducts />
                 <CardsGrid />
-                <CaruselProductsDisplay />
+                <FreshOrganicVegatables />
                 <PromoBanner />
                 <BestsellerProductsSection />
                 <BestsellerProductTwo />

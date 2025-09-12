@@ -2,24 +2,42 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../../features/products/ProductsSlice';
 import type { RootState } from '../../../app/Store';
-import ProductCard from './OrganicProductsCards';
+import OurOrganicProductsCard from './OurOrganicProductsCard';
 
-const categories = ['All Products', 'Vegetables', 'Fruits', 'Bread', 'Meat'];
 
-const OrganicProductSection: React.FC = () => {
+export interface Category {
+  id: string;
+  name: string;
+}
+
+const OurOrganicProducts: React.FC = () => {
+
+  const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All Products');
+
+useEffect(() => {
+  fetch("http://localhost:3000/categories")
+  .then((res) => res.json())
+  .then((data: Category[]) => {
+    const names = data.map((cat) => cat.name);
+    setCategories(["All Products", ...names]);
+  })
+  .catch((err) => console.error("Failed to fetch categories", err)); 
+}, []);
+
+
   const dispatch = useDispatch();
-
   const { items: products, loading, error } = useSelector((state: RootState) => state.products);
-
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  const filteredProducts =
-    selectedCategory === 'All Products'
-      ? products
-      : products.filter((p) => p.category?.name === selectedCategory);
+
+  const filteredProducts = 
+      selectedCategory === "All Products" ? products : products.filter((p) => p.category?.name === selectedCategory);
+
+
+ 
 
   return (
     <section className='bg-[#FFFFF] mx-auto px-4 mt-20'>
@@ -53,13 +71,13 @@ const OrganicProductSection: React.FC = () => {
             <p className="text-red-500 text-lg">Error: {error}</p>
           ) : filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
-              <ProductCard
+              <OurOrganicProductsCard
                 key={product.id}
                 id={product.id}
                 name={product.name}
                 image={product.images?.[0] || ''}
                 category={product.category?.name || 'Uncategorized'}
-                price={product.price ? parseFloat(product.price) : 0} 
+                price={`$${product.price ? parseFloat(`${product.price}`).toFixed(2) : '0.00'}`} 
                 description={product.description || 'Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.'}
               />
             ))
@@ -74,4 +92,4 @@ const OrganicProductSection: React.FC = () => {
   );
 };
 
-export default OrganicProductSection;
+export default OurOrganicProducts;

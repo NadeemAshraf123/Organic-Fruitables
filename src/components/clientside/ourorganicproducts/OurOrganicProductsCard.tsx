@@ -14,7 +14,7 @@ interface ProductCardProps {
   description: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ id, name, image, category, price, description}) => {
+const OurOrganicProductsCard: React.FC<ProductCardProps> = ({ id, name, image, category, price, description}) => {
   
 const dispatch = useAppDispatch();
         
@@ -81,4 +81,4 @@ const dispatch = useAppDispatch();
   );
 };
 
-export default ProductCard;
+export default OurOrganicProductsCard;

@@ -297,6 +297,7 @@ const handleFormSubmit =() => {
           </div>
 
              <button
+             onClick={handleShippingSubmit}
                 type="submit"
                 className="w-full bg-green-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-green-700 transition-colors"
               >

@@ -188,9 +188,9 @@ const OrderManagement: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
+        <div className="">
           <h1 className="text-3xl font-bold text-gray-900">Order Management</h1>
-          <p className="text-gray-600 mt-2">Manage and update order statuses</p>
+          <p className="text-gray-600">Manage and update order statuses</p>
         </div>
 
         {error && (
@@ -216,7 +216,7 @@ const OrderManagement: React.FC = () => {
           </div>
         )}
 
-        <div className="bg-white rounded-lg shadow mb-6 p-4">
+        <div className="bg-white rounded-lg shadow mb-2  p-4">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-gray-700 font-medium">Filter by status:</span>
             {(
@@ -302,12 +302,12 @@ const OrderManagement: React.FC = () => {
                       key={order.id}
                       className="hover:bg-green-50 transition-colors duration-200"
                     >
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-4 py- whitespace-nowrap text-sm font-medium text-gray-900">
                         <span className="bg-gray-100 px-2 py-1 rounded-md text-gray-700">
                           #{order.id}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py- whitespace-nowrap text-sm text-gray-900">
                         <div>
                           <p className="font-medium text-gray-800">
                             {order.shippingAddress.name}
@@ -318,7 +318,7 @@ const OrderManagement: React.FC = () => {
                           </p>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
+                      <td className="px-6 py- text-sm text-gray-900">
                         <div className="max-w-xs">
                           {order.items.slice(0, 2).map((item, index) => (
                             <div
@@ -340,13 +340,13 @@ const OrderManagement: React.FC = () => {
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-green-700">
+                      <td className="px-6 py- whitespace-nowrap text-sm font-semibold text-green-700">
                         {formatCurrency(order.total)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      <td className="px-6 py- whitespace-nowrap text-sm text-gray-600">
                         {formatDate(order.createdAt)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py- whitespace-nowrap">
                         <span
                           className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
                             order.status
@@ -356,7 +356,7 @@ const OrderManagement: React.FC = () => {
                             order.status.slice(1)}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <td className="px-6 py- whitespace-nowrap text-sm font-medium">
                         <div className="flex space-x-2">
                           <select
                             value={order.status}
@@ -366,7 +366,7 @@ const OrderManagement: React.FC = () => {
                                 e.target.value as Order["status"]
                               )
                             }
-                            className="text-xs border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                            className="text-xs border border-gray-300 rounded-md px-2 py- focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                           >
                             <option value="pending">Pending</option>
                             <option value="processing">Processing</option>
@@ -391,8 +391,8 @@ const OrderManagement: React.FC = () => {
         </div>
 
         {selectedOrder && (
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50">
-            <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 border border-green-200">
+          <div className="fixed inset-0 bg-green-100 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50 ">
+            <div className="mt-40 md:mt-0 bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 border border-green-200 md:ml-30 ">
               <div className="bg-[#81C408] px-6 py-4 rounded-t-xl">
                 <div className="flex justify-between items-center">
                   <h3 className="text-xl font-semibold text-white">

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import CaruselProductCard from './CaruselProductCard';
+import FreshOrganicVegatablesCard from './FreshOrganicVegatablesCard';
 import bananas from '../../../assets/caruselimages/bananas.png';
 import grapes from '../../../assets/products/grapes.jpg';
 import parsely from '../../../assets/caruselimages/parsely.jpg';
@@ -47,7 +47,8 @@ const products: Product[] =
   { id: 26, name: 'Tomatoes', image: tomatoes, category: 'Fruits', price: '$1.29/kg', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt.' }
 ];
 
-const CaruselProductsDisplay: React.FC = () => {
+const FreshOrganicVegatables: React.FC = () => {
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [cardWidth, setCardWidth] = useState(0);
@@ -129,12 +130,12 @@ useEffect(() => {
               ref={index === 0 ? cardRef : null}
               className="flex-shrink-0"
             >
-              <CaruselProductCard
+              <FreshOrganicVegatablesCard
                  id={product.id}
                 name={product.name}
                 image={product.image}
                 category={product.category}
-                price={parseFloat(product.price.replace(/[^0-9.]/g, ""))}
+                price={`$${parseFloat(product.price.replace(/[^0-9.]/g, "")).toFixed(2)}`}
                 description={product.description}
               />
             </div>
@@ -145,4 +146,4 @@ useEffect(() => {
   );
 };
 
-export default CaruselProductsDisplay;
+export default FreshOrganicVegatables;

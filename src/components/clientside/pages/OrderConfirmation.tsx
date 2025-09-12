@@ -62,18 +62,6 @@ const OrderConfirmation: React.FC = () => {
     }
   }, [currentUser?.id]);
 
-  // useEffect(() => {
-  //   if (showConfirmation) {
-
-  //     const timer = setTimeout(() => {
-  //       setShowConfirmation(false);
-  //       setActiveTab("current");
-  //       setShowTabContent(true);
-  //     }, 3000);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [showConfirmation]);
-
   useEffect(() => {
     if (showConfirmation) {
       const timer = setTimeout(() => {
@@ -203,53 +191,32 @@ const OrderConfirmation: React.FC = () => {
             <>
               {activeTab === "user" &&
                 (currentUser?.id ? (
-                  <div className="bg-white rounded-lg shadow overflow-hidden">
-                    <div className="overflow-x-auto rounded shadow">
-                      <table className="min-w-full bg-white border border-gray-300">
-                        <thead className="bg-[#81C408] text-white">
-                          <tr>
-                            <th className="py-3 px-4 text-left">Field</th>
-                            <th className="py-3 px-4 text-left">Value</th>
-                          </tr>
-                        </thead>
-                        <tbody className="text-sm text-gray-700">
-                          <tr className="hover:bg-gray-50 transition">
-                            <td className="py-2 px-4 border-t font-semibold">
-                              ID
-                            </td>
-                            <td className="py-2 px-4 border-t">
-                              {currentUser.id}
-                            </td>
-                          </tr>
-                          <tr className="hover:bg-gray-50 transition">
-                            <td className="py-2 px-4 border-t font-semibold">
-                              Name
-                            </td>
-                            <td className="py-2 px-4 border-t">
-                              {currentUser.name}
-                            </td>
-                          </tr>
-                          <tr className="hover:bg-gray-50 transition">
-                            <td className="py-2 px-4 border-t font-semibold">
-                              Email
-                            </td>
-                            <td className="py-2 px-4 border-t">
-                              {currentUser.email}
-                            </td>
-                          </tr>
-                          <tr className="hover:bg-gray-50 transition">
-                            <td className="py-2 px-4 border-t font-semibold">
-                              Role
-                            </td>
-                            <td className="py-2 px-4 border-t">
-                              <span className="px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                {currentUser.role}
-                              </span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                  <div className="bg-white rounded-lg shadow-md p-6">
+                    <h3 className="text-xl font-bold text-[#81C408] mb-4">
+                      User Information
+                    </h3>
+                    <ul className="space-y-4 text-sm text-gray-700">
+                      <li className="flex justify-between items-center border-b pb-2">
+                        <span className="font-medium text-gray-600">Name:</span>
+                        <span className="font-extrabold text-xl">{currentUser.name}</span>
+                      </li>
+                      <li className="flex justify-between items-center border-b pb-2">
+                        <span className="font-medium text-gray-600">
+                          Email:
+                        </span>
+                        <span className="font-bold">{currentUser.email}</span>
+                      </li>
+                      <li className="flex justify-between items-center border-b pb-2">
+                        <span className="font-medium text-gray-600">ID:</span>
+                        <span className="font-bold">{currentUser.id}</span>
+                      </li>
+                      <li className="flex justify-between items-center">
+                        <span className="font-medium text-gray-600">Role:</span>
+                        <span className="px-2 py-1 text-sm font-bold rounded-full bg-blue-100 text-blue-800">
+                          {currentUser.role}
+                        </span>
+                      </li>
+                    </ul>
                   </div>
                 ) : (
                   <div className="text-center py-12">
@@ -277,6 +244,7 @@ const OrderConfirmation: React.FC = () => {
                     </p>
                   </div>
                 ))}
+
 
               {activeTab === "current" && (
                 <>
@@ -316,16 +284,16 @@ const OrderConfirmation: React.FC = () => {
                                 </td>
                                 <td className="py-2 px-4 border-t">
                                   <span
-                                    className={`font-semibold px-2 py-1 rounded text-white
+                                    className={`font-semibold px-2 py-1 rounded-full text-gray
                                 ${
                                   order.status === "pending"
-                                    ? "bg-yellow-500"
+                                    ? "bg-yellow-100"
                                     : order.status === "delivered"
                                     ? "bg-green-600"
-                                    : order.status === "processed"
-                                    ? "bg-blue-500"
+                                    : order.status === "processing"
+                                    ? "bg-blue-200"
                                     : order.status === "dispatched"
-                                    ? "bg-purple-600"
+                                    ? "bg-purple-200"
                                     : "bg-gray-400"
                                 }
                               `}

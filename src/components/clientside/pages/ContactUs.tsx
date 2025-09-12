@@ -121,7 +121,9 @@ const ContactUs: React.FC = () => {
 
 export default ContactUs;
 
-// individuals ports for all api's 
-// user icon component display order-confirmation
-// success msg component below the nav items 
-// store folder 
+// direct src/admin/client side 
+// all pages should be completed 
+// product detail page 
+// and searchbar product search navigate to the detailed page 
+//  move the src/client/admin/components =>
+//  loginsignup are common folders in compoents/ header and footer are comman folder / 
