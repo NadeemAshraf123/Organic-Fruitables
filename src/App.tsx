@@ -4,35 +4,26 @@ import { Provider } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
 import "./App.css";
-import MainDashboard from "./components/adminSide/mainDashboard/MainDashboard";
-import AuthenticatedUsers from "./components/adminSide/adminSection/AuthenticatedUsers";
-import HeroBanner from "./components/clientside/hero/HeroBanner";
-import FeatureHighlights from "./components/clientside/featuresHighlight/FeatureHighlights";
-import CardsGrid from "./components/clientside/cardgrid/CardsGrid";
-import Footer from "./components/clientside/footer/Footer";
-import Navbar from "./components/clientside/navbarTopbar/Navbar";
-import StatsSection from "./components/clientside/statssection/StatsSection";
-import OurTestimonial from "./components/clientside/ourtestimonials/OurTesttimonial";
-import BestsellerProductsSection from "./components/clientside/bestsellerproducts/BestSellerProductsSection";
-import PromoBanner from "./components/clientside/promobanner/PromoBanner";
-import BestsellerProductTwo from "./components/clientside/bestsellerproducts/BestSellerProductTwo";
-import LoginPage from "./components/clientloginSignUp/LoginPage";
-import SignUpPage from "./components/clientloginSignUp/SignUpPage";
-import FirstCounter from "./features/counter/FirstCounter";
-
-import ProtectedRoute from "./components/adminSide/protectroutes/ProtectedRoutes";
-import AddDashboardCategory from "./components/adminSide/dashboardpages/addDashboardCategory/AddDashboardCategory";
-import AddDashboardProduct from "./components/adminSide/dashboardpages/addDashboardProduct/AddDashboardProduct";
-import Cart from "./components/clientside/pages/Cart";
-import OrderConfirmation from "./components/clientside/pages/OrderConfirmation";
-import OrderHistory from "./components/clientside/pages/OrderHistoryPage";
-import CheckOutPage from "./components/clientside/pages/CheckOutPage";
-import NotFoundPage from "./components/clientside/pages/NotFoundPage";
-import CurrentUserProfilePage from "./components/clientside/pages/CurrentUserProfilePage";
-import OrderManagement from "./components/clientside/pages/OrderManagement";
-import ContactUs from "./components/clientside/pages/ContactUs";
-import OurOrganicProducts from "./components/clientside/ourorganicproducts/OurOrganicProducts";
-import FreshOrganicVegatables from "./components/clientside/freshorganicegatables/FreshOrganicVegatables";
+import MainDashboard from "./adminSide/mainDashboard";
+import AuthenticatedUsers from "./adminSide/adminSection";
+import Navbar from "./components/commoncomponent/navbarTopbar";
+import LoginPage from "./components/commoncomponent/loginsignup/LoginPage";
+import SignUpPage from "./components/commoncomponent/loginsignup/SignUpPage";
+import ProtectedRoute from "./adminSide/protectroutes";
+import AddDashboardCategory from "./adminSide/dashboardpages/addDashboardCategory";
+import AddDashboardProduct from "./adminSide/dashboardpages/addDashboardProduct";
+import Cart from "./clientside/pages/Cart";
+import OrderConfirmation from "./clientside/pages/OrderConfirmation";
+import CheckOutPage from "./clientside/pages/CheckOutPage";
+import NotFoundPage from "./clientside/pages/NotFoundPage";
+import CurrentUserProfilePage from "./clientside/pages/CurrentUserProfilePage";
+import OrderManagement from "./clientside/pages/OrderManagement";
+import ContactUs from "./clientside/pages/ContactUs";
+import OurOrganicProducts from "./clientside/ourorganicproducts";
+import OrderHistory from "./clientside/pages/OrderHistoryPage";
+import ProductDetailPage from "./clientside/pages/ProductDetailPage";
+import Home from "./clientside/home";
+import TestimonialCarousel from "./clientside/ourtestimonials";
 
 function App() {
 
@@ -55,14 +46,11 @@ function App() {
             const res = await fetch(`http://localhost:3000/fruitablesusers?email=${email}`);
             const users = await res.json();
             if (users.length > 0) {
-              // setUserRole(users[0].role);
             }
           } catch (error) {
             console.error("Failed to fetch user role:", error);
           }
         }
-      } else {
-        // setUserRole("");
       }
     };
 
@@ -149,24 +137,11 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
           <Route
             path="/"
             element={
-              <>
-                <HeroBanner />
-                <FeatureHighlights />
-                <OurOrganicProducts />
-                <CardsGrid />
-                <FreshOrganicVegatables />
-                <PromoBanner />
-                <BestsellerProductsSection />
-                <BestsellerProductTwo />
-                <StatsSection />
-                <OurTestimonial />
-                <Footer />
-              </>
+              <Home />
             }
           />
 
           <Route element={<AuthGuard> <Outlet /> </AuthGuard>} >
-            <Route path="/counter" element={<FirstCounter />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/order-confirmation" element={<OrderConfirmation />} />
             <Route path="/order-history" element={<OrderHistory />} />
@@ -191,8 +166,11 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
 
 
           <Route path="/not-found-page" element={<NotFoundPage />} />
+          <Route path="/testimonials"   element={ <TestimonialCarousel /> } />
+          <Route path="/order-history"  element={ <OrderHistory /> } />
+          <Route path="/product/:id"    element={ <ProductDetailPage /> }   />
           <Route path="/contact-us" element={ <ContactUs />  } />
-          {/* <Route path="/reduxdashboard" element={<ProductreduxDashboard />} /> */}
+          <Route path="/shop-page" element={<OurOrganicProducts />} />
 
           <Route
             path="/login"
@@ -205,7 +183,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
             } />
 
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/not-found-page" replace />} />
         </Routes>
       </Provider>
     </>

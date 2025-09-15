@@ -1,0 +1,286 @@
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0rem 2rem;
+  background: #F3F4FF;
+  z-index: 900;
+  height: 70px;
+  box-sizing: border-box;
+  border-bottom: none;
+}
+
+.main-content {
+  padding: 2rem;
+  min-height: calc(100vh - 70px);
+  transition: margin-left 0.3s ease;
+  background: #f8f9fa;
+}
+
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.hamburger {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #6C5CE7;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.hamburger:hover {
+    background: #f0f0ff;
+    color: #5A4FCF;
+}
+
+/* Search Bar Styling - Akademi Style */
+.search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    /* padding: 0.75rem 1.25rem 0.75rem 3rem; */
+    padding: 0.35rem 0.5rem 0.35rem 3rem;
+    border: 1.5px solid #e8e8e8;
+    border-radius: 25px;
+    width: 150px;
+    outline: none;
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: #333;
+    background: #fafafa;
+    transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+    border-color: #6C5CE7;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+}
+
+.search-bar input::placeholder {
+    color: #999;
+    font-weight: 400;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.25rem;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* Navbar Right Section */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Notifications - Akademi Style */
+.notifications {
+    position: relative;
+    color: #666;
+    font-size: 0.3rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.notifications:hover {
+    background: #f8f9fa;
+    color: #6C5CE7;
+}
+
+.badge {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    background: linear-gradient(135deg, #FF6B6B, #FF5252);
+    color: white;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;   
+    font-size: 0.65rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+}
+
+/* User Profile - Akademi Style */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.user-profile:hover {
+    background: #f8f9fa;
+}
+.user-icon {
+    font-size: 0.5rem;
+    color: #ffffff;
+    background: linear-gradient(135deg, #6C5CE7, #5A4FCF);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(108, 92, 231, 0.25);
+    border: 1px solid #ffffff;
+    /* border: 2px solid red;  */
+
+}
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #2d3748;
+    line-height: 1.2;
+}
+
+.user-role {
+    font-size: 0.7rem;
+    color: #718096;
+    font-weight: 400;
+    line-height: 1.2;
+}
+.page-heading {
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 15px;
+}
+
+
+
+@media (max-width: 340px) {
+
+    .navbar-right {
+    gap: 1rem;
+}
+
+.notifications {
+    font-size: 1rem;
+}
+
+.badge {
+    width: 10px;
+    height: 10px;
+}
+
+.user-profile {
+    gap: 0.575rem;
+    padding: 0.3rem 0.95rem;
+}
+.user-icon {
+    font-size: 1.2rem;
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgb(13, 255, 0);
+
+}
+
+.user-info {
+    gap: 0.05rem;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.5rem;
+    line-height: 1.2;
+}
+
+.user-role {
+    font-size: 0.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+}
+}
+
+
+@media (max-width: 576px) {
+    .search-bar {
+        display: none;
+    }
+
+}
+
+
+
+@media (min-width: 577px) and  (max-width: 991px) {
+
+.notifications {
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.badge {
+    font-size: 0.5rem;
+    right: 4px;
+}
+}
+
+@media (min-width: 992px) {
+  .navbar {
+    padding: 0rem 3rem;
+  }
+
+
+
+  .search-bar input {
+    width: 200px;
+  }
+
+  .hamburger {
+    font-size: 1.6rem;
+  }
+
+  .navbar-right {
+    gap: 4rem;
+}
+
+  .notifications {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+
+  }
+
+.badge {
+    right: -6px;
+    width: 14px;
+    height: 14px;   
+}
+
+  .user-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 1.5rem;
+  }
+}
