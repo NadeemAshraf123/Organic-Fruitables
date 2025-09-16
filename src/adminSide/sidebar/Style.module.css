@@ -1,54 +1,111 @@
 /* SidebarSelf.module.css - Fixed and Akademi Styled */
 .sidebar {
   width: 250px;
-  height: calc(100vh -30px);
+  height: 100vh;
   background: linear-gradient(180deg, #6C5CE7 0%, #4D44B5 100%); 
   color: white;
-  position: static;
-  /* top: 15px; */
-  /* left: 15px; */
+  position: fixed;
+  top: 0;
+  left: 0;
   transition: transform 0.3s ease-in-out;
-  /* z-index: 100; */
+  z-index: 100;
   box-shadow: 0 8px 32px rgba(77, 68, 181, 0.15); 
   overflow-y: auto;
   overflow-x: hidden;
   border: none;
-
   box-sizing: border-box;
 }
 
 /* Mobile behavior - hide sidebar initially */
 @media (max-width: 991px) {
   .sidebar {
-    left: -265px;
-    top: 15px;
-    height: calc(100vh - 30px);
+    left: -250px;
+    top: 0;
+    height: 100vh;
   }
   
   .sidebar.open {
-    transform: translateX(265px);
+    transform: translateX(250px);
   }
 }
 
-/* Desktop behavior - always visible */
+/* Desktop behavior - Always visible */
 @media (min-width: 992px) {
   .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
     transform: translateX(0) !important;
-    /* left: 15px;
-    top: 15px; */
+    z-index: 100;
+  }
+  
+  /* Ensure sidebar is always open on desktop, regardless of open/closed class */
+  .sidebar.open,
+  .sidebar:not(.open) {
+    transform: translateX(0) !important;
   }
 }
 
 /* Logo Section - Akademi Style */
 .logo {
-  padding: 24px 20px 32px 20px;
+  padding: 24px 20px 20px 20px;
   text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
   margin: 0;
+  position: relative;
+}
+
+.logo h2 {
+  margin: 0;
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: -0.5px;
+  padding-right: 20px; /* Default padding */
+}
+
+/* Add space for toggle button only on mobile */
+@media (max-width: 991px) {
+  .logo h2 {
+    padding-right: 50px; /* Space for toggle button on mobile */
+  }
+}
+
+/* Toggle Button - Only visible on mobile */
+.toggleButton {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  display: none; /* Hidden by default */
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.toggleButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.toggleButton:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Show toggle button only on mobile */
+@media (max-width: 991px) {
+  .toggleButton {
+    display: flex;
+  }
 }
 
 /* Menu Container */
@@ -191,7 +248,7 @@
 /* Main content adjustments for desktop */
 @media (min-width: 992px) {
   .main-content {
-    margin-left: 280px;
+    margin-left: 250px;
     transition: margin-left 0.3s ease-in-out;
   }
 }
@@ -212,15 +269,8 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 90;
-  display: none;
+  z-index: 99;
   backdrop-filter: blur(2px);
-}
-
-@media (max-width: 991px) {
-  .sidebar.open ~ .overlay {
-    display: block;
-  }
 }
 
 /* Custom Scrollbar */

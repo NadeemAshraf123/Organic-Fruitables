@@ -6,45 +6,41 @@ import DashboardNavbar from '../dashboardNavbar/index';
 
 
 const MainDashboard: React.FC = () => {
-
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [searchTerm, setSearchTerm] = useState("");
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const handleResize = () => {
-      setIsSidebarOpen(window.innerWidth >= 992);
+      const isDesktop = window.innerWidth >= 992;
+      setIsSidebarOpen(isDesktop);
     };
-    handleResize();
     
-    window.addEventListener('resize', handleResize);
     handleResize();
+    window.addEventListener('resize', handleResize);
     
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const toggleSidebar = () => {
-    if(window.innerWidth < 992) {
-
     setIsSidebarOpen(!isSidebarOpen);
   };
-};
 
 
-   return (
-    <div className={styles.container}>
+  return (
+    <div className={`${styles.container} ${isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed}`}>
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-    
-        <div className={styles.mainContent}>
-
+      
+      <div className={styles.mainContent}>
         <DashboardNavbar 
-          setSearchTerm = {setSearchTerm}
+          setSearchTerm={setSearchTerm}
           toggleSidebar={toggleSidebar} 
-          isSidebarOpen={isSidebarOpen} 
         />
+        
+        {/* Mobile overlay */}
         {isSidebarOpen && window.innerWidth < 992 && (
           <div className={styles.overlay} onClick={toggleSidebar} />
         )}
+        
         <Outlet context={{ searchTerm }} />
       </div>
     </div>

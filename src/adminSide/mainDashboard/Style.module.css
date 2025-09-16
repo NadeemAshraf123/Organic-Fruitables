@@ -9,16 +9,24 @@
   display: flex;
   min-height: 100vh;
   position: relative;
-  width: 100%                 ;
-
+  width: 100%;
 }
 
 .mainContent {
   flex-grow: 1;
-
   width: 100%;
   transition: all 0.3s ease;
   margin-left: 0; /* Mobile-first */
+}
+
+/* Sidebar Open State */
+.sidebarOpen .mainContent {
+  margin-left: 250px;
+}
+
+/* Sidebar Closed State */
+.sidebarClosed .mainContent {
+  margin-left: 0;
 }
 
 .contentWrapper {
@@ -31,17 +39,10 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Mobile Sidebar State */
-.sidebarOpen .mainContent {
-  filter: brightness(0.8);
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Overlay for mobile sidebar */
+/* Mobile Overlay */
 .overlay {
   position: fixed;
-  top: 60px; /* Start below navbar */
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -50,30 +51,30 @@
   display: none;
 }
 
-.sidebarOpen .overlay {
-  display: block;
-}
-/* hf */
-/* Responsive Adjustments */
-@media (min-width: 768px) {
-  .mainContent {
-    padding: 25px;
-     width: calc(100% - 280px);
-  }
-}
-
-@media (min-width: 992px) {
-  .container {
-    padding-top: 0; /* Reset for desktop */
+/* Mobile responsive behavior */
+@media (max-width: 991px) {
+  /* On mobile, sidebar slides over content */
+  .sidebarOpen .mainContent {
+    margin-left: 0 !important;
   }
   
-  .mainContent {
-    width: calc(100% - 280px); /* Adjust for sidebar */
-    padding: 0;
-    filter: none !important; /* Disable mobile effects */
+  .sidebarClosed .mainContent {
+    margin-left: 0 !important;
   }
   
   .overlay {
-    display: none !important; /* Never show on desktop */
+    display: block;
+  }
+}
+
+/* Desktop responsive behavior */
+@media (min-width: 992px) {
+  /* On desktop, content always pushes to the right when sidebar exists */
+  .mainContent {
+    margin-left: 250px !important;
+  }
+  
+  .overlay {
+    display: none !important;
   }
 }

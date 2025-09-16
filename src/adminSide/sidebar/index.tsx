@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from "./Style.module.css";
-import { FaBoxOpen, FaPlus, FaThList, FaUserShield } from "react-icons/fa";
+import { FaBoxOpen, FaPlus, FaUserShield, FaBars, FaTimes } from "react-icons/fa";
 
 type SidebarProps = {
   isOpen: boolean;
@@ -10,25 +10,50 @@ type SidebarProps = {
 
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
-  const [showClosedButton, setShowedCloseButton] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const navigate = useNavigate();
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
 
+  // Handle window resize
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    const handleResize = () => {
+      const mobile = window.innerWidth < 992;
+      const wasMobile = isMobile;
+      setIsMobile(mobile);
+      
+      // When switching from mobile to desktop, ensure sidebar is open
+      if (wasMobile && !mobile && !isOpen) {
+        toggleSidebar();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    // Check initial size
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMobile, isOpen, toggleSidebar]);
+
+  useEffect(() => {
+    let timer: number;
     if (isOpen) {
       timer = setTimeout(() => {
-        setShowedCloseButton(true);
+        // Timer logic can be added here if needed
       }, 500);
-    } else {
-      setShowedCloseButton(false);
     }
     return () => clearTimeout(timer);
   }, [isOpen]);
 
   const handleItemClick = () => {
-    if (window.innerWidth < 992) {
+    if (isMobile) {
+      toggleSidebar();
+    }
+  };
+
+  const handleOverlayClick = () => {
+    if (isMobile && isOpen) {
       toggleSidebar();
     }
   };
@@ -36,56 +61,74 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
 
   return (
-    <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
-     
-      <h2 className={styles.logo}>Admin Panel</h2>
+    <>
+      {/* Mobile Overlay */}
+      {isMobile && isOpen && (
+        <div className={styles.overlay} onClick={handleOverlayClick} />
+      )}
+      
+      <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
+        <div className={styles.logo}>
+          <h2>Admin Panel</h2>
+          {/* Only show toggle button on mobile or when sidebar is closed on desktop */}
+          {isMobile && (
+            <button 
+              className={styles.toggleButton}
+              onClick={toggleSidebar}
+              title={isOpen ? "Hide Sidebar" : "Show Sidebar"}
+            >
+              {isOpen ? <FaTimes /> : <FaBars />}
+            </button>
+          )}
+        </div>
 
-      <ul className={styles.menu}>
-        <li
-          className={`${styles.menuItem} ${isActive("/dashboard/authenticatedUsers") ? styles.active : ""}`}
-          onClick={() => {
-            navigate("/dashboard/authenticatedUsers");
-            if (window.innerWidth < 992) toggleSidebar();
-          }}
-        >
-          <FaUserShield className={`${styles.icon} ${isActive("/dashboard/authenticatedUsers") ? styles.activeIcon : ""}`} />
-          Admin
-        </li>
+        <ul className={styles.menu}>
+          <li
+            className={`${styles.menuItem} ${isActive("/dashboard/authenticatedUsers") ? styles.active : ""}`}
+            onClick={() => {
+              navigate("/dashboard/authenticatedUsers");
+              handleItemClick();
+            }}
+          >
+            <FaUserShield className={`${styles.icon} ${isActive("/dashboard/authenticatedUsers") ? styles.activeIcon : ""}`} />
+            Admin
+          </li>
 
-        <li
-          className={`${styles.menuItem} ${isActive("/dashboard/adddashboardproduct") ? styles.active : ""}`}
-          onClick={() => { navigate("/dashboard/adddashboardproduct")
-          if (window.innerWidth < 992) toggleSidebar()
-          }}
-        >
-          <FaPlus className={`${styles.icon} ${isActive("/dashboard/adddashboardproduct") ? styles.activeIcon : ""}`} />
-          Add Product
-        </li>
+          <li
+            className={`${styles.menuItem} ${isActive("/dashboard/adddashboardproduct") ? styles.active : ""}`}
+            onClick={() => { 
+              navigate("/dashboard/adddashboardproduct");
+              handleItemClick();
+            }}
+          >
+            <FaPlus className={`${styles.icon} ${isActive("/dashboard/adddashboardproduct") ? styles.activeIcon : ""}`} />
+            Add Product
+          </li>
 
-        <li
-          className={`${styles.menuItem} ${isActive("/dashboard/adddashboardcategory") ? styles.active : ""}`}
-          onClick={() => { 
-                         navigate("/dashboard/adddashboardcategory")
-                         if (window.innerWidth < 992) toggleSidebar()
-                         }}
-        >
-          <FaBoxOpen className={`${styles.icon} ${isActive("/dashboard/adddashboardcategory") ? styles.activeIcon : ""}`} />
-          Add Category
-        </li>
+          <li
+            className={`${styles.menuItem} ${isActive("/dashboard/adddashboardcategory") ? styles.active : ""}`}
+            onClick={() => { 
+              navigate("/dashboard/adddashboardcategory");
+              handleItemClick();
+            }}
+          >
+            <FaBoxOpen className={`${styles.icon} ${isActive("/dashboard/adddashboardcategory") ? styles.activeIcon : ""}`} />
+            Add Category
+          </li>
 
-
-         <li
-          className={`${styles.menuItem} ${isActive("/dashboard/ordermanagement") ? styles.active : ""}`}
-          onClick={() => { 
-                         navigate("/dashboard/ordermanagement")
-                         if (window.innerWidth < 992) toggleSidebar()
-                         }}
-        >
-          <FaBoxOpen className={`${styles.icon} ${isActive("/dashboard/ordermanagement") ? styles.activeIcon : ""}`} />
-          Order Management
-        </li>
-      </ul>
-    </div>
+          <li
+            className={`${styles.menuItem} ${isActive("/dashboard/ordermanagement") ? styles.active : ""}`}
+            onClick={() => { 
+              navigate("/dashboard/ordermanagement");
+              handleItemClick();
+            }}
+          >
+            <FaBoxOpen className={`${styles.icon} ${isActive("/dashboard/ordermanagement") ? styles.activeIcon : ""}`} />
+            Order Management
+          </li>
+        </ul>
+      </div>
+    </>
   );
 };
 
