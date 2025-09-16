@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // ADD THIS IMPORT
+import { useNavigate } from "react-router-dom"; 
 import { useAppDispatch } from "../../app/Hooks";
 import { addToCart } from "../../features/cart/CartSlice";
 import { ShoppingBag } from "lucide-react";
