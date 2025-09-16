@@ -1,7 +1,7 @@
 .sidebar {
-  width: 250px;
+  /* width: 250px;
   padding: 0;
-  background-color: #4D44B5;
+  background: linear-gradient(180deg, #6C5CE7 0%, #4D44B5 100%); 
   color: white;
   border: none;
   
@@ -11,7 +11,26 @@
   border-radius: 0;
   box-shadow: 0 8px 32px rgba(77,68,181,0.15);
   transition: transform 0.3s ease;
-  z-index: 100;
+  z-index: 100; */
+
+
+
+  width: 250px;
+  height: calc(100vh - 30p);
+  background: linear-gradient(180deg, #6C5CE7 0%, #4D44B5 100%); 
+  color: white;
+  position: static;
+   /* z-index: 100; */
+  /* top: 15px; */
+  /* left: 15px; */
+  transition: transform 0.3s ease-in-out;
+  /* z-index: 100; */
+  box-shadow: 0 8px 32px rgba(77, 68, 181, 0.15); 
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: none;
+
+  box-sizing: border-box;
 }
 
 .logo {

@@ -186,6 +186,9 @@ const OrderManagement: React.FC = () => {
   }
 
   return (
+    <div className="w-full  mx-auto">
+
+
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="">
@@ -526,6 +529,7 @@ const OrderManagement: React.FC = () => {
         )}
       </div>
     </div>
+        </div>
   );
 };
 
