@@ -8,7 +8,6 @@ type SidebarProps = {
   toggleSidebar: () => void;
 };
 
-
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const navigate = useNavigate();
@@ -46,9 +45,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     return () => clearTimeout(timer);
   }, [isOpen]);
 
-  const handleItemClick = () => {
-    if (isMobile) {
-      toggleSidebar();
+  // Fixed handleItemClick with proper delay
+  const handleItemClick = (path: string) => {
+    if (isMobile && isOpen) {
+      // Navigate first, then close sidebar with a small delay
+      navigate(path);
+      setTimeout(() => {
+        toggleSidebar();
+      }, 100); // Small delay to prevent glitch
+    } else {
+      // Desktop behavior - just navigate
+      navigate(path);
     }
   };
 
@@ -57,8 +64,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       toggleSidebar();
     }
   };
-
-
 
   return (
     <>
@@ -70,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
         <div className={styles.logo}>
           <h2>Admin Panel</h2>
-          {/* Only show toggle button on mobile or when sidebar is closed on desktop */}
+          {/* Only show toggle button on mobile */}
           {isMobile && (
             <button 
               className={styles.toggleButton}
@@ -85,10 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         <ul className={styles.menu}>
           <li
             className={`${styles.menuItem} ${isActive("/dashboard/authenticatedUsers") ? styles.active : ""}`}
-            onClick={() => {
-              navigate("/dashboard/authenticatedUsers");
-              handleItemClick();
-            }}
+            onClick={() => handleItemClick("/dashboard/authenticatedUsers")}
           >
             <FaUserShield className={`${styles.icon} ${isActive("/dashboard/authenticatedUsers") ? styles.activeIcon : ""}`} />
             Admin
@@ -96,10 +98,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
           <li
             className={`${styles.menuItem} ${isActive("/dashboard/adddashboardproduct") ? styles.active : ""}`}
-            onClick={() => { 
-              navigate("/dashboard/adddashboardproduct");
-              handleItemClick();
-            }}
+            onClick={() => handleItemClick("/dashboard/adddashboardproduct")}
           >
             <FaPlus className={`${styles.icon} ${isActive("/dashboard/adddashboardproduct") ? styles.activeIcon : ""}`} />
             Add Product
@@ -107,10 +106,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
           <li
             className={`${styles.menuItem} ${isActive("/dashboard/adddashboardcategory") ? styles.active : ""}`}
-            onClick={() => { 
-              navigate("/dashboard/adddashboardcategory");
-              handleItemClick();
-            }}
+            onClick={() => handleItemClick("/dashboard/adddashboardcategory")}
           >
             <FaBoxOpen className={`${styles.icon} ${isActive("/dashboard/adddashboardcategory") ? styles.activeIcon : ""}`} />
             Add Category
@@ -118,10 +114,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
           <li
             className={`${styles.menuItem} ${isActive("/dashboard/ordermanagement") ? styles.active : ""}`}
-            onClick={() => { 
-              navigate("/dashboard/ordermanagement");
-              handleItemClick();
-            }}
+            onClick={() => handleItemClick("/dashboard/ordermanagement")}
           >
             <FaBoxOpen className={`${styles.icon} ${isActive("/dashboard/ordermanagement") ? styles.activeIcon : ""}`} />
             Order Management
