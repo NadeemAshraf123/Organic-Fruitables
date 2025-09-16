@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Store } from "./app/Store";
+import { persistor, Store } from "./app/Store";
 import { Provider } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
@@ -24,6 +24,7 @@ import OrderHistory from "./clientside/pages/OrderHistoryPage";
 import ProductDetailPage from "./clientside/pages/ProductDetailPage";
 import Home from "./clientside/home";
 import TestimonialCarousel from "./clientside/ourtestimonials";
+import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
 
@@ -71,13 +72,14 @@ function App() {
   );
 }
 
+
+
 function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData }) {
   const location = useLocation();
   const hideNavbar = location.pathname.startsWith("/dashboard");
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
-    // localStorage.removeItem("userEmail");
     localStorage.removeItem("user");
     setIsAuthenticated(false);
     setUserData(null);
@@ -125,6 +127,8 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
   return (
     <>
       <Provider store={Store}>
+        <PersistGate loading={null} persistor={persistor} >
+
         {!hideNavbar && (
           <Navbar
             isAuthenticated={isAuthenticated}
@@ -170,7 +174,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
           <Route path="/order-history"  element={ <OrderHistory /> } />
           <Route path="/product/:id"    element={ <ProductDetailPage /> }   />
           <Route path="/contact-us" element={ <ContactUs />  } />
-          <Route path="/shop-page" element={<OurOrganicProducts />} />
+          <Route path="/shop-page" element={<OurOrganicProducts  showSearchBar filterByCategory={false} />} />
 
           <Route
             path="/login"
@@ -185,6 +189,7 @@ function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData
 
           <Route path="*" element={<Navigate to="/not-found-page" replace />} />
         </Routes>
+        </PersistGate>
       </Provider>
     </>
   );

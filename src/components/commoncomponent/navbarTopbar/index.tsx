@@ -12,6 +12,8 @@ import {
 } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearCurrentUser } from "../../../features/currentuser/CurrentUserSlice";
 
 interface NavbarProps {
   isAuthenticated: boolean;
@@ -29,11 +31,17 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const totalItems = useAppSelector((state) => state.cart.totalItems);
+  const currentUser = useAppSelector((state) => state.currentUser);
+  const dispatch = useDispatch();
+
+  console.log("currenUser Reduxtoolkit", currentUser);
 
   const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("logedInUser");
+    dispatch(clearCurrentUser());
     onLogout();
     navigate("/");
   };
@@ -128,16 +136,16 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
   const handleNotFoundPage = () => {
     setPagesOpen(false);
     setMobilePagesOpen(false);
-  }
+  };
   const handleCurrentUserPage = () => {
-    navigate('/order-confirmation');
+    navigate("/order-confirmation");
     setPagesOpen(false);
     setMobilePagesOpen(false);
-  }
+  };
   const handleViewHistoryPage = () => {
-     setPagesOpen(false);
+    setPagesOpen(false);
     setMobilePagesOpen(false);
-  }
+  };
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50">
@@ -158,14 +166,16 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                   </div>
                   <div className="hidden sm:flex items-center gap-2">
                     <FaEnvelope className="w-4 h-4 text-[#FFB524]" />
-                    <a
-                      href="mailto:Email@example.com"
-                      className="font-Open-Sans"
-                    >
-                      Email@Example.com
-                    </a>
+                    {isAuthenticated && currentUser ? (
+                      <span className="font-Open-Sans">{currentUser.email}</span>
+                    ) : ( 
+                      <a href="mailto:Email@example.com" className="font-Open-Sans">
+                        Email@Example.com
+                      </a>
+                    )}
                   </div>
                 </div>
+                
                 <div className="flex items-center gap-2 sm:gap-4 whitespace-nowrap text-xs sm:text-sm">
                   <a href="#" className="font-opensans hover:underline">
                     Privacy Policy
@@ -293,14 +303,22 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                 )}
               </div>
 
-              <button
-                className="hover:text-green-600 text-[#81C408] text-2xl"
-                aria-label="User account"
-                onClick={handleCurrentUserPage}
-              >
-                <FaUser className="text-3xl" />
-              </button>
+              <div className="flex flex-col items-center">
+                <button
+                  className="hover:text-green-600 text-[#81C408] text-2xl"
+                  aria-label="User account"
+                  onClick={handleCurrentUserPage}
+                >
+                  <FaUser className="text-3xl" />
+                </button>
+                {isAuthenticated && currentUser && (
+                  <span className="text-xs text-gray-600 truncate max-w-[80px]">
+                    {currentUser.name}/{currentUser.role}
+                  </span>
+                )}
+              </div>
             </div>
+
 
             <div className="xl:hidden flex items-center gap-3">
               <button
@@ -382,13 +400,20 @@ const SmartHeader: React.FC = ({ isAuthenticated, onLogout }) => {
                   </span>
                 )}
               </div>
-              <button
-                className="text-[#81C408] ml-6 mb-1 hover:text-green-600"
-                aria-label="User account"
-                onClick={handleCurrentUserPage}
-              >
-                <FaUser className="text-3xl" />
-              </button>
+               <div className="flex flex-col items-center">
+                <button
+                  className="hover:text-green-600 text-[#81C408] text-2xl"
+                  aria-label="User account"
+                  onClick={handleCurrentUserPage}
+                >
+                  <FaUser className="text-3xl" />
+                </button>
+                {isAuthenticated && currentUser && (
+                  <span className="text-xs text-gray-600 truncate max-w-[80px]">
+                    {currentUser.name}/{currentUser.role}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         )}

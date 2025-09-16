@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import main from '../../../assets/fruits/main.jpg';
 import './LoginPage.css';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../../../features/currentuser/CurrentUserSlice';
 
 interface LoginPageProps {
   setIsAuthenticated: (value: boolean) => void;
@@ -18,6 +20,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, setUserData }
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
+  const dispatch = useDispatch()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,6 +71,13 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, setUserData }
         email: user.email,
         role: user.role,
       }));
+
+      dispatch(setCurrentUser({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      }))
 
     
       setIsAuthenticated(true);

@@ -121,9 +121,16 @@ const ContactUs: React.FC = () => {
 
 export default ContactUs;
 
-// direct src/admin/client side 
+// direct src/admin/client side ---------ok
 // all pages should be completed -------ok
 // product detail page -----------------ok
-// and searchbar product search navigate to the detailed page 
-//  move the src/client/admin/components =>
-//  loginsignup are common folders in compoents/ header and footer are comman folder / 
+// and searchbar product search navigate to the detailed page -----ok
+//  move the src/client/admin/components =>-----ok
+//  loginsignup are common folders in compoents/ header and footer are comman folder / ----ok
+
+
+// new tasks 
+// admin side admin login name displayed dynamically updated 
+// and if user login and role is user than displayhed ony on the froend side  
+// admin side page displayed needs to becomes responsive for all sceen
+ 
