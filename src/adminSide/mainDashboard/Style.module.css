@@ -53,7 +53,7 @@
 .sidebarOpen .overlay {
   display: block;
 }
-
+/* hf */
 /* Responsive Adjustments */
 @media (min-width: 768px) {
   .mainContent {
