@@ -85,7 +85,6 @@ const OrderConfirmation: React.FC = () => {
   };
 
 
-  console.log("orders", orders);
 
   return (
     <div className="flex justify-center items-center min-h-[70vh] px-4 mt-20">
@@ -103,7 +102,7 @@ const OrderConfirmation: React.FC = () => {
                 : "text-gray-700"
             }`}
           >
-            Active User
+            User Profile
           </button>
           <button
             onClick={() => {

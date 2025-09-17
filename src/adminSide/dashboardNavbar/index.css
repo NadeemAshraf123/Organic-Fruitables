@@ -1,14 +1,14 @@
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0rem 2rem;
+  padding: 0rem 1.5rem;
   background: #F3F4FF;
   z-index: 900;
   height: 70px;
   box-sizing: border-box;
   border-bottom: none;
+  min-width: 320px;
 }
 
 .main-content {
@@ -18,269 +18,332 @@
   background: #f8f9fa;
 }
 
-
 .navbar-left {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem; 
 }
 
 .hamburger {
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: #6C5CE7;
-    padding: 0.5rem;
-    border-radius: 6px;
-    transition: all 0.2s ease;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  /* color: #6C5CE7; */
+  color:  #4a5075;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  flex-shrink: 0; 
 }
 
 .hamburger:hover {
-    background: #f0f0ff;
-    color: #5A4FCF;
+  background: #f0f0ff;
+  color: #5A4FCF;
 }
 
-/* Search Bar Styling - Akademi Style */
 .search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .search-bar input {
-    /* padding: 0.75rem 1.25rem 0.75rem 3rem; */
-    padding: 0.35rem 0.5rem 0.35rem 3rem;
-    border: 1.5px solid #e8e8e8;
-    border-radius: 25px;
-    width: 150px;
-    outline: none;
-    font-size: 0.7rem;
-    font-weight: 400;
-    color: #333;
-    background: #fafafa;
-    transition: all 0.3s ease;
+  padding: 0.35rem 0.5rem 0.35rem 2.5rem;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 25px;
+  width: 150px;
+  outline: none;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #333;
+  background: #fafafa;
+  transition: all 0.3s ease;
 }
 
 .search-bar input:focus {
-    border-color: #6C5CE7;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+  border-color: #6C5CE7;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
 }
 
 .search-bar input::placeholder {
-    color: #999;
-    font-weight: 400;
+  color: #999;
+  font-weight: 400;
 }
 
 .search-icon {
-    position: absolute;
-    left: 1.25rem;
-    color: #999;
-    font-size: 0.9rem;
+  position: absolute;
+  left: 1rem;
+  color: #999;
+  font-size: 0.9rem;
 }
 
-/* Navbar Right Section */
 .navbar-right {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
-/* Notifications - Akademi Style */
 .notifications {
-    position: relative;
-    color: #666;
-    font-size: 0.3rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 8px;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    transition: all 0.2s ease;
+  position: relative;
+  color: #666;
+  font-size: 1.1rem; 
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 50%;
+  height: 36px;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .notifications:hover {
-    background: #f8f9fa;
-    color: #6C5CE7;
+  background: #f8f9fa;
+  color: #6C5CE7;
 }
 
 .badge {
-    position: absolute;
-    top: -1px;
-    right: -1px;
-    background: linear-gradient(135deg, #FF6B6B, #FF5252);
-    color: white;
-    border-radius: 50%;
-    width: 12px;
-    height: 12px;   
-    font-size: 0.65rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid white;
-    box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: linear-gradient(135deg, #FF6B6B, #FF5252);
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
 }
 
-/* User Profile - Akademi Style */
 .user-profile {
-    display: flex;
-    align-items: center;
-    gap: 0.875rem;
-    cursor: pointer;
-    padding: 0.5rem 0.75rem;
-    border-radius: 12px;
-    transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem; 
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  min-width: 0; 
 }
 
 .user-profile:hover {
-    background: #f8f9fa;
+  background: #f8f9fa;
 }
-.user-icon {
-    font-size: 0.5rem;
-    color: #ffffff;
-    background: linear-gradient(135deg, #6C5CE7, #5A4FCF);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 3px 8px rgba(108, 92, 231, 0.25);
-    border: 1px solid #ffffff;
-    /* border: 2px solid red;  */
 
+.user-icon {
+  font-size: 1rem;
+  color: #ffffff;
+  /* background: linear-gradient(135deg, #6C5CE7, #5A4FCF); */
+  background:  #4a5075;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(108, 92, 231, 0.25);
+  border: 2px solid #ffffff;
+  flex-shrink: 0; 
 }
+
 .user-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0; 
 }
 
 .user-name {
-    font-weight: 600;
-    font-size: 0.75rem;
-    color: #2d3748;
-    line-height: 1.2;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #2d3748;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
 }
 
 .user-role {
-    font-size: 0.7rem;
-    color: #718096;
-    font-weight: 400;
-    line-height: 1.2;
+  font-size: 0.65rem;
+  color: #718096;
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
 }
+
 .page-heading {
   font-size: 20px;
   font-weight: 600;
   margin-left: 15px;
 }
 
-
-
-@media (max-width: 340px) {
-
-    .navbar-right {
-    gap: 1rem;
-}
-
-.notifications {
-    font-size: 1rem;
-}
-
-.badge {
-    width: 10px;
-    height: 10px;
-}
-
-.user-profile {
-    gap: 0.575rem;
-    padding: 0.3rem 0.95rem;
-}
-.user-icon {
+@media (max-width: 375px) {
+  .navbar {
+    padding: 0rem 1rem;
+    height: 60px;
+    gap: 0.5rem;
+  }
+  
+  .navbar-left {
+    gap: 0.75rem;
+  }
+  
+  .navbar-right {
+    gap: 0.75rem;
+  }
+  
+  .hamburger {
     font-size: 1.2rem;
-    width: 30px;
-    height: 30px;
-    border: 2px solid rgb(13, 255, 0);
-
-}
-
-.user-info {
-    gap: 0.05rem;
-}
-
-.user-name {
-    font-weight: 600;
-    font-size: 0.5rem;
-    line-height: 1.2;
-}
-
-.user-role {
-    font-size: 0.5rem;
-    font-weight: 400;
-    line-height: 1.2;
-}
+    padding: 0.4rem;
+  }
+  
+  .notifications {
+    font-size: 1rem;
+    padding: 0.35rem;
+    height: 32px;
+    width: 32px;
+  }
+  
+  .badge {
+    width: 14px;
+    height: 14px;
+    font-size: 0.55rem;
+    top: 1px;
+    right: 1px;
+  }
+  
+  .user-profile {
+    gap: 0.5rem;
+    padding: 0.3rem 0.5rem;
+  }
+  
+  .user-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+  
+  .user-name {
+    font-size: 0.35rem;
+    max-width: 60px;
+  }
+  
+  .user-role {
+    font-size: 0.55rem;
+    max-width: 60px;
+  }
 }
 
 
 @media (max-width: 576px) {
-    .search-bar {
-        display: none;
-    }
-
+  .search-bar {
+    display: none;
+  }
+  
+  .navbar {
+    padding: 0rem 1.2rem;
+  }
+  
+  .user-name {
+    max-width: 70px;
+  }
+  
+  .user-role {
+    max-width: 70px;
+  }
 }
 
 
-
-@media (min-width: 577px) and  (max-width: 991px) {
-
-.notifications {
-    font-size: 1rem;
-    cursor: pointer;
+@media (min-width: 577px) and (max-width: 991px) {
+  .notifications {
+    font-size: 1.1rem;
+  }
+  
+  .badge {
+    font-size: 0.6rem;
+    right: 3px;
+  }
+  
+  .search-bar input {
+    width: 180px;
+  }
 }
 
-.badge {
-    font-size: 0.5rem;
-    right: 4px;
-}
-}
 
 @media (min-width: 992px) {
   .navbar {
+    padding: 0rem 2.5rem;
+  }
+  
+  .search-bar input {
+    width: 220px;
+    padding: 0.5rem 0.75rem 0.5rem 3rem;
+  }
+  
+  .search-icon {
+    left: 1.25rem;
+  }
+  
+  .hamburger {
+    font-size: 1.5rem;
+  }
+  
+  .navbar-right {
+    gap: 2.5rem;
+  }
+  
+  .notifications {
+    font-size: 1.3rem;
+    height: 40px;
+    width: 40px;
+  }
+  
+  .badge {
+    right: 3px;
+    width: 18px;
+    height: 18px;
+  }
+  
+  .user-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
+  }
+  
+  .user-name {
+    font-size: 0.85rem;
+    max-width: 100px;
+  }
+  
+  .user-role {
+    font-size: 0.75rem;
+    max-width: 100px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .navbar {
     padding: 0rem 3rem;
   }
-
-
-
+  
   .search-bar input {
-    width: 200px;
+    width: 250px;
   }
-
-  .hamburger {
-    font-size: 1.6rem;
-  }
-
+  
   .navbar-right {
-    gap: 4rem;
-}
-
-  .notifications {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-
-  }
-
-.badge {
-    right: -6px;
-    width: 14px;
-    height: 14px;   
-}
-
-  .user-icon {
-    width: 35px;
-    height: 35px;
-    font-size: 1.5rem;
+    gap: 3rem;
   }
 }

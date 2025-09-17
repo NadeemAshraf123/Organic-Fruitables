@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from "react-router-dom";
-import { FaEdit, FaTrash } from 'react-icons/fa'; // Import icons from react-icons
+import { FaEdit, FaTrash } from 'react-icons/fa'; 
 import './Style.css';
 
 type ContextType = { searchTerm: string };

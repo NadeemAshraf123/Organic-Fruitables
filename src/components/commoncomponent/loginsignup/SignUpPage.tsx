@@ -112,15 +112,6 @@ const SignUpPage: React.FC = () => {
             />
             <p className={styles.error}>{errors.confirmPassword?.message}</p>
 
-            {/* <select {...register('role')} className={styles.input} style={{borderRadius:"8px 8px 0 0"}} defaultValue="" >
-              <option value="" disabled hidden >Select Role</option>
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select> 
-
-            <p className={styles.error}>{errors.role?.message}</p> */}
-
-
             <button type="submit" className={styles.outlineWarning}>
               Sign Up
             </button>
