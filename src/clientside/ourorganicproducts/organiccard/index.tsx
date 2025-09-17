@@ -9,7 +9,7 @@ interface ProductCardProps {
   name: string;
   image: string;
   category: string;
-  price: string; // 👈 keep as string because you already pass formatted price in OurOrganicProducts
+  price: string; 
   description: string;
 }
 
@@ -24,7 +24,7 @@ const OurOrganicProductsCard: React.FC<ProductCardProps> = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  // ✅ properly defined click handler
+
   const handleCardClick = () => {
     navigate(`/product/${id}`);
   };
@@ -34,7 +34,7 @@ const OurOrganicProductsCard: React.FC<ProductCardProps> = ({
       className="bg-white rounded-xl overflow-hidden transition-all duration-300 
         hover:shadow-[0_0_40px_rgba(64,64,64,0.7),0_0_20px_rgba(64,64,64,0.5)] 
         w-full max-w-[330px] h-auto border border-[#FDC700]"
-      onClick={handleCardClick} // ✅ no error now
+      onClick={handleCardClick} 
     >
       <div className="overflow-hidden">
         <div className="relative">

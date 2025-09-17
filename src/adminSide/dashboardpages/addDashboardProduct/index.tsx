@@ -46,50 +46,12 @@ const AddDashboardProduct = () => {
   fetchData();
 }, []);
 
-
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (!validate()) return;
-
-  //   if (productImages.length > 0) {
-  //     const imagePromises = productImages.map((file) => {
-  //       return new Promise<string>((resolve, reject) => {
-  //         const reader = new FileReader();
-  //         reader.onloadend = () => resolve(reader.result as string);
-  //         reader.onerror = reject;
-  //         reader.readAsDataURL(file);
-  //       });
-  //     });
-
-  //     Promise.all(imagePromises).then((base64Images) => {
-  //       const newProduct = {
-  //         id: uuidv4(),
-  //         name: productName,
-  //         price: productPrice,
-  //         images: base64Images,
-  //         category: productCategory,
-  //         rating: productRating,
-  //         isFeatured: isFeatured === "true"
-  //       };
-
-  //       const existingProducts = JSON.parse(localStorage.getItem("products") || "[]");
-  //       existingProducts.push(newProduct);
-  //       localStorage.setItem("products", JSON.stringify(existingProducts));
-  //       setTableProducts(existingProducts);
-  //       toast.success("Product added successfully");
-  //       setShowAddModal(false);
-  //       resetForm();
-  //     });
-  //   }
-  // };
-
-  // 👇 Updated handleSubmit function
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   if (!validate()) return;
 
   try {
-    // Convert images to Base64 first
+    
     const imagePromises = productImages.map((imageFile) => {
       return new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
@@ -351,7 +313,7 @@ const saveEditProduct = async () => {
             >
               ×
             </button>
-            <h3>Add New Product</h3>
+            <h3 style={{fontSize:"20px", fontWeight:"bold"}}>Add New Product</h3>
             <form onSubmit={handleSubmit} className={styles.form}>
               <div className={styles.formGroup}>
                 <label>Product Name</label>
@@ -463,24 +425,6 @@ const saveEditProduct = async () => {
         </div>
       )}
 
-
-
-{/* =========////////////////====================== */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {isEditing && editingProduct && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
@@ -490,7 +434,7 @@ const saveEditProduct = async () => {
             >
               ×
             </button>
-            <h3>Edit Product</h3>
+            <h3 style={{fontSize:"16px",fontWeight:"bold"}}>Edit Product</h3>
             <form className={styles.form}>
               <div className={styles.formGroup}>
                 <label>Product Name</label>

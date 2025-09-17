@@ -42,6 +42,8 @@ const OrderManagement: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [editingOrder, setEditingOrder] = useState<Order | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -108,10 +110,10 @@ const OrderManagement: React.FC = () => {
         prevOrders.map((order) =>
           order.id === orderId
             ? {
-              ...order,
-              status: newStatus,
-              updatedAt: new Date().toISOString(),
-            }
+                ...order,
+                status: newStatus,
+                updatedAt: new Date().toISOString(),
+              }
             : order
         )
       );
@@ -119,6 +121,101 @@ const OrderManagement: React.FC = () => {
       setError("Failed to update order status.");
       console.error("Error updating order:", err);
     }
+  };
+
+  const openEditModal = (order: Order) => {
+    setEditingOrder({
+      ...order,
+      total: order.total || 0,
+      shippingAddress: {
+        name: order.shippingAddress?.name || "",
+        address: order.shippingAddress?.address || "",
+        city: order.shippingAddress?.city || "",
+        state: order.shippingAddress?.state || "",
+        zipCode: order.shippingAddress?.zipCode || "",
+        country: order.shippingAddress?.country || "",
+      }
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingOrder(null);
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingOrder) return;
+
+    try {
+      await axios.patch(`http://localhost:3000/orders/${editingOrder.id}`, {
+        ...editingOrder,
+        updatedAt: new Date().toISOString(),
+      });
+
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.id === editingOrder.id ? editingOrder : order
+        )
+      );
+
+      closeEditModal();
+    } catch (err) {
+      setError("Failed to update order.");
+      console.error("Error updating order:", err);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    if (!editingOrder) return;
+
+    const { name, value } = e.target;
+    
+    if (name.startsWith("shippingAddress.")) {
+      const addressField = name.split(".")[1];
+      setEditingOrder({
+        ...editingOrder,
+        shippingAddress: {
+          ...editingOrder.shippingAddress,
+          [addressField]: value
+        }
+      });
+    } else if (name === "total") {
+      setEditingOrder({
+        ...editingOrder,
+        [name]: parseFloat(value) || 0
+      });
+    } else if (name === "createdAt") {
+      setEditingOrder({
+        ...editingOrder,
+        [name]: value
+      });
+    } else {
+      setEditingOrder({
+        ...editingOrder,
+        [name]: value
+      });
+    }
+  };
+
+  const handleItemChange = (index: number, field: keyof OrderItem, value: string | number) => {
+    if (!editingOrder) return;
+    
+    const updatedItems = [...editingOrder.items];
+    updatedItems[index] = {
+      ...updatedItems[index],
+      [field]: field === 'price' || field === 'quantity' ? Number(value) : value
+    };
+    
+    // Calculate new total based on all items
+    const newTotal = updatedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    setEditingOrder({
+      ...editingOrder,
+      items: updatedItems,
+      total: newTotal
+    });
   };
 
   const filteredOrders =
@@ -158,7 +255,9 @@ const OrderManagement: React.FC = () => {
   };
 
   const formatCurrency = (amount: number | null) => {
-    if (amount === null || isNaN(amount)) return "$0.00";
+    if (amount === null || amount === undefined || typeof amount !== 'number') {
+      return "$0.00";
+    }
     return `$${amount.toFixed(2)}`;
   };
 
@@ -186,11 +285,9 @@ const OrderManagement: React.FC = () => {
   }
 
   return (
-    <div className="w-full  mx-auto">
-
-
+    <div className="w-full mx-auto">
       <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-9xl mx-auto">
           <div className="">
             <h1 className="text-3xl font-bold text-gray-900">Order Management</h1>
             <p className="text-gray-600">Manage and update order statuses</p>
@@ -203,7 +300,7 @@ const OrderManagement: React.FC = () => {
                   <svg
                     className="h-5 w-5 text-red-400"
                     viewBox="0 0 20 20"
-                    fill="currentColor"
+                    fill="CurrentColor"
                   >
                     <path
                       fillRule="evenodd"
@@ -219,7 +316,7 @@ const OrderManagement: React.FC = () => {
             </div>
           )}
 
-          <div className="bg-white rounded-lg shadow mb-2  p-4">
+          <div className="bg-white rounded-lg shadow mb-2 p-4">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-gray-700 font-medium">Filter by status:</span>
               {(
@@ -235,10 +332,11 @@ const OrderManagement: React.FC = () => {
                 <button
                   key={status}
                   onClick={() => setFilterStatus(status)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${filterStatus === status
-                      ? "bg-[#81C408] text-white shadow-md"
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    filterStatus === status
+                      ? "bg-[#4A5075] text-white shadow-md"
                       : "bg-white text-gray-700 border border-gray-300 hover:bg-green-50 hover:border-green-200"
-                    }`}
+                  }`}
                 >
                   {status.charAt(0).toUpperCase() + status.slice(1)}
                 </button>
@@ -270,29 +368,29 @@ const OrderManagement: React.FC = () => {
                 </p>
               </div>
             ) : (
-              <div className="overflow-x-auto  max-w-[900px]">
-                <table className=" divide-y  divide-gray-200">
-                  <thead className="bg-[#81C408]">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-[#4A5075]">
                     <tr>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider min-w-[120px]">
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Order ID
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider min-w-[180px]">
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Customer
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider min-w-[200px]">
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Items
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider min-w-[100px]">
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Total
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider min-w-[120px]">
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Date
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider min-w-[120px]">
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider min-w-[200px]">
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Actions
                       </th>
                     </tr>
@@ -304,12 +402,12 @@ const OrderManagement: React.FC = () => {
                         key={order.id}
                         className="hover:bg-green-50 transition-colors duration-200"
                       >
-                        <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900 min-w-[120px]">
-                          <span className="bg-gray-100 px-2 py-1 rounded-md text-gray-700">
+                        <td className="px-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <span className="bg-gray-100 px-6 rounded-md text-gray-700">
                             #{order.id}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 min-w-[180px]">
+                        <td className="whitespace-nowrap text-sm text-gray-900">
                           <div>
                             <p className="font-medium text-gray-800">
                               {order.shippingAddress.name}
@@ -320,17 +418,18 @@ const OrderManagement: React.FC = () => {
                             </p>
                           </div>
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-900 min-w-[200px]">
+
+                        <td className="text-sm text-gray-900">
                           <div className="max-w-xs">
                             {order.items.slice(0, 2).map((item, index) => (
                               <div
                                 key={item.id}
-                                className="flex justify-start items-center mb-1"
+                                className="flex justify-between items-center"
                               >
                                 <span className="truncate text-gray-700">
                                   {item.name}
                                 </span>
-                                <span className="ml-2  text-gray-500 bg-gray-100 gap-10 px-2 py-0.5 rounded text-xs">
+                                <span className="mr-4 text-gray-500 bg-gray-100 rounded text-xs">
                                   ×{item.quantity}
                                 </span>
                               </div>
@@ -342,15 +441,18 @@ const OrderManagement: React.FC = () => {
                             )}
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-green-700 min-w-[100px]">
+
+                        <td className="px-4 py- whitespace-nowrap text-sm font-semibold text-green-700">
                           {formatCurrency(order.total)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 min-w-[120px]">
+
+                        <td className="px- py- whitespace-nowrap text-sm text-gray-600">
                           {formatDate(order.createdAt)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap min-w-[120px]">
+
+                        <td className="px-2 py- whitespace-nowrap">
                           <span
-                            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
+                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(
                               order.status
                             )}`}
                           >
@@ -358,29 +460,38 @@ const OrderManagement: React.FC = () => {
                               order.status.slice(1)}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium min-w-[200px]">
+
+                        <td className="px- py- whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
-                            <select
-                              value={order.status}
-                              onChange={(e) =>
-                                updateOrderStatus(
-                                  order.id,
-                                  e.target.value as Order["status"]
-                                )
-                              }
-                              className="text-xs border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                            >
-                              <option value="pending">Pending</option>
-                              <option value="processing">Processing</option>
-                              <option value="dispatched">Dispatched</option>
-                              <option value="delivered">Delivered</option>
-                              <option value="cancelled">Cancelled</option>
-                            </select>
+                            <div className="relative">
+                              <select
+                                value={order.status}
+                                onChange={(e) =>
+                                  updateOrderStatus(
+                                    order.id,
+                                    e.target.value as Order["status"]
+                                  )
+                                }
+                                className="text-xs border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                              >
+                                <option value="pending">Pending</option>
+                                <option value="processing">Processing</option>
+                                <option value="dispatched">Dispatched</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                              </select>
+                            </div>
                             <button
                               onClick={() => setSelectedOrder(order)}
                               className="text-green-600 hover:text-green-800 text-xs bg-green-100 px-3 py-1 rounded-md hover:bg-green-200 transition-colors"
                             >
                               View
+                            </button>
+                            <button
+                              onClick={() => openEditModal(order)}
+                              className="text-blue-600 hover:text-blue-800 text-xs bg-blue-100 px-3 py-1 rounded-md hover:bg-blue-200 transition-colors"
+                            >
+                              Edit
                             </button>
                           </div>
                         </td>
@@ -391,6 +502,165 @@ const OrderManagement: React.FC = () => {
               </div>
             )}
           </div>
+
+          {/* Edit Order Modal */}
+          {isEditModalOpen && editingOrder && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="bg-[#4A5075] px-6 py-4 rounded-t-lg flex justify-between items-center">
+                  <h3 className="text-xl font-semibold text-white">
+                    Edit Order #{editingOrder.id}
+                  </h3>
+                  <button
+                    onClick={closeEditModal}
+                    className="text-white hover:text-gray-200 transition-colors"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                <form onSubmit={handleEditSubmit} className="p-6 space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-gray-800 mb-4 text-lg">Shipping Address</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                        <input
+                          type="text"
+                          name="shippingAddress.address"
+                          value={editingOrder.shippingAddress.address || ""}
+                          onChange={handleInputChange}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                        <input
+                          type="text"
+                          name="shippingAddress.city"
+                          value={editingOrder.shippingAddress.city || ""}
+                          onChange={handleInputChange}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                        <input
+                          type="text"
+                          name="shippingAddress.zipCode"
+                          value={editingOrder.shippingAddress.zipCode || ""}
+                          onChange={handleInputChange}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-gray-800 mb-4 text-lg">Order Items</h4>
+                    <div className="space-y-4">
+                      {editingOrder.items.map((item, index) => (
+                        <div key={item.id} className="grid grid-cols-1 md:grid-cols-4 gap-4 p-3 bg-gray-50 rounded-md">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                            <input
+                              type="text"
+                              value={item.name}
+                              onChange={(e) => handleItemChange(index, 'name', e.target.value)}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Price</label>
+                            <input
+                              type="number"
+                              value={item.price}
+                              onChange={(e) => handleItemChange(index, 'price', e.target.value)}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+                            <input
+                              type="number"
+                              value={item.quantity}
+                              onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div className="flex items-end">
+                            <span className="text-sm font-medium text-gray-700">
+                              Subtotal: {formatCurrency(item.price * item.quantity)}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-gray-800 mb-4 text-lg">Order Details</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select
+                          name="status"
+                          value={editingOrder.status}
+                          onChange={handleInputChange}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="processing">Processing</option>
+                          <option value="dispatched">Dispatched</option>
+                          <option value="delivered">Delivered</option>
+                          <option value="cancelled">Cancelled</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Total Amount</label>
+                        <input
+                          type="number"
+                          name="total"
+                          value={editingOrder.total || 0}
+                          onChange={handleInputChange}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          readOnly
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                        <input
+                          type="datetime-local"
+                          name="createdAt"
+                          value={editingOrder.createdAt ? new Date(editingOrder.createdAt).toISOString().slice(0, 16) : ""}
+                          onChange={handleInputChange}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                    <button
+                      type="button"
+                      onClick={closeEditModal}
+                      className="px-6 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
 
           {selectedOrder && (
             <div className="fixed inset-0 bg-green-100 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50 ">

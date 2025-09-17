@@ -1,5 +1,5 @@
 
-/* Main Container */
+
 .admin-table-container {
   background: #F3F4FF;
   border-radius: 8px;
@@ -8,11 +8,11 @@
   padding: 10px 20px 0px 20px ; 
   margin: 0 auto; 
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: auto;
   
 }
 
-/* Table Styling */
+
 .admin-table {
   width: 100%;
   border-collapse: collapse;
@@ -23,16 +23,15 @@
 }
 
 .admin-table th {
-  background-color: #f8f9fa;
-  padding: 14px 16px;
+  background-color:  #4a5075;
+  padding: 10px 10px;
   text-align: left;
   font-weight: 600;
-  color: #555;
-  color: #5D649F;
+  color: white;
 }
 
 .admin-table td {
-  padding: 14px 16px;
+  padding: 8px 8px;
   border-bottom: 1px solid #f0f0f0;
   vertical-align: middle;
 }
@@ -43,11 +42,11 @@
   background-color: #f9f9f9;
 }
 
-/* User Name Cell */
+
 .user-name-cell {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 .profile-placeholder {
@@ -63,7 +62,6 @@
   font-size: 0.875rem;
 }
 
-/* Action Buttons */
 .action-buttons {
   display: flex;
   gap: 10px;
@@ -76,7 +74,7 @@
   font-size: 0.7rem;
   color: #666;
   transition: color 0.2s;
-  /* padding: 5px; */
+  
    width: 25px;
   height: 25px;
   text-align: center;
@@ -93,7 +91,7 @@
   color: #e74c3c;
 }
 
-/* Edit Popup */
+
 .edit-popup {
   position: fixed;
   top: 50%;
@@ -142,7 +140,7 @@
   color: #333;
 }
 
-/* Loading State */
+
 p {
   padding: 20px;
   color: #666;

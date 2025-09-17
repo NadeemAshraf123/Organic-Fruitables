@@ -17,7 +17,7 @@ import OrderConfirmation from "./clientside/pages/OrderConfirmation";
 import CheckOutPage from "./clientside/pages/CheckOutPage";
 import NotFoundPage from "./clientside/pages/NotFoundPage";
 import CurrentUserProfilePage from "./clientside/pages/CurrentUserProfilePage";
-import OrderManagement from "./clientside/pages/OrderManagement";
+import OrderManagement from "./adminSide/dashboardpages/ordermanagement/OrderManagement";
 import ContactUs from "./clientside/pages/ContactUs";
 import OurOrganicProducts from "./clientside/ourorganicproducts";
 import OrderHistory from "./clientside/pages/OrderHistoryPage";
@@ -72,9 +72,8 @@ function App() {
   );
 }
 
-
-
 function AppContent({ isAuthenticated, setIsAuthenticated, userData, setUserData }) {
+  
   const location = useLocation();
   const hideNavbar = location.pathname.startsWith("/dashboard");
 

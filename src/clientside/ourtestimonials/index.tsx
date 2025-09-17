@@ -75,7 +75,7 @@ const TestimonialCarousel = () => {
           </div>
 
           
-          {/* {!isMobile && ( */}
+          
             <div className="w-full max-w-[1320px] flex justify-end gap-6">
               <button
                 onClick={() => handleScroll("prev")}
@@ -90,7 +90,7 @@ const TestimonialCarousel = () => {
                 →
               </button>
             </div>
-          {/* )} */}
+        
         </div>
 
         

@@ -36,7 +36,7 @@ const MainDashboard: React.FC = () => {
           toggleSidebar={toggleSidebar} 
         />
         
-        {/* Mobile overlay */}
+      
         {isSidebarOpen && window.innerWidth < 992 && (
           <div className={styles.overlay} onClick={toggleSidebar} />
         )}

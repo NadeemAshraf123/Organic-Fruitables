@@ -1,4 +1,4 @@
-/* Base Styles */
+
 .container {
   padding: 10px 20px 0px 20px;
   background-color: #F3F4FF;
@@ -45,7 +45,7 @@
   color: white;
   border: none;
   border-radius: 6px;
-  padding: 8px 15px;
+  padding: 8px 35px;
   font-size: 14px;
   cursor: pointer;
   display: flex;
@@ -58,7 +58,7 @@
   background-color: #4a5075;
 }
 
-/* Table Styles */
+
 .tableContainer {
   background-color: white;
   border-radius: 8px;
@@ -73,8 +73,8 @@
 }
 
 .categoryTable th {
-  background-color: #f8f9fa;
-  color: #5D6491;
+  background-color: #4a5075;
+  color: white;
   font-weight: 600;
   text-align: left;
   padding: 12px 15px;
@@ -127,7 +127,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #7f8c8d;
+  color: #4a5075;
   font-size: 15px;
   padding: 5px;
   border-radius: 4px;
@@ -178,7 +178,6 @@
   z-index: 1000;
 }
 
-/* Modal Container */
 .modalContent {
   background-color: #fff;
   border-radius: 10px;
@@ -202,7 +201,7 @@
   }
 }
 
-/* Close Button */
+
 .closeButton {
   position: absolute;
   top: 15px;
@@ -214,7 +213,6 @@
   color: #888;
 }
 
-/* Form Styling */
 .form {
   display: flex;
   flex-direction: column;
@@ -249,7 +247,6 @@
   box-shadow: 0 0 0 2px rgba(93, 100, 145, 0.2);
 }
 
-/* Image Preview */
 .previewImage {
   width: 60px;
   height: 60px;
@@ -258,7 +255,7 @@
   margin-bottom: 8px;
 }
 
-/* Radio Buttons */
+
 .radioGroup {
   display: flex;
   gap: 20px;
@@ -272,14 +269,14 @@
   font-weight: 500;
 }
 
-/* Error Text */
+
 .error {
   color: #e74c3c;
   font-size: 12px;
   margin-top: 4px;
 }
 
-/* Actions */
+
 .formActions {
   display: flex;
   justify-content: flex-end;
@@ -322,409 +319,6 @@
 
 
 
-
-/* Add Category Button Modal Styles */
-/* .modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modalContent {
-  background-color: white;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 400px;
-  height: auto;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  animation: modalFadeIn 0.3s ease-out;
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.closeButton {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #7f8c8d;
-  padding: 5px;
-} */
-
-/* .form {
-  padding: 20px;
-}
-
-.formGroup {
-  margin-bottom: 18px;
-}
-
-.formGroup label {
-  display: block;
-  margin-bottom: 6px;
-  text-align: left;
-  font-size: 12px;
-  color: #2c3e50;
-  font-weight: 600;
-}
-
-.formGroup input,
-.formGroup select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: all 0.3s;
-}
-
-.formGroup input:focus,
-.formGroup select:focus {
-  outline: none;
-  border-color: #5D6491;
-  box-shadow: 0 0 0 2px rgba(93, 100, 145, 0.2);
-}
-
-.error {
-  color: #e74c3c;
-  font-size: 13px;
-  margin-top: 5px;
-  display: block;
-}
-
-.radioGroup {
-  display: flex;
-  gap: 15px;
-  margin-top: 5px;
-}
-
-.radioGroup label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: normal;
-  cursor: pointer;
-}
-
-.radioGroup input {
-  width: auto;
-  margin: 0;
-}
-
-.previewImage {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin: 10px 0;
-}
-
-.formActions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
-}
-
-.submitButton {
-  background-color: #5D6491;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 15px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.submitButton:hover {
-  background-color: #4a5075;
-}
-
-.cancelButton {
-  background-color: #f5f7fa;
-  color: #2c3e50;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 8px 15px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.cancelButton:hover {
-  background-color: #e0e0e0;
-}
-
-
-
-
-.modalContent {
-  background-color: #ffffff;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 400px;
-  padding: 20px 20px 25px 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  animation: fadeInModal 0.3s ease-out;
-  position: relative;
-  overflow-y: auto;
-  max-height: 90vh;
-}
-
-@keyframes fadeInModal {
-  from {
-    opacity: 0;
-    transform: translateY(-25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.closeButton {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: #888;
-  cursor: pointer;
-  transition: color 0.2s;
-  font-weight: 600;
-}
-
-.closeButton:hover {
-  color: #e74c3c;
-}
-
-.modalContent h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #2c3e50;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-}
-
-.formGroup input[type="text"] {
-   background-color: #f9f9f9;
-}
-.formGroup input[type="file"] {
-  background-color: #f9f9f9;
-  font-size: 8px;
-}
-
-.previewImage {
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  margin-top: 8px;
-  margin-bottom: 10px;
-}
-.radioGroup {
-  display: flex;
-  gap: 25px;
-  margin-top: 8px;
-}
-
-.radioGroup label {
-  font-size: 14px;
-  color: #34495e;
-}
-
-
-.formActions {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 25px;
-  padding-top: 20px;
-  border-top: 1px solid #eee;
-}
-
-.submitButton {
-  background-color: #5D6491;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0px 10px;
-  font-size: 14px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.3s;
-}
-
-.submitButton:hover {
-  background-color: #4a5075;
-}
-
-.cancelButton {
-  background-color: #f5f7fa;
-  color: #2c3e50;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 8px 10px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.cancelButton:hover {
-  background-color: #e0e0e0;
-} */
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .actions {
-    width: auto;
-    flex-direction: row;
-    align-items: flex-start;
-    /* flex-wrap: wrap; */
-    gap: 10px;
-  }
-
-  .searchContainer {
-    width: 100%;
-  }
-
-  .searchInput {
-    width: 100%;
-  }
-
-  .addButton {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .categoryTable {
-    display: block;
-    overflow-x: auto;
-  }
-
-  .modalContent {
-    width: 95%;
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 340px) {
-
-  .title {
-    font-size: 14px;
-  }
-  .actions {
-    flex-direction: row;
-  }
-  .addButton{
-  background-color: #5D6491;
-  color: white;
-  border-radius: 6px;
-  padding: 6px 5px;
-  font-size: 5px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: background-color 0.3s;
-  }
-
-  .searchInput {  
-  padding: 4px 0px 4px 30px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  width: 100px;
-  font-size: 8px;
-  transition: all 0.3s;
-  }
-  .searchIcon {
-    font-size: 8px;
-  }
-  .tableContainer{
-    padding: 0px;
-    width: 100%;
-  }
-  .categoryTable {
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-  }
-  .categoryTable th {
-  background-color: #f8f9fa;
-  background-color: chartreuse;
-  font-weight: 100;
-  text-align: left;
-  padding: 6px 8px;
-}
-.categoryTable td {
-  padding: 6px 8px;
-}
-.categoryImage {
-  width: 20px;
-  height: 20px;
-}
-.actionButtons {
-  gap: 4px;
-}
-
-.editButton, .deleteButton {
-  font-size: 10px;
-  padding: 3px;
-  transition: all 0.2s;
-  width: 20px;
-  height: 20px;
-}
-
-
-}
-/* =========================
-   Base Styles (Desktop-first)
-   ========================= */
-.container {
-  padding: 10px 20px 0 20px;
-  background-color: #F3F4FF;
-  min-height: 100vh;
-  width: 100%;
-  margin: 0 auto;
-}
-
-/* =========================
-   Responsive Adjustments
-   ========================= */
-
-/* Mobile First - Small phones (max 480px) */
 @media (max-width: 480px) {
   .actions {
     flex-direction: column;
@@ -732,16 +326,17 @@
     width: 100%;
   }
 
+  .searchContainer {
+    width: 50%;
+  }
   .searchInput {
-    width: 100%;
-    font-size: 12px;
-    padding: 6px 6px 6px 28px;
+   width: 100% !important;
   }
 
   .addButton {
-    width: 100%;
+    width: 50%;
     font-size: 12px;
-    padding: 6px;
+    padding: 8px;
     justify-content: center;
   }
 
@@ -751,18 +346,21 @@
   }
 
   .categoryTable {
-    font-size: 12px;
-    min-width: 400px; /* prevent text squish */
+    
   }
 
   .modalContent {
-    width: 95%;
+    width: 100%;
     padding: 16px;
   }
 }
 
-/* Tablets (481px - 768px) */
+
 @media (max-width: 768px) {
+  .container {
+    padding: 10px 15px;
+  }
+
   .header {
     flex-direction: column;
     align-items: flex-start;
@@ -784,19 +382,30 @@
     flex-shrink: 0;
   }
 
-  .categoryTable {
-    display: block;
+  .tableContainer {
     overflow-x: auto;
-    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+  }
+
+  .categoryTable {
+    min-width: 600px; 
+    width: 100%;
+  }
+
+  .categoryTable th,
+  .categoryTable td {
+    padding: 10px 12px;
+    font-size: 13px;
   }
 
   .modalContent {
-    width: 90%;
+    width: 95%;
     margin: auto;
+    padding: 20px;
   }
 }
 
-/* Small Desktops (769px - 1024px) */
 @media (max-width: 1024px) {
   .container {
     padding: 10px 15px;
@@ -811,7 +420,7 @@
   }
 }
 
-/* Large Screens (≥1280px) */
+
 @media (min-width: 1280px) {
   .container {
     max-width: full;
