@@ -14,14 +14,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
 
-  // Handle window resize
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 992;
       const wasMobile = isMobile;
       setIsMobile(mobile);
       
-      // When switching from mobile to desktop, ensure sidebar is open
       if (wasMobile && !mobile && !isOpen) {
         toggleSidebar();
       }
@@ -29,7 +27,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
     window.addEventListener('resize', handleResize);
     
-    // Check initial size
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
@@ -39,22 +36,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     let timer: number;
     if (isOpen) {
       timer = setTimeout(() => {
-        // Timer logic can be added here if needed
       }, 500);
     }
     return () => clearTimeout(timer);
   }, [isOpen]);
 
-  // Fixed handleItemClick with proper delay
   const handleItemClick = (path: string) => {
     if (isMobile && isOpen) {
-      // Navigate first, then close sidebar with a small delay
       navigate(path);
       setTimeout(() => {
         toggleSidebar();
-      }, 100); // Small delay to prevent glitch
+      }, 100);
     } else {
-      // Desktop behavior - just navigate
       navigate(path);
     }
   };
@@ -67,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
   return (
     <>
-      {/* Mobile Overlay */}
+      
       {isMobile && isOpen && (
         <div className={styles.overlay} onClick={handleOverlayClick} />
       )}
@@ -75,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
         <div className={styles.logo}>
           <h2>Admin Panel</h2>
-          {/* Only show toggle button on mobile */}
+        
           {isMobile && (
             <button 
               className={styles.toggleButton}

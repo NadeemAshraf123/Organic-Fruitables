@@ -88,19 +88,17 @@ const AddDashboardCategory = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // const handleSaveEditedCategory = () => {
-  //   const updatedList = categoryList.map((cat) =>
-  //     cat.id === editingCategory.id ? editingCategory : cat
-  //   );
-  //   localStorage.setItem("categoryname", JSON.stringify(updatedList));
-  //   setCategoryList(updatedList);
-  //   toast.success("Category updated!");
-  //   setIsEditing(false);
-  //   setEditingCategory(null);
-  // };
+  const validateEdit = () => {
+  const newErrors: { [key: string]: string } = {};
+  if (!editingCategory?.name?.trim())
+    newErrors.editName = "Category name is required";
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
 
   const handleSaveEditedCategory = async () => {
     if (!editingCategory) return;
+    if(!validateEdit()) return;
 
     try {
       const res = await fetch(
@@ -126,16 +124,6 @@ const AddDashboardCategory = () => {
       toast.error("COuld not update category");
     }
   };
-
-  // const deleteCategory = (id: string) => {
-  //   const confirmDelete = window.confirm("Are you sure you want to delete this category?");
-  //   if (!confirmDelete) return;
-
-  //   const filtered = categoryList.filter((cat) => cat.id !== id);
-  //   localStorage.setItem("categoryname", JSON.stringify(filtered));
-  //   setCategoryList(filtered);
-  //   toast.success("Category deleted!");
-  // };
 
   const deleteCategory = async (id: string) => {
     const confirmDelete = window.confirm(
@@ -345,7 +333,6 @@ const AddDashboardCategory = () => {
         </div>
       )}
 
-      {/* Edit Category Modal */}
       {isEditing && editingCategory && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
@@ -369,9 +356,12 @@ const AddDashboardCategory = () => {
                     })
                   }
                 />
+                {errors.editName && (
+            <span className={styles.error}>{errors.editName}</span>
+          )}
               </div>
 
-              <div className={styles.formGroup}>
+              {/* <div className={styles.formGroup}>
                 <label>Image</label>
                 {editingCategory.image && (
                   <img
@@ -391,13 +381,58 @@ const AddDashboardCategory = () => {
                         setEditingCategory({
                           ...editingCategory,
                           image: reader.result,
+                          imageName: file.name,
                         });
                       };
                       reader.readAsDataURL(file);
                     }
                   }}
                 />
-              </div>
+              </div> */}
+              <div className={styles.formGroup}>
+  <label>Image</label>
+  {editingCategory.image && (
+    <div>
+      <img
+        src={editingCategory.image}
+        alt="Preview"
+        className={styles.previewImage}
+      />
+      <p className={styles.imageFilename}>
+        Current image: {editingCategory.imageName || "category-image"}
+      </p>
+    </div>
+  )}
+  <div className={styles.fileInputContainer}>
+    <input
+      type="file"
+      accept="image/*"
+      id="editCategoryImage"
+      onChange={(e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setEditingCategory({
+              ...editingCategory,
+              image: reader.result,
+              imageName: file.name, 
+            });
+          };
+          reader.readAsDataURL(file);
+        }
+      }}
+      className={styles.fileInput}
+    />
+    <label htmlFor="editCategoryImage" className={styles.fileInputLabel}>
+      Choose Image
+    </label>
+    <span className={styles.fileName}>
+      {editingCategory.imageName || "No file chosen"}
+    </span>
+  </div>
+</div>
+
 
               <div className={styles.formGroup}>
                 <label>Status</label>

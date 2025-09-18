@@ -29,7 +29,6 @@
   border: none;
   font-size: 1.4rem;
   cursor: pointer;
-  /* color: #6C5CE7; */
   color:  #4a5075;
   padding: 0.5rem;
   border-radius: 6px;
@@ -142,7 +141,6 @@
 .user-icon {
   font-size: 1rem;
   color: #ffffff;
-  /* background: linear-gradient(135deg, #6C5CE7, #5A4FCF); */
   background:  #4a5075;
   border-radius: 50%;
   width: 32px;

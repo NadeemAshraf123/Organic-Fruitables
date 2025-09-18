@@ -44,6 +44,8 @@ const OrderManagement: React.FC = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [editingOrder, setEditingOrder] = useState<Order | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -134,7 +136,7 @@ const OrderManagement: React.FC = () => {
         state: order.shippingAddress?.state || "",
         zipCode: order.shippingAddress?.zipCode || "",
         country: order.shippingAddress?.country || "",
-      }
+      },
     });
     setIsEditModalOpen(true);
   };
@@ -144,9 +146,33 @@ const OrderManagement: React.FC = () => {
     setEditingOrder(null);
   };
 
+  const validateEditOrder = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!editingOrder?.shippingAddress?.address?.trim())
+      newErrors.shippingAddress = "Address is required";
+    if (!editingOrder?.shippingAddress?.city?.trim())
+      newErrors.shippingCity = "City is required";
+    if (!editingOrder?.shippingAddress?.zipCode?.trim())
+      newErrors.shippingZipCode = "ZIP Code is required";
+
+    editingOrder?.items?.forEach((item, index) => {
+      if (!item.name?.trim())
+        newErrors[`itemName-${index}`] = "Item name is required";
+      if (!item.price || item.price <= 0)
+        newErrors[`itemPrice-${index}`] = "Valid price is required";
+      if (!item.quantity || item.quantity <= 0)
+        newErrors[`itemQuantity-${index}`] = "Valid quantity is required";
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingOrder) return;
+    if (!validateEditOrder()) return;
 
     try {
       await axios.patch(`http://localhost:3000/orders/${editingOrder.id}`, {
@@ -167,54 +193,63 @@ const OrderManagement: React.FC = () => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     if (!editingOrder) return;
 
     const { name, value } = e.target;
-    
+
     if (name.startsWith("shippingAddress.")) {
       const addressField = name.split(".")[1];
       setEditingOrder({
         ...editingOrder,
         shippingAddress: {
           ...editingOrder.shippingAddress,
-          [addressField]: value
-        }
+          [addressField]: value,
+        },
       });
     } else if (name === "total") {
       setEditingOrder({
         ...editingOrder,
-        [name]: parseFloat(value) || 0
+        [name]: parseFloat(value) || 0,
       });
     } else if (name === "createdAt") {
       setEditingOrder({
         ...editingOrder,
-        [name]: value
+        [name]: value,
       });
     } else {
       setEditingOrder({
         ...editingOrder,
-        [name]: value
+        [name]: value,
       });
     }
   };
 
-  const handleItemChange = (index: number, field: keyof OrderItem, value: string | number) => {
+  const handleItemChange = (
+    index: number,
+    field: keyof OrderItem,
+    value: string | number
+  ) => {
     if (!editingOrder) return;
-    
+
     const updatedItems = [...editingOrder.items];
     updatedItems[index] = {
       ...updatedItems[index],
-      [field]: field === 'price' || field === 'quantity' ? Number(value) : value
+      [field]:
+        field === "price" || field === "quantity" ? Number(value) : value,
     };
-    
-    // Calculate new total based on all items
-    const newTotal = updatedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
+
+    const newTotal = updatedItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
     setEditingOrder({
       ...editingOrder,
       items: updatedItems,
-      total: newTotal
+      total: newTotal,
     });
   };
 
@@ -255,7 +290,7 @@ const OrderManagement: React.FC = () => {
   };
 
   const formatCurrency = (amount: number | null) => {
-    if (amount === null || amount === undefined || typeof amount !== 'number') {
+    if (amount === null || amount === undefined || typeof amount !== "number") {
       return "$0.00";
     }
     return `$${amount.toFixed(2)}`;
@@ -285,11 +320,13 @@ const OrderManagement: React.FC = () => {
   }
 
   return (
-    <div className="w-full mx-auto">
-      <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="w-full mx-auto ">
+      <div className="min-h-screen bg-gray-50">
         <div className="max-w-9xl mx-auto">
           <div className="">
-            <h1 className="text-3xl font-bold text-gray-900">Order Management</h1>
+            <h1 className="text-3xl ml-4 font-bold text-gray-900">
+              Order Management
+            </h1>
             <p className="text-gray-600">Manage and update order statuses</p>
           </div>
 
@@ -316,9 +353,11 @@ const OrderManagement: React.FC = () => {
             </div>
           )}
 
-          <div className="bg-white rounded-lg shadow mb-2 p-4">
+          <div className="bg-white rounded-lg shadow mb-2 p-2 md:p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-gray-700 font-medium">Filter by status:</span>
+              <span className="text-gray-700 font-medium">
+                Filter by status:
+              </span>
               {(
                 [
                   "all",
@@ -332,7 +371,7 @@ const OrderManagement: React.FC = () => {
                 <button
                   key={status}
                   onClick={() => setFilterStatus(status)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`px-2 py-0.5 md:px-4 md:py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     filterStatus === status
                       ? "bg-[#4A5075] text-white shadow-md"
                       : "bg-white text-gray-700 border border-gray-300 hover:bg-green-50 hover:border-green-200"
@@ -368,29 +407,29 @@ const OrderManagement: React.FC = () => {
                 </p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto p-1">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-[#4A5075]">
                     <tr>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
+                      <th className="px-2 py-2 md:px-4 md:py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Order ID
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
-                        Customer
+                      <th className="md:px-6 md:py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
+                        Address
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
+                      <th className="md:px-6 md:py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Items
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
+                      <th className="md:px-6 md:py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Total
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
+                      <th className="md:px-6 md:py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Date
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
+                      <th className="md:px-6 md:py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
+                      <th className="md:px-6 md:py-4 text-sm text-center font-semibold text-white uppercase tracking-wider">
                         Actions
                       </th>
                     </tr>
@@ -402,20 +441,20 @@ const OrderManagement: React.FC = () => {
                         key={order.id}
                         className="hover:bg-green-50 transition-colors duration-200"
                       >
-                        <td className="px-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <td className="px-4 py-8 whitespace-nowrap text-sm font-medium text-gray-900">
                           <span className="bg-gray-100 px-6 rounded-md text-gray-700">
                             #{order.id}
                           </span>
                         </td>
-                        <td className="whitespace-nowrap text-sm text-gray-900">
+                        <td className="whitespace-nowrap text-sm py-4 text-gray-900">
                           <div>
-                            <p className="font-medium text-gray-800">
+                            <span className="font-medium text-gray-800">
                               {order.shippingAddress.name}
-                            </p>
-                            <p className="text-gray-500 text-xs">
+                            </span>
+                            <span className="text-gray-500 text-xs">
                               {order.shippingAddress.city},{" "}
                               {order.shippingAddress.state}
-                            </p>
+                            </span>
                           </div>
                         </td>
 
@@ -426,7 +465,7 @@ const OrderManagement: React.FC = () => {
                                 key={item.id}
                                 className="flex justify-between items-center"
                               >
-                                <span className="truncate text-gray-700">
+                                <span className=" ml-3 truncate text-gray-700">
                                   {item.name}
                                 </span>
                                 <span className="mr-4 text-gray-500 bg-gray-100 rounded text-xs">
@@ -472,7 +511,7 @@ const OrderManagement: React.FC = () => {
                                     e.target.value as Order["status"]
                                   )
                                 }
-                                className="text-xs border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                className="text-xs border border-gray-300 rounded-md py-1 md:px-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                               >
                                 <option value="pending">Pending</option>
                                 <option value="processing">Processing</option>
@@ -483,13 +522,13 @@ const OrderManagement: React.FC = () => {
                             </div>
                             <button
                               onClick={() => setSelectedOrder(order)}
-                              className="text-green-600 hover:text-green-800 text-xs bg-green-100 px-3 py-1 rounded-md hover:bg-green-200 transition-colors"
+                              className="text-green-600 hover:text-green-800 text-xs bg-green-100 px-1 py-1 rounded-md hover:bg-green-200 transition-colors"
                             >
                               View
                             </button>
                             <button
                               onClick={() => openEditModal(order)}
-                              className="text-blue-600 hover:text-blue-800 text-xs bg-blue-100 px-3 py-1 rounded-md hover:bg-blue-200 transition-colors"
+                              className="text-blue-600 hover:text-blue-800 text-xs bg-blue-100 px-1 mr-2 py-1 rounded-md hover:bg-blue-200 transition-colors"
                             >
                               Edit
                             </button>
@@ -503,7 +542,6 @@ const OrderManagement: React.FC = () => {
             )}
           </div>
 
-          {/* Edit Order Modal */}
           {isEditModalOpen && editingOrder && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
               <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -515,84 +553,184 @@ const OrderManagement: React.FC = () => {
                     onClick={closeEditModal}
                     className="text-white hover:text-gray-200 transition-colors"
                   >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 </div>
 
                 <form onSubmit={handleEditSubmit} className="p-6 space-y-6">
                   <div>
-                    <h4 className="font-semibold text-gray-800 mb-4 text-lg">Shipping Address</h4>
+                    <h4 className="font-semibold text-gray-800 mb-4 text-lg">
+                      Shipping Address
+                    </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Address
+                        </label>
                         <input
                           type="text"
                           name="shippingAddress.address"
                           value={editingOrder.shippingAddress.address || ""}
-                          onChange={handleInputChange}
+                          onChange={(e) => {
+                            handleInputChange(e);
+                          if (errors.shippingAddress) {
+                            setErrors(prev => ({...prev, shippingAddress: ''}));
+                          }}
+                        }
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
+                        {errors.shippingAddress && (
+                          <span className="text-red-500 text-xs">
+                            {errors.shippingAddress}
+                          </span>
+                        )}
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          City
+                        </label>
                         <input
                           type="text"
                           name="shippingAddress.city"
                           value={editingOrder.shippingAddress.city || ""}
-                          onChange={handleInputChange}
+                        onChange={(e) => {
+    handleInputChange(e);
+    if (errors.shippingCity) {
+      setErrors(prev => ({...prev, shippingCity: ''}));
+    }
+  }}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
+                        {errors.shippingCity && (
+                          <span className="text-red-500 text-xs">
+                            {errors.shippingCity}
+                          </span>
+                        )}
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          ZIP Code
+                        </label>
                         <input
                           type="text"
                           name="shippingAddress.zipCode"
                           value={editingOrder.shippingAddress.zipCode || ""}
-                          onChange={handleInputChange}
+                            onChange={(e) => {
+    handleInputChange(e);
+    if (errors.shippingZipCode) {
+      setErrors(prev => ({...prev, shippingZipCode: ''}));
+    }
+  }}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
+                        {errors.shippingZipCode && (
+                          <span className="text-red-500 text-xs">
+                            {errors.shippingZipCode}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-gray-800 mb-4 text-lg">Order Items</h4>
-                    <div className="space-y-4">
+                    <h4 className="font-semibold text-gray-800 mb-2 text-lg">
+                      Order Items
+                    </h4>
+                    <div className="space-y-3">
                       {editingOrder.items.map((item, index) => (
-                        <div key={item.id} className="grid grid-cols-1 md:grid-cols-4 gap-4 p-3 bg-gray-50 rounded-md">
+                        <div
+                          key={item.id}
+                          className="grid grid-cols-1 md:grid-cols-4 gap-4 p-3 bg-gray-50 rounded-md"
+                        >
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Name
+                            </label>
                             <input
                               type="text"
                               value={item.name}
-                              onChange={(e) => handleItemChange(index, 'name', e.target.value)}
+                              onChange={(e) =>
+                                handleItemChange(index, "name", e.target.value)
+                              }
                               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
+                                 {errors[`itemName-${index}`] && (
+        <span className="text-red-500 text-xs">{errors[`itemName-${index}`]}</span>
+      )}
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Price</label>
-                            <input
-                              type="number"
-                              value={item.price}
-                              onChange={(e) => handleItemChange(index, 'price', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Price
+                            </label>
+
+                           <input
+  type="number"
+  value={item.price}
+  onChange={(e) => {
+    handleItemChange(index, 'price', e.target.value);
+    if (errors[`itemPrice-${index}`]) {
+      setErrors(prev => ({...prev, [`itemPrice-${index}`]: ''}));
+    }
+  }}
+  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
+                                 {errors[`itemPrice-${index}`] && (
+        <span className="text-red-500 text-xs">{errors[`itemPrice-${index}`]}</span>
+      )}
                           </div>
+
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
-                            <input
-                              type="number"
-                              value={item.quantity}
-                              onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Quantity
+                            </label>
+                             <div className="flex items-center">
+        <button
+          type="button"
+          onClick={() => handleItemChange(index, 'quantity', Math.max(1, item.quantity - 1))}
+          className="px-2 py-1 bg-gray-200 rounded-l-md hover:bg-gray-300"
+        >
+          -
+        </button>
+        <input
+          type="number"
+          value={item.quantity}
+          onChange={(e) => {
+            handleItemChange(index, 'quantity', e.target.value);
+            if (errors[`itemQuantity-${index}`]) {
+              setErrors(prev => ({...prev, [`itemQuantity-${index}`]: ''}));
+            }
+          }}
+          min="1"
+          className="w-16 px-2 py-1 border-t border-b border-gray-300 text-center"
+        />
+        <button
+          type="button"
+          onClick={() => handleItemChange(index, 'quantity', item.quantity + 1)}
+          className="px-2 py-1 bg-gray-200 rounded-r-md hover:bg-gray-300"
+        >
+          +
+        </button>
+      </div>
+                                {errors[`itemQuantity-${index}`] && (
+        <span className="text-red-500 text-xs">{errors[`itemQuantity-${index}`]}</span>
+      )}
                           </div>
                           <div className="flex items-end">
                             <span className="text-sm font-medium text-gray-700">
-                              Subtotal: {formatCurrency(item.price * item.quantity)}
+                              Subtotal:{" "}
+                              {formatCurrency(item.price * item.quantity)}
                             </span>
                           </div>
                         </div>
@@ -601,10 +739,14 @@ const OrderManagement: React.FC = () => {
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-gray-800 mb-4 text-lg">Order Details</h4>
+                    <h4 className="font-semibold text-gray-800 mb-4 text-lg">
+                      Order Details
+                    </h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Status
+                        </label>
                         <select
                           name="status"
                           value={editingOrder.status}
@@ -619,7 +761,9 @@ const OrderManagement: React.FC = () => {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Total Amount</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Total Amount
+                        </label>
                         <input
                           type="number"
                           name="total"
@@ -630,11 +774,19 @@ const OrderManagement: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Date
+                        </label>
                         <input
                           type="datetime-local"
                           name="createdAt"
-                          value={editingOrder.createdAt ? new Date(editingOrder.createdAt).toISOString().slice(0, 16) : ""}
+                          value={
+                            editingOrder.createdAt
+                              ? new Date(editingOrder.createdAt)
+                                  .toISOString()
+                                  .slice(0, 16)
+                              : ""
+                          }
                           onChange={handleInputChange}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
@@ -646,13 +798,13 @@ const OrderManagement: React.FC = () => {
                     <button
                       type="button"
                       onClick={closeEditModal}
-                      className="px-6 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
+                      className="px-3 py-1 md:px-6 md:py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+                      className=" px-2 py-2 md:px-6 md:py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
                     >
                       Save Changes
                     </button>

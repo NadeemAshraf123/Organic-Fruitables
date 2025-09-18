@@ -83,7 +83,7 @@ const AuthenticatedUsers = () => {
 
   return (
     <div className="admin-table-container">
-
+      <div className='wrapped-admin-table'>
       <table className="admin-table">
         <thead>
           <tr>
@@ -101,7 +101,7 @@ const AuthenticatedUsers = () => {
               <td>
                 <div className='user-name-cell'>
                   <div className="profile-placeholder">{admin.name.charAt(0)}</div>
-                  {admin.name}
+                  <span className='admin-name'> {admin.name} </span>
                 </div>
               </td>
               <td>{admin.id}</td>
@@ -128,6 +128,7 @@ const AuthenticatedUsers = () => {
           ))}
         </tbody>
       </table>
+      </div> 
 
       {editUser && (
         <div className="edit-popup">

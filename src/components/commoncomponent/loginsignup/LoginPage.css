@@ -154,7 +154,7 @@
   color: #155724;
 }
 
-/* Responsive design */
+
 @media (max-width: 480px) {
   .login-card {
     padding: 30px 20px;

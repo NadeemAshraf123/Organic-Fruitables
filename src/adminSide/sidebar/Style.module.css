@@ -1,7 +1,7 @@
-/* SidebarSelf.module.css - Fixed and Akademi Styled */
 .sidebar {
   width: 250px;
-  height: 100vh;
+  min-height: 100vh;
+  /* max-height: 100vh; */
   background: linear-gradient(180deg, #6C5CE7 0%, #4D44B5 100%); 
   color: white;
   position: fixed;
@@ -10,13 +10,10 @@
   transition: transform 0.3s ease-in-out;
   z-index: 100;
   box-shadow: 0 8px 32px rgba(77, 68, 181, 0.15); 
-  overflow-y: auto;
-  overflow-x: hidden;
   border: none;
   box-sizing: border-box;
 }
 
-/* Mobile behavior - hide sidebar initially */
 @media (max-width: 991px) {
   .sidebar {
     left: -250px;
@@ -29,7 +26,6 @@
   }
 }
 
-/* Desktop behavior - Always visible */
 @media (min-width: 992px) {
   .sidebar {
     position: fixed;
@@ -39,21 +35,20 @@
     z-index: 100;
   }
   
-  /* Ensure sidebar is always open on desktop, regardless of open/closed class */
   .sidebar.open,
   .sidebar:not(.open) {
     transform: translateX(0) !important;
   }
 }
 
-/* Logo Section - Akademi Style */
 .logo {
-  padding: 24px 20px 20px 20px;
+  padding: 17px 20px 17px 20px;
   text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
   margin: 0;
   position: relative;
+  height: 70px;
 }
 
 .logo h2 {
@@ -61,17 +56,15 @@
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: -0.5px;
-  padding-right: 20px; /* Default padding */
+  padding-right: 20px; 
 }
 
-/* Add space for toggle button only on mobile */
 @media (max-width: 991px) {
   .logo h2 {
-    padding-right: 50px; /* Space for toggle button on mobile */
+    padding-right: 50px; 
   }
 }
 
-/* Toggle Button - Only visible on mobile */
 .toggleButton {
   position: absolute;
   top: 50%;
@@ -85,7 +78,7 @@
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.3s ease;
-  display: none; /* Hidden by default */
+  display: none; 
   align-items: center;
   justify-content: center;
   width: 32px;
@@ -101,21 +94,21 @@
   transform: translateY(-50%) scale(0.95);
 }
 
-/* Show toggle button only on mobile */
 @media (max-width: 991px) {
   .toggleButton {
     display: flex;
   }
 }
 
-/* Menu Container */
 .menu {
   list-style: none;
   padding: 16px 0 0 0;
   margin: 0;
+  min-height: calc(100vh - 70px);
+  max-height: calc(100vh - 70px);
+  overflow: auto;
 }
 
-/* Menu Items - Fixed to prevent horizontal scroll */
 .menuItem {
   padding: 14px 12px 14px 20px;
   margin: 4px 8px 4px 0;
@@ -133,7 +126,6 @@
   border: none; 
 }
 
-/* Hover Effect - Akademi Style (Fixed) */
 .menuItem:hover {
   background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
@@ -141,7 +133,6 @@
   border-radius: 12px 0 0 12px;
 }
 
-/* Active State - Akademi Style (Fixed) */
 .active {
   background: rgba(255, 255, 255, 0.2) !important;
   color: #ffffff !important;
@@ -151,7 +142,6 @@
   box-shadow: inset 4px 0 0 rgba(255, 255, 255, 0.5);
 }
 
-/* Icon Styling */
 .icon {
   margin-right: 14px;
   font-size: 1.1rem;
@@ -160,18 +150,15 @@
   min-width: 18px;
 }
 
-/* Active Icon */
 .active .icon {
   color: #ffffff;
 }
 
-/* Hover Icon Effect */
 .menuItem:hover .icon {
   color: #ffffff;
   transform: scale(1.05);
 }
 
-/* Mobile Toggle Button - Updated */
 .mobileToggle {
   display: none;
   position: fixed;
@@ -198,7 +185,6 @@
   transition: left 0.3s ease-in-out;
 }
 
-/* Close Button - Enhanced */
 .closeButton {
   position: absolute;
   top: 20px;
@@ -222,19 +208,16 @@
   transform: rotate(90deg);
 }
 
-/* Mobile Responsive */
 @media (max-width: 991px) {
   .mobileToggle {
     display: block;
   }
   
-  /* Show close button on mobile */
   .closeButton {
     display: flex;
   }
 }
 
-/* Desktop - hide mobile elements */
 @media (min-width: 992px) {
   .mobileToggle {
     display: none;
@@ -245,7 +228,6 @@
   }
 }
 
-/* Main content adjustments for desktop */
 @media (min-width: 992px) {
   .main-content {
     margin-left: 250px;
@@ -253,7 +235,6 @@
   }
 }
 
-/* Mobile main content */
 @media (max-width: 991px) {
   .main-content {
     margin-left: 0;
@@ -261,7 +242,6 @@
   }
 }
 
-/* Overlay for mobile */
 .overlay {
   position: fixed;
   top: 0;
@@ -273,7 +253,6 @@
   backdrop-filter: blur(2px);
 }
 
-/* Custom Scrollbar */
 .sidebar::-webkit-scrollbar {
   width: 4px;
 }
@@ -282,7 +261,6 @@
   background: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
 }
-
 .sidebar::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 2px;
@@ -292,7 +270,6 @@
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* Menu item hover indicator */
 .menuItem::before {
   content: '';
   position: absolute;
@@ -305,8 +282,14 @@
   transition: transform 0.3s ease;
   border-radius: 0 2px 2px 0;
 }
-
 .menuItem.active::before,
 .menuItem:hover::before {
   transform: scaleY(1);
+}
+
+@media(min-width:991px ) and (max-width: 1024px) {
+
+  .sidebar {
+    height: 100% ;
+  }
 }

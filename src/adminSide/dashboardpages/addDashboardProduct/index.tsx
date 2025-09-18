@@ -73,7 +73,6 @@ const handleSubmit = async (e: React.FormEvent) => {
       isFeatured: isFeatured === "true",
     };
 
-
     const res = await fetch("http://localhost:3000/products", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -94,7 +93,6 @@ const handleSubmit = async (e: React.FormEvent) => {
     toast.error("Could not save product. Try again!");
   }
 };
-
 
   const resetForm = () => {
     setProductName("");
@@ -129,9 +127,19 @@ const handleSubmit = async (e: React.FormEvent) => {
     setProductCategory(product.category);
     setIsEditing(true);
   };
+  const validateEditOrder = () => {
+  const newErrors: { [key: string]: string } = {};
+  if (!editingProduct?.name?.trim()) newErrors.editName = "Product name is required";
+  if (!editingProduct?.price || isNaN(Number(editingProduct.price)) || Number(editingProduct.price) <= 0) 
+    newErrors.editPrice = "Valid price is required";
+  if (!productCategory) newErrors.editCategory = "Category is required";
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
 
 const saveEditProduct = async () => {
   if (!editingProduct) return;
+  if (!validateEditOrder()) return;
 
   const updatedProduct = {
     ...editingProduct,
@@ -162,8 +170,6 @@ const saveEditProduct = async () => {
     toast.error("Could not update product");
   }
 };
-
-
   const deleteProduct = async (id: string) => {
   const confirmDelete = window.confirm("Are you sure you want to delete this product?");
   if (!confirmDelete) return;
@@ -184,9 +190,6 @@ const saveEditProduct = async () => {
   }
 };
 
-
-
-
   const filteredProducts = tableProducts.filter((item) => {
     const nameMatch = item.name.toLowerCase().includes(searchName.toLowerCase());
     const categoryMatch = searchCategory === "" || 
@@ -196,6 +199,8 @@ const saveEditProduct = async () => {
       (searchFeatured === "false" && !item.isFeatured);
     return nameMatch && categoryMatch && featuredMatch;
   });
+
+  
   
 
   return (
@@ -226,7 +231,7 @@ const saveEditProduct = async () => {
         <table className={styles.productTable}>
           <thead>
             <tr>
-              <th>#</th>
+              <th style={{paddingLeft:"10px"}}>#</th>
               <th>Product Name</th>
               <th>Price</th>
               <th>Category</th>
@@ -239,7 +244,7 @@ const saveEditProduct = async () => {
           <tbody>
             {filteredProducts.map((item, index) => (
               <tr key={item.id}>
-                <td>{index + 1}</td>
+                <td style={{paddingLeft:"10px"}}>{index + 1}</td>
                 <td>{item.name}</td>
                 <td>${item.price}</td>
                 <td>{item.category?.name || "-"}</td>
@@ -445,6 +450,8 @@ const saveEditProduct = async () => {
                     setEditingProduct({ ...editingProduct, name: e.target.value })
                   }
                 />
+                {errors.editName && <span className={styles.error}>{errors.editName}</span>}
+
               </div>
 
               <div className={styles.formGroup}>
@@ -456,6 +463,8 @@ const saveEditProduct = async () => {
                     setEditingProduct({ ...editingProduct, price: e.target.value })
                   }
                 />
+                  {errors.editPrice && <span className={styles.error}>{errors.editPrice}</span>}
+
               </div>
 
               <div className={styles.formGroup}>
@@ -468,6 +477,7 @@ const saveEditProduct = async () => {
                       ...editingProduct,
                       category: selectedCat
                     });
+                    setProductCategory(selectedCat);
                   }}
                 >
                   <option value="" disabled   className={styles.categoriesoptionSelection} style={{width: "50px"}}>Select Category</option>
@@ -477,6 +487,7 @@ const saveEditProduct = async () => {
                     </option>
                   ))}
                 </select>
+                  {errors.editCategory && <span className={styles.error}>{errors.editCategory}</span>}
               </div>
 
               <div className={styles.formGroup}>

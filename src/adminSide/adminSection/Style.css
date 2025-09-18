@@ -1,14 +1,12 @@
 
-
 .admin-table-container {
   background: #F3F4FF;
   border-radius: 8px;
   width: 100%;
   height: auto;
-  padding: 10px 20px 0px 20px ; 
-  margin: 0 auto; 
   box-sizing: border-box;
   overflow: auto;
+  padding: 6px;
   
 }
 
@@ -148,13 +146,11 @@ p {
 
 @media (max-width: 576px) {
   .admin-table-container {
-    padding: 10px;
-    margin: 0;
-    overflow-x: scroll;
   }
   .Admin-List-Heading {
     font-size: 1.2rem;
     text-align: center;
+  
   }
   .admin-table {
     width: 100%;
@@ -163,14 +159,18 @@ p {
   }
   .admin-table th,
   .admin-table td {
-    padding: 10px;
+    padding: 8px;
     font-size: o.75rem;
   }
   .user-name-cell {
-    flex-direction: column;
+    flex-direction: row;
   align-items: flex-start;
     gap: 8px;
 }
+.admin-name {
+  margin-top: 8px;
+}
+
 .action-buttons {
   flex-direction: column;
   gap: 5px;
@@ -186,4 +186,17 @@ p {
   width: 100%;
   margin-bottom: 10px;
 }
+}
+
+
+
+@media( max-width: 1024px) {
+  .admin-table-container {
+    /* height: calc(100vh - 70px) ; */
+    height: 100%;
+    
+  }
+  .admin-table {
+    
+  }
 }
