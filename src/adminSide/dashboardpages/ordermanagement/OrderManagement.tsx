@@ -44,8 +44,7 @@ const OrderManagement: React.FC = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [editingOrder, setEditingOrder] = useState<Order | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -429,7 +428,7 @@ const OrderManagement: React.FC = () => {
                       <th className="md:px-6 md:py-4 text-left text-sm font-semibold text-white uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="md:px-6 md:py-4 text-sm text-center font-semibold text-white uppercase tracking-wider">
+                      <th className="md:px-6 md:py-4 text-sm text-left font-semibold text-white uppercase tracking-wider">
                         Actions
                       </th>
                     </tr>
@@ -585,10 +584,13 @@ const OrderManagement: React.FC = () => {
                           value={editingOrder.shippingAddress.address || ""}
                           onChange={(e) => {
                             handleInputChange(e);
-                          if (errors.shippingAddress) {
-                            setErrors(prev => ({...prev, shippingAddress: ''}));
+                            if (errors.shippingAddress) {
+                              setErrors((prev) => ({
+                                ...prev,
+                                shippingAddress: "",
+                              }));
+                            }
                           }}
-                        }
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                         {errors.shippingAddress && (
@@ -605,12 +607,15 @@ const OrderManagement: React.FC = () => {
                           type="text"
                           name="shippingAddress.city"
                           value={editingOrder.shippingAddress.city || ""}
-                        onChange={(e) => {
-    handleInputChange(e);
-    if (errors.shippingCity) {
-      setErrors(prev => ({...prev, shippingCity: ''}));
-    }
-  }}
+                          onChange={(e) => {
+                            handleInputChange(e);
+                            if (errors.shippingCity) {
+                              setErrors((prev) => ({
+                                ...prev,
+                                shippingCity: "",
+                              }));
+                            }
+                          }}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                         {errors.shippingCity && (
@@ -627,12 +632,15 @@ const OrderManagement: React.FC = () => {
                           type="text"
                           name="shippingAddress.zipCode"
                           value={editingOrder.shippingAddress.zipCode || ""}
-                            onChange={(e) => {
-    handleInputChange(e);
-    if (errors.shippingZipCode) {
-      setErrors(prev => ({...prev, shippingZipCode: ''}));
-    }
-  }}
+                          onChange={(e) => {
+                            handleInputChange(e);
+                            if (errors.shippingZipCode) {
+                              setErrors((prev) => ({
+                                ...prev,
+                                shippingZipCode: "",
+                              }));
+                            }
+                          }}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                         {errors.shippingZipCode && (
@@ -666,66 +674,98 @@ const OrderManagement: React.FC = () => {
                               }
                               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                                 {errors[`itemName-${index}`] && (
-        <span className="text-red-500 text-xs">{errors[`itemName-${index}`]}</span>
-      )}
+                            {errors[`itemName-${index}`] && (
+                              <span className="text-red-500 text-xs">
+                                {errors[`itemName-${index}`]}
+                              </span>
+                            )}
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                               Price
                             </label>
 
-                           <input
-  type="number"
-  value={item.price}
-  onChange={(e) => {
-    handleItemChange(index, 'price', e.target.value);
-    if (errors[`itemPrice-${index}`]) {
-      setErrors(prev => ({...prev, [`itemPrice-${index}`]: ''}));
-    }
-  }}
-  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-/>
-                                 {errors[`itemPrice-${index}`] && (
-        <span className="text-red-500 text-xs">{errors[`itemPrice-${index}`]}</span>
-      )}
+                            <input
+                              type="number"
+                              value={item.price}
+                              onChange={(e) => {
+                                handleItemChange(
+                                  index,
+                                  "price",
+                                  e.target.value
+                                );
+                                if (errors[`itemPrice-${index}`]) {
+                                  setErrors((prev) => ({
+                                    ...prev,
+                                    [`itemPrice-${index}`]: "",
+                                  }));
+                                }
+                              }}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            {errors[`itemPrice-${index}`] && (
+                              <span className="text-red-500 text-xs">
+                                {errors[`itemPrice-${index}`]}
+                              </span>
+                            )}
                           </div>
 
                           <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                               Quantity
                             </label>
-                             <div className="flex items-center">
-        <button
-          type="button"
-          onClick={() => handleItemChange(index, 'quantity', Math.max(1, item.quantity - 1))}
-          className="px-2 py-1 bg-gray-200 rounded-l-md hover:bg-gray-300"
-        >
-          -
-        </button>
-        <input
-          type="number"
-          value={item.quantity}
-          onChange={(e) => {
-            handleItemChange(index, 'quantity', e.target.value);
-            if (errors[`itemQuantity-${index}`]) {
-              setErrors(prev => ({...prev, [`itemQuantity-${index}`]: ''}));
-            }
-          }}
-          min="1"
-          className="w-16 px-2 py-1 border-t border-b border-gray-300 text-center"
-        />
-        <button
-          type="button"
-          onClick={() => handleItemChange(index, 'quantity', item.quantity + 1)}
-          className="px-2 py-1 bg-gray-200 rounded-r-md hover:bg-gray-300"
-        >
-          +
-        </button>
-      </div>
-                                {errors[`itemQuantity-${index}`] && (
-        <span className="text-red-500 text-xs">{errors[`itemQuantity-${index}`]}</span>
-      )}
+                            <div className="flex items-center">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleItemChange(
+                                    index,
+                                    "quantity",
+                                    Math.max(1, item.quantity - 1)
+                                  )
+                                }
+                                className="px-2 py-1 bg-gray-200 rounded-l-md hover:bg-gray-300"
+                              >
+                                -
+                              </button>
+                              <input
+                                // type="number"
+                                value={item.quantity}
+                                onChange={(e) => {
+                                  handleItemChange(
+                                    index,
+                                    "quantity",
+                                    e.target.value
+                                  );
+                                  if (errors[`itemQuantity-${index}`]) {
+                                    setErrors((prev) => ({
+                                      ...prev,
+                                      [`itemQuantity-${index}`]: "",
+                                    }));
+                                  }
+                                }}
+                                min="1"
+                                className="w-16 px-2 py-1 border-t border-b border-gray-300 text-center"
+                              />
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleItemChange(
+                                    index,
+                                    "quantity",
+                                    item.quantity + 1
+                                  )
+                                }
+                                className="px-2 py-1 bg-gray-200 rounded-r-md hover:bg-gray-300"
+                              >
+                                +
+                              </button>
+                            </div>
+                            {errors[`itemQuantity-${index}`] && (
+                              <span className="text-red-500 text-xs">
+                                {errors[`itemQuantity-${index}`]}
+                              </span>
+                            )}
                           </div>
                           <div className="flex items-end">
                             <span className="text-sm font-medium text-gray-700">

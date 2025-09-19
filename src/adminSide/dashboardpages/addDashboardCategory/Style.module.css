@@ -313,9 +313,7 @@
   margin-right: 10px;
 }
 
-/* .fileInputLabel:hover {
-  background-color: #45a049;
-} */
+
 
 .fileName {
   color: #666;
@@ -360,7 +358,6 @@
 
   .container {
  padding: 1px;
-  background-color: #27ae60;
   }
 
   .actions {
@@ -389,7 +386,7 @@
   }
 
   .categoryTable {
-    background-color: red;
+    background-color: transparent;
     padding: ;
     
   }
